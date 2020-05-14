@@ -37,3 +37,5 @@ release.properties
 #lsp/
 /lsp
 
+#maven target
+/target
