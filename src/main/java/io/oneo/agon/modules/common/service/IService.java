@@ -1,4 +1,4 @@
-package io.oneo.agon.infra.service;
+package io.oneo.agon.modules.common.service;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,7 +19,7 @@ public interface IService<T extends Serializable, ID extends Serializable>
 
     List<T> listar();
 
-    <T> T deepConvert(Object source, Class<T> target);
+    <T> T convert(Object source, Class<T> target);
 
-    <D, T> List<D> deepConvertList(final Collection<T> sourceList, Class<D> target);
+    <D, T> List<D> convertList(final Collection<T> sourceList, Class<D> target);
 }

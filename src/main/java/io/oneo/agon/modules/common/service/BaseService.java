@@ -1,4 +1,4 @@
-package io.oneo.agon.infra.service;
+package io.oneo.agon.modules.common.service;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import org.jooq.DSLContext;
@@ -43,8 +43,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     public Optional<T> buscarPorID(ID id)
     {
         logger.info("# retornando um objeto pelo ID #");
-        T t = this.repo.findById(id);
-        return Optional.of(t);
+        return this.repo.findByIdOptional(id);
     }
 
     @Override
@@ -57,8 +56,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     public void removerPorID(ID id)
     {
         logger.info("# removendo uma entidade pelo ID #");
-        Optional<T> opt = this.buscarPorID(id);
-        this.remover(opt.get());
+        this.repo.deleteById(id);
     }
 
     @Override
@@ -69,14 +67,14 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     }
 
     @Override
-    public <T> T deepConvert(Object source, Class<T> target)
+    public <T> T convert(Object source, Class<T> target)
     {
         logger.info("# conversão de único objeto #");
         return source == null ? null : this.mapper.map(source, target);
     }
 
     @Override
-    public <D, T> List<D> deepConvertList(final Collection<T> sourceList, Class<D> target)
+    public <D, T> List<D> convertList(final Collection<T> sourceList, Class<D> target)
     {
         logger.info("# conversão de uma lista objetos #");
         return sourceList.size() > 0 ? sourceList.stream()
