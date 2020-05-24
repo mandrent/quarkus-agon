@@ -67,7 +67,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     }
 
     @Override
-    public <T> T convert(Object source, Class<T> target)
+    public <T> T convertOne(Object source, Class<T> target)
     {
         logger.info("# conversão de único objeto #");
         return source == null ? null : this.mapper.map(source, target);

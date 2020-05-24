@@ -17,7 +17,10 @@ import java.io.Serializable;
 @Entity @Table(name = "cidade", schema = "agondb")
 public class Cidade extends PanacheEntity implements Serializable
 {
-    @Column(name = "nome") @NotNull
+    private static final long serialVersionUID = -701281650522286275L;
+
+    @Column(name = "nome")
+    @NotNull
     @Size(min = 4, max = 150)
     public String nome;
 

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity @Table(name = "telefone", schema = "agorzdb")
+@Entity @Table(name = "telefone", schema = "agondb")
 public class Telefone extends PanacheEntity implements Serializable
 {
     @Column(name = "ddd", length = 2)

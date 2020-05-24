@@ -19,7 +19,7 @@ public interface IService<T extends Serializable, ID extends Serializable>
 
     List<T> listar();
 
-    <T> T convert(Object source, Class<T> target);
+    <T> T convertOne(Object source, Class<T> target);
 
     <D, T> List<D> convertList(final Collection<T> sourceList, Class<D> target);
 }
