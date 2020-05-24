@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.acesso.modules.usuario.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.acesso.modules.grupo.model.Grupo;
 import io.oneo.agon.modules.acesso.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.acesso.modules.usuario.repository.UsuarioRepository;

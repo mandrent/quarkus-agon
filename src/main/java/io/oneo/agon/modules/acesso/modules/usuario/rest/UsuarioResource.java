@@ -24,7 +24,7 @@ public class UsuarioResource
     public List<UsuarioDTO> listar()
     {
         List<Usuario> list = this.service.listar();
-        List<UsuarioDTO> dtos = this.service.deepConvertList(list, UsuarioDTO.class);
+        List<UsuarioDTO> dtos = this.service.convertList(list, UsuarioDTO.class);
         return dtos;
     }
 
@@ -33,7 +33,7 @@ public class UsuarioResource
     public UsuarioDTO buscarPorID(@PathParam("id") Long id)
     {
         Optional<Usuario> opt = this.service.buscarPorID(id);
-        UsuarioDTO dto = this.service.deepConvert(opt.get(), UsuarioDTO.class);
+        UsuarioDTO dto = this.service.convertOne(opt.get(), UsuarioDTO.class);
         return dto;
     }
 
@@ -42,7 +42,7 @@ public class UsuarioResource
     public UsuarioDTO buscarLogin(@PathParam("login") String login)
     {
         Usuario usuario = this.service.buscarPorLogin(login);
-        UsuarioDTO dto = this.service.deepConvert(usuario, UsuarioDTO.class);
+        UsuarioDTO dto = this.service.convertOne(usuario, UsuarioDTO.class);
         return dto;
     }
 

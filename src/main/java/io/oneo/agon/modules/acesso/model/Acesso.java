@@ -16,6 +16,8 @@ import java.util.List;
 @Entity @Table(name = "sec_acesso", schema = "agondb")
 public class Acesso extends PanacheEntity implements Serializable
 {
+    private static final long serialVersionUID = 3037895156205550284L;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     public List<Usuario> usuarios;

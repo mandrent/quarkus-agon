@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.acesso.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.acesso.model.Acesso;
 import io.oneo.agon.modules.acesso.repository.AcessoRepository;
 
