@@ -23,7 +23,7 @@ public class Estado extends PanacheEntity implements Serializable
 
     @Column(name = "sigla", unique = true)
     @NotNull
-    public Character sigla;
+    public String sigla;
 
     @Column(name = "regiao")
     @NotNull

@@ -10,7 +10,7 @@ import java.util.List;
 @ApplicationScoped
 public class TelefoneRepository implements PanacheRepositoryBase<Telefone, Long>
 {
-    public Telefone buscarPorNome(String nome) { return this.find("nome", nome).firstResult(); }
+    public Telefone buscarPorNumero(String numero) { return this.find("numero", numero).firstResult(); }
 
     public List<Telefone> listarPorDDD(String ddd) { return this.find("ddd", ddd).list(); }
 

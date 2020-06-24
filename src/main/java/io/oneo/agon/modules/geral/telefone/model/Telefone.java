@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Entity @Table(name = "telefone", schema = "agondb")
 public class Telefone extends PanacheEntity implements Serializable
 {
+    private static final long serialVersionUID = -2069305261353665287L;
+
     @Column(name = "ddd", length = 2)
     public String ddd;
 
