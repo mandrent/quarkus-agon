@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.acesso.resource;
 
-import io.oneo.agon.modules.acesso.modules.usuario.resource.GrupoDTO;
-import io.oneo.agon.modules.acesso.modules.usuario.resource.UsuarioDTO;
+import io.oneo.agon.modules.acesso.modules.usuario.support.resources.GrupoDTO;
+import io.oneo.agon.modules.acesso.modules.usuario.support.resources.UsuarioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

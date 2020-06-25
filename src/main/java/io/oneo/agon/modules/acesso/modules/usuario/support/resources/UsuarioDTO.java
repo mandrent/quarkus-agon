@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.acesso.modules.usuario.resource;
+package io.oneo.agon.modules.acesso.modules.usuario.support.resources;
 
 import io.oneo.agon.modules.acesso.modules.usuario.type.StatusUsuarioTipo;
 import lombok.Getter;

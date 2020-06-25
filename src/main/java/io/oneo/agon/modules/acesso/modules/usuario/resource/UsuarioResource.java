@@ -1,7 +1,7 @@
-package io.oneo.agon.modules.acesso.modules.usuario.rest;
+package io.oneo.agon.modules.acesso.modules.usuario.resource;
 
 import io.oneo.agon.modules.acesso.modules.usuario.model.Usuario;
-import io.oneo.agon.modules.acesso.modules.usuario.resource.UsuarioDTO;
+import io.oneo.agon.modules.acesso.modules.usuario.support.resources.UsuarioDTO;
 import io.oneo.agon.modules.acesso.modules.usuario.service.UsuarioService;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import javax.inject.Inject;
