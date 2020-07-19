@@ -1,14 +1,15 @@
-package io.oneo.agon.modules.acesso.modules.usuario.resource;
+package io.oneo.agon.modules.usuario.resource;
 
-import io.oneo.agon.modules.acesso.modules.usuario.model.Usuario;
-import io.oneo.agon.modules.acesso.modules.usuario.support.resources.UsuarioDTO;
-import io.oneo.agon.modules.acesso.modules.usuario.service.UsuarioService;
+import io.oneo.agon.modules.usuario.model.Usuario;
+import io.oneo.agon.modules.usuario.support.dto.UsuarioDTO;
+import io.oneo.agon.modules.usuario.service.UsuarioService;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,23 +19,27 @@ import java.util.Optional;
 @Consumes("application/json")
 public class UsuarioResource
 {
-    @Inject private UsuarioService service;
+    @Inject UsuarioService service;
 
     @GET
-    public List<UsuarioDTO> listar()
+    public Response listar()
     {
         List<Usuario> list = this.service.listar();
         List<UsuarioDTO> dtos = this.service.convertList(list, UsuarioDTO.class);
-        return dtos;
+        return Response
+                .ok(dtos)
+                .build();
     }
 
     @GET
     @Path("/{id}")
-    public UsuarioDTO buscarPorID(@PathParam("id") Long id)
+    public Response buscarPorID(@PathParam("id") Long id)
     {
         Optional<Usuario> opt = this.service.buscarPorID(id);
         UsuarioDTO dto = this.service.convertOne(opt.get(), UsuarioDTO.class);
-        return dto;
+        return Response
+                .ok(dto)
+                .build();
     }
 
     @GET

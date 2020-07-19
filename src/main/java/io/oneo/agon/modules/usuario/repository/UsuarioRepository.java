@@ -1,14 +1,14 @@
-package io.oneo.agon.modules.acesso.modules.usuario.repository;
+package io.oneo.agon.modules.usuario.repository;
 
-import io.oneo.agon.modules.acesso.modules.grupo.model.Grupo;
-import io.oneo.agon.modules.acesso.modules.usuario.model.Usuario;
-import io.oneo.agon.modules.acesso.modules.usuario.type.StatusUsuarioTipo;
+import io.oneo.agon.modules.usuario.model.Usuario;
+import io.oneo.agon.modules.usuario.type.GrupoTipo;
+import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 public class UsuarioRepository implements PanacheRepositoryBase<Usuario, Long>
 {
     public Usuario buscarPorLogin(String login)
@@ -21,7 +21,7 @@ public class UsuarioRepository implements PanacheRepositoryBase<Usuario, Long>
         return this.find("email", email).firstResult();
     }
 
-    public List<Usuario> listarPorGrupo(Grupo grupo)
+    public List<Usuario> listarPorGrupo(GrupoTipo grupo)
     {
         return this.list("grupo", grupo);
     }
