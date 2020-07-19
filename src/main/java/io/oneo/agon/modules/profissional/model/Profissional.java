@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.profissional.model;
 
-import io.oneo.agon.modules.acesso.model.Acesso;
+import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.geral.telefone.model.Telefone;
 import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -23,15 +23,15 @@ public class Profissional extends PanacheEntity implements Serializable
     private static final long serialVersionUID = -2283230030471863819L;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "acesso_id", referencedColumnName = "id")
-    public Acesso acesso;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    public Usuario usuario;
 
     @Column(name = "nome")
     @NotNull
     @Size(min = 3, max = 30)
     public String nome;
 
-    @Column(name = "sobre_nome")
+    @Column(name = "sobrenome")
     @NotNull
     @Size(min = 3, max = 30)
     public String sobreNome;
