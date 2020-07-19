@@ -1,47 +1,45 @@
+-- tabela grupo_usr
+create table grupo
+(
+	id integer auto_increment,
+	tipo varchar(20) not null,
+	descricao varchar(20) null,
+	constraint sec_grupo_pk
+		primary key (id)
+);
+
+insert into agondb.grupo (tipo, descricao)
+	values
+	('ADMIN', 'ADMIN'),
+	('CONVIDADO', 'CONVIDADO'),
+	('EMPRESA', 'EMPRESA'),
+	('PROFISSIONAL', 'PROFISSIONAL');
+
+
 -- tabela usuario
-create table sec_usuario
+create table usuario
 (
-    id         int auto_increment primary key,
-    login      varchar(20) not null,
-    senha      varchar(20) not null,
-    email      varchar(50) not null,
-    grupo_id   int         not null,
-    status_usr int         not null,
-    criacao_dt datetime    not null,
-    acesso_dt  datetime    not null,
-    update_dt  datetime    null,
-    constraint sec_usuario_login_uindex
-        unique (login)
+	idd integer auto_increment,
+	login varchar(20) not null,
+	senha varchar(10) not null,
+	email varchar(50) not null,
+	grupo_id integer not null,
+	status_usr int not null,
+	criacao_dt datetime not null,
+	acesso_dt datetime not null,
+	update_dt datetime null,
+	constraint usuario_pk
+		primary key (idd)
 );
 
+create unique index usuario_email_uindex
+	on usuario (email);
 
--- tabela grupo | usuarios
-create table sec_grupo
-(
-    id         int auto_increment primary key,
-    descricao  varchar(15) not null,
-    usuario_id int not null,
-    constraint sec_usuario_fk
-        foreign key (id) references sec_usuario (id)
-);
+create unique index usuario_login_uindex
+	on usuario (login);
 
 
--- tabela acesso
-create table sec_acesso
-(
-    id         int auto_increment primary key,
-    usuario_id int           not null,
-    grupo_id   int           not null,
-    adc        int default 1 not null,
-    edt        int default 1 not null,
-    rmv        int default 1 not null,
-    vis        int default 1 not null,
-    spc        int default 1 null,
-    constraint sec_grp_fk
-        foreign key (id) references sec_grupo (id),
-    constraint sec_usr_fk
-        foreign key (id) references sec_usuario (id)
-);
+
 
 
 -- tabela telefone
