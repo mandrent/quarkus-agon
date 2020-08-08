@@ -1,5 +1,6 @@
 package io.oneo.agon.modules.usuario.support.dto;
 
+import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class UsuarioDTO
 
     private String email;
 
-    private GrupoDTO grupo;
+    private GrupoTipo grupo;
 
     private StatusUsuarioTipo status;
 
