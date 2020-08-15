@@ -12,16 +12,15 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity @Table(name = "func_documento", schema = "agondb")
+@Entity @Table(name = "funcionario_documento", schema = "agondb")
 public class FuncionarioDocumento extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = 5217427445688373069L;
 
-    @OneToOne(mappedBy = "funcionario")
+    @OneToOne(mappedBy = "documento")
     @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
     public Funcionario funcionario;
 

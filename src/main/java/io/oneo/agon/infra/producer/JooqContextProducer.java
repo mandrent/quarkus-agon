@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.common.producer;
+package io.oneo.agon.infra.producer;
 
 import io.agroal.api.AgroalDataSource;
 import org.jooq.DSLContext;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 @Dependent
 public class JooqContextProducer
 {
-    @Inject private AgroalDataSource ads;
+    @Inject AgroalDataSource ads;
 
     @Produces
     public DSLContext getContext()

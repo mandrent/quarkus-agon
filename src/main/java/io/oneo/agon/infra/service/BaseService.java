@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.common.service;
+package io.oneo.agon.infra.service;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import org.jooq.DSLContext;
@@ -22,7 +22,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
 
     @Inject protected DSLContext dsl;
 
-    @Inject private ModelMapper mapper;
+    private ModelMapper mapper = new ModelMapper();
 
     public BaseService() { }
 

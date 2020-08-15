@@ -1,6 +1,7 @@
 package io.oneo.agon.modules.epi_epc.model;
 
 import io.oneo.agon.modules.epi_epc.type.AtenuacaoTipo;
+import io.oneo.agon.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.geral.fabricante.model.Fabricante;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.*;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "epi_equip", schema = "agondb")
+@Table(name = "epi_equipamento", schema = "agondb")
 public class EquipamentoEPI extends PanacheEntity implements Serializable
 {
     public static final long serialVersionUID = 1016746741607364245L;
@@ -28,6 +29,10 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fabricante_id", referencedColumnName = "id")
     public Fabricante fabricante;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    private Funcionario funcionario;
 
     @Column(name = "ca_code")
     @NotNull
@@ -42,11 +47,11 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
     @NotNull
     public int quantidade;
 
-    @Column(name = "quantidade")
+    @Column(name = "dt_entrega")
     @NotNull
-    public LocalDateTime entrega;
+    public LocalDateTime entregaDT;
 
-    @Column(name = "quantidade")
+    @Column(name = "dt_devolucao")
     @NotNull
     public LocalDateTime devolucao;
 }

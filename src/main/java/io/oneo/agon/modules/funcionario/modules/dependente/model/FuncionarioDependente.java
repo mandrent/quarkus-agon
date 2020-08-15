@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity @Table(name = "func_dependente", schema = "agondb")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "func_dependente", schema = "agondb")
 public class FuncionarioDependente extends PanacheEntity implements Serializable
 {
     public static final long serialVersionUID = 5674229360067270924L;

@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.common.service;
+package io.oneo.agon.infra.service;
 
 import java.io.Serializable;
 import java.util.Collection;
