@@ -55,33 +55,32 @@ create table telefone
 -- tabela estado
 create table estado
 (
-    id     int auto_increment
+    idstd     int auto_increment
         primary key,
     nome   varchar(20) not null,
     sigla  varchar(2)  not null,
     regiao varchar(12) not null,
     constraint estado_nome_uindex
-        unique (nome),
-    constraint estado_regiao_uindex
-        unique (regiao),
-    constraint estado_sigla_uindex
-        unique (sigla)
+        unique (nome)
 );
 
-
--- tabela cidade
+-- cidade
 create table cidade
 (
-    id        int auto_increment
-        primary key,
-    nome      varchar(150) not null,
-    codigo    varchar(7)   null,
-    estado_id char(2)      not null,
-    constraint cidade_codigo_uindex
-        unique (codigo),
-    constraint estado_fk
-        foreign key (estado_id) references estado (sigla)
+	idcdd integer auto_increment,
+	nome varchar(50) not null,
+	codigo varchar(10) not null,
+	estado_id integer not null,
+	constraint cidade_pk
+		primary key (idcdd),
+	constraint cidade_fk_estado
+		foreign key (estado_id) references estado (idstd)
 );
+
+create unique index cidade_codigo_uindex
+	on cidade (codigo);
+
+
 
 
 -- tabela de operacoes para usuarios

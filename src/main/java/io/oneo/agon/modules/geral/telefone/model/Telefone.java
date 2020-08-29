@@ -11,8 +11,9 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity @Table(name = "telefone", schema = "agondb")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "telefone", schema = "agondb")
 public class Telefone extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -2069305261353665287L;

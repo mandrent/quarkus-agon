@@ -37,6 +37,7 @@ public class UsuarioResource
     {
         Optional<Usuario> opt = this.service.buscarPorID(id);
         UsuarioDTO dto = this.service.convertOne(opt.get(), UsuarioDTO.class);
+        dto.setId(opt.get().id);
         return Response
                 .ok(dto)
                 .build();

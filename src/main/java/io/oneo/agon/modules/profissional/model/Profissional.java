@@ -16,14 +16,15 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity @Table(name = "profissional", schema = "agondb")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "profissional", schema = "agondb")
 public class Profissional extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -2283230030471863819L;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "usuario_id", referencedColumnName = "idusr")
     public Usuario usuario;
 
     @Column(name = "nome")
@@ -51,6 +52,6 @@ public class Profissional extends PanacheEntity implements Serializable
     public int sesmtID;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "telefone_id", referencedColumnName = "id")
+    @JoinColumn(name = "telefone_id", referencedColumnName = "idtel")
     public Set<Telefone> telefones;
 }

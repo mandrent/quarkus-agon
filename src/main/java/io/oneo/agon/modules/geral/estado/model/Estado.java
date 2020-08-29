@@ -14,7 +14,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity @Table(name = "estado", schema = "agondb")
+@Entity
+@Table(name = "estado", schema = "agondb")
 public class Estado extends PanacheEntity implements Serializable
 {
     @Column(name = "nome", unique = true)

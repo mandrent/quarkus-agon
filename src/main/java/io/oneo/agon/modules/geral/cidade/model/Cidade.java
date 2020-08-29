@@ -13,8 +13,9 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity @Table(name = "cidade", schema = "agondb")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "cidade", schema = "agondb")
 public class Cidade extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -701281650522286275L;
@@ -29,6 +30,6 @@ public class Cidade extends PanacheEntity implements Serializable
     public String codigo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estado_id", referencedColumnName = "sigla")
+    @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
     public Estado estado;
 }

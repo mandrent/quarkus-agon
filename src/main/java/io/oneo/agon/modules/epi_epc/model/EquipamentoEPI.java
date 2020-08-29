@@ -30,8 +30,8 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
     @JoinColumn(name = "fabricante_id", referencedColumnName = "id")
     public Fabricante fabricante;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "idfnc")
     private Funcionario funcionario;
 
     @Column(name = "ca_code")
@@ -40,18 +40,18 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
     public String codigoCA;
 
     @Column(name = "atenuacao")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     public AtenuacaoTipo atenuacao;
 
     @Column(name = "quantidade")
     @NotNull
     public int quantidade;
 
-    @Column(name = "dt_entrega")
+    @Column(name = "entrega_dt")
     @NotNull
-    public LocalDateTime entregaDT;
+    public LocalDateTime entrega;
 
-    @Column(name = "dt_devolucao")
+    @Column(name = "devolucao_dt")
     @NotNull
     public LocalDateTime devolucao;
 }

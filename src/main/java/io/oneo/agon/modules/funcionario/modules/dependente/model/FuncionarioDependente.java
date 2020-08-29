@@ -1,7 +1,8 @@
 package io.oneo.agon.modules.funcionario.modules.dependente.model;
 
 import io.oneo.agon.modules.funcionario.model.Funcionario;
-import io.oneo.agon.modules.funcionario.modules.dependente.type.DependenteFuncionarioTipo;
+import io.oneo.agon.modules.funcionario.modules.dependente.type.DependenteSexoTipo;
+import io.oneo.agon.modules.funcionario.modules.dependente.type.DependenteTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.*;
 
@@ -14,18 +15,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "func_dependente", schema = "agondb")
+@Table(name = "funcionario_dependente", schema = "agondb")
 public class FuncionarioDependente extends PanacheEntity implements Serializable
 {
     public static final long serialVersionUID = 5674229360067270924L;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "idfnc")
     public Funcionario funcionario;
 
     @Column(name = "nome")
     @NotNull
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 30)
     public String nome;
 
     @Column(name = "sobre_nome")
@@ -35,8 +36,8 @@ public class FuncionarioDependente extends PanacheEntity implements Serializable
 
     @Column(name = "sexo")
     @NotNull
-    @Size(min = 1, max = 1)
-    public Character sexo;
+    @Enumerated(EnumType.STRING)
+    public DependenteSexoTipo sexoTipo;
 
     @Column(name = "idade")
     @NotNull
@@ -46,25 +47,20 @@ public class FuncionarioDependente extends PanacheEntity implements Serializable
     @Column(name = "filiacao")
     @NotNull
     @Enumerated(EnumType.STRING)
-    public DependenteFuncionarioTipo dependenteTipo;
+    public DependenteTipo dependenteTipo;
 
-    @Column(name = "idrg")
-    @Size(min = 5, max = 10)
-    public String idrg;
+    @Column(name = "rgdoc", unique = true, length = 15)
+    public String rgdoc;
 
-    @Column(name = "cpf")
-    @Size(min = 3, max = 11)
+    @Column(name = "cpf", unique = true, length = 11)
     public String cpf;
 
-    @Column(name = "cert_nasc")
-    @Size(min = 5, max = 20)
+    @Column(name = "nasc_cert", length = 20)
     public String certidaoNascimento;
 
-    @Column(name = "cert_casa")
-    @Size(min = 5, max = 30)
+    @Column(name = "casa_cert", length = 30)
     public String certidaoCasamento;
 
-    @Column(name = "cart_vacina")
-    @Size(min = 5, max = 20)
+    @Column(name = "vacina_cart", length = 20)
     public String carteiraVacina;
 }
