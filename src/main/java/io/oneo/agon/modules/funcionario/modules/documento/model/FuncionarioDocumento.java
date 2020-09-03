@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "funcionario_documento", schema = "agondb")
@@ -23,7 +22,7 @@ public class FuncionarioDocumento extends PanacheEntity implements Serializable
     private static final long serialVersionUID = 5217427445688373069L;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "idfnc")
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
     public Funcionario funcionario;
 
     @Column(name = "nome", length = 30)
@@ -88,4 +87,6 @@ public class FuncionarioDocumento extends PanacheEntity implements Serializable
 
     @Column(name = "cert_casa", unique = true, length = 40)
     public String certidaoCasa;
+
+    public FuncionarioDocumento() { }
 }

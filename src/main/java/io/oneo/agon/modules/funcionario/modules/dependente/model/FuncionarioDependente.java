@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "funcionario_dependente", schema = "agondb")
@@ -21,7 +20,7 @@ public class FuncionarioDependente extends PanacheEntity implements Serializable
     public static final long serialVersionUID = 5674229360067270924L;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "idfnc")
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
     public Funcionario funcionario;
 
     @Column(name = "nome")
@@ -63,4 +62,6 @@ public class FuncionarioDependente extends PanacheEntity implements Serializable
 
     @Column(name = "vacina_cart", length = 20)
     public String carteiraVacina;
+
+    public FuncionarioDependente() { }
 }

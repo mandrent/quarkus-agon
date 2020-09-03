@@ -44,12 +44,14 @@ public class UsuarioResource
     }
 
     @GET
-    @Path("/{login}/login")
-    public UsuarioDTO buscarLogin(@PathParam("login") String login)
+    @Path("/login/{login}")
+    public Response buscarLogin(@PathParam("login") String login)
     {
-        Usuario usuario = this.service.buscarPorLogin(login);
+        Usuario usuario = this.service.getRepo().buscarPorLogin(login);
         UsuarioDTO dto = this.service.convertOne(usuario, UsuarioDTO.class);
-        return dto;
+        return Response
+                .ok(dto)
+                .build();
     }
 
     @GET

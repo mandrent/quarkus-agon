@@ -5,14 +5,12 @@ import io.oneo.agon.modules.geral.endereco.type.LogradouroTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "endereco", schema = "agondb")
@@ -29,8 +27,7 @@ public class Endereco extends PanacheEntity implements Serializable
     @NotNull
     public int numero;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "complemento_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     public EnderecoComplemento complemento;
 
     @Column(name = "bairro", length = 30)
@@ -45,4 +42,6 @@ public class Endereco extends PanacheEntity implements Serializable
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
     public Cidade cidade;
+
+    public Endereco() { }
 }

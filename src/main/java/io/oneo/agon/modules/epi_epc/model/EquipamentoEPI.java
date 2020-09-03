@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "epi_equipamento", schema = "agondb")
@@ -21,9 +20,8 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
 {
     public static final long serialVersionUID = 1016746741607364245L;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", length = 50)
     @NotNull
-    @Size(min = 3, max = 50)
     public String descricao;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,12 +29,11 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
     public Fabricante fabricante;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "idfnc")
+    @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
     private Funcionario funcionario;
 
-    @Column(name = "ca_code")
+    @Column(name = "ca_code", length = 20)
     @NotNull
-    @Size(min = 5, max = 20)
     public String codigoCA;
 
     @Column(name = "atenuacao")
@@ -54,4 +51,6 @@ public class EquipamentoEPI extends PanacheEntity implements Serializable
     @Column(name = "devolucao_dt")
     @NotNull
     public LocalDateTime devolucao;
+
+    public EquipamentoEPI() { }
 }

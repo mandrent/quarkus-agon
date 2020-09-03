@@ -69,14 +69,14 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public <T> T convertOne(Object source, Class<T> target)
     {
-        logger.info("# conversão de único objeto #");
+        this.logger.info("# conversão de único objeto #");
         return source == null ? null : this.mapper.map(source, target);
     }
 
     @Override
     public <D, T> List<D> convertList(final Collection<T> sourceList, Class<D> target)
     {
-        logger.info("# conversão de uma lista objetos #");
+        this.logger.info("# conversão de uma lista objetos #");
         return sourceList.size() > 0 ? sourceList.stream()
                 .map(source -> this.mapper.map(source, target))
                 .collect(Collectors.toList()) :  new ArrayList<>();

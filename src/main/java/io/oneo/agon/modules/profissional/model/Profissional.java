@@ -24,7 +24,7 @@ public class Profissional extends PanacheEntity implements Serializable
     private static final long serialVersionUID = -2283230030471863819L;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idusr")
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     public Usuario usuario;
 
     @Column(name = "nome")
@@ -52,6 +52,6 @@ public class Profissional extends PanacheEntity implements Serializable
     public int sesmtID;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "telefone_id", referencedColumnName = "idtel")
+    @JoinColumn(name = "telefone_id", referencedColumnName = "id")
     public Set<Telefone> telefones;
 }

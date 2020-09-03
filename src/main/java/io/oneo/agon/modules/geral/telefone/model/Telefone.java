@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "telefone", schema = "agondb")
@@ -27,4 +26,6 @@ public class Telefone extends PanacheEntity implements Serializable
     @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
     public TelefoneTipo tipo;
+
+    public Telefone() { }
 }

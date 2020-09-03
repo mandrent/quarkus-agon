@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "usuario", schema = "agondb")
@@ -55,4 +54,6 @@ public class Usuario extends PanacheEntity implements Serializable
 
     @Column(name = "update_dt")
     public LocalDateTime update;
+
+    public Usuario() { }
 }

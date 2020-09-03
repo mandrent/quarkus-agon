@@ -4,7 +4,6 @@ import io.oneo.agon.modules.geral.estado.model.Estado;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +11,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "cidade", schema = "agondb")
@@ -30,6 +28,8 @@ public class Cidade extends PanacheEntity implements Serializable
     public String codigo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
+    @JoinColumn(name = "estado_id", referencedColumnName = "id")
     public Estado estado;
+
+    public Cidade() { }
 }

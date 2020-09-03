@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "fabricante", schema = "agondb")
@@ -21,17 +20,15 @@ public class Fabricante extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = 5558400895022890758L;
 
-    @Column(name = "descricao")
+    @Column(name = "model", length = 20)
     @NotNull
-    @Size(min = 3, max = 30)
-    public String descricao;
+    public String modelo;
 
-    @Column(name = "tipo")
-    @NotNull
-    @Size(min = 3, max = 10)
+    @Column(name = "tipo", length = 10)
     public String tipo;
 
+    @Column(name = "descricao", length = 30)
+    public String descricao;
 
-
-
+    public Fabricante() { }
 }

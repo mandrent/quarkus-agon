@@ -22,7 +22,7 @@ public class EnderecoComplemento extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -1031847733190560481L;
 
-    @OneToOne(mappedBy = "complemento")
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     public Endereco endereco;
 

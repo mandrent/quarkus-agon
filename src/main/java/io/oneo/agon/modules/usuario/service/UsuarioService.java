@@ -15,13 +15,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 {
     @Inject UsuarioRepository repo;
 
-    public Usuario buscarPorLogin(String login) { return this.repo.buscarPorLogin(login); }
-
-    public Usuario buscarPorEmail(String email) { return this.repo.buscarPorEmail(email); }
-
-    public List<Usuario> listarPorGrupo(GrupoTipo grupo) { return this.repo.listarPorGrupo(grupo); }
-
-    public List<Usuario> listarPorStatus(StatusUsuarioTipo status) { return this.repo.listarPorStatus(status); }
+    public UsuarioRepository getRepo() { return this.repo; }
 
 
 }
