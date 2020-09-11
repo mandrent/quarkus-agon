@@ -1,8 +1,10 @@
 package io.oneo.agon.modules.usuario.resource;
 
+import io.oneo.agon.modules.usuario.client.UsuarioClient;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.support.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -45,7 +47,7 @@ public class UsuarioResource
 
     @GET
     @Path("/login/{login}")
-    public Response buscarLogin(@PathParam("login") String login)
+    public Response buscarPorLogin(@PathParam("login") String login)
     {
         Usuario usuario = this.service.getRepo().buscarPorLogin(login);
         UsuarioDTO dto = this.service.convertOne(usuario, UsuarioDTO.class);
