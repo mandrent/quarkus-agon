@@ -18,7 +18,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
 {
     private final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
-    @Inject private PanacheRepositoryBase<T, ID> repo;
+    @Inject PanacheRepositoryBase<T, ID> repo;
 
     @Inject protected DSLContext dsl;
 
