@@ -2,26 +2,26 @@ package io.oneo.agon.modules.usuario.resource;
 
 import io.oneo.agon.modules.usuario.client.UsuarioClient;
 import io.oneo.agon.modules.usuario.model.Usuario;
-import io.oneo.agon.modules.usuario.support.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
+import io.oneo.agon.modules.usuario.support.dto.UsuarioDTO;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.jboss.resteasy.annotations.jaxrs.PathParam;
+
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
-
-@Path("/usuario")
+@Path("/usuarios")
 @Produces("application/json")
 @Consumes("application/json")
 public class UsuarioResource
 {
     @Inject UsuarioService service;
+
+    @Inject
+    @RestClient
+    UsuarioClient client;
 
     @GET
     public Response listar()
@@ -46,15 +46,18 @@ public class UsuarioResource
     }
 
     @GET
-    @Path("/login/{login}")
-    public Response buscarPorLogin(@PathParam("login") String login)
+    @Path("findByLoginLocal")
+    public Response findByLogin(@PathParam("login") String login)
     {
-        Usuario usuario = this.service.getRepo().buscarPorLogin(login);
+        Usuario usuario = this.client.findByLogin(login);
         UsuarioDTO dto = this.service.convertOne(usuario, UsuarioDTO.class);
         return Response
                 .ok(dto)
                 .build();
     }
+
+//    public Response buscarPorLogin(@PathParam("login") String login)
+//    findByLogin(@QueryParam("login") String login);
 
     @GET
     @Path("/test")

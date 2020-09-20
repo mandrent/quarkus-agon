@@ -12,10 +12,7 @@ import java.util.List;
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario>
 {
-    public Usuario buscarPorLogin(String login)
-    {
-        return this.find("login", login).firstResult();
-    }
+    public Usuario buscarPorLogin(String login) { return this.find("login", login).firstResult(); }
 
     public Usuario buscarPorEmail(String email)
     {
