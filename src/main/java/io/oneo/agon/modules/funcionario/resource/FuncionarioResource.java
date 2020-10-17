@@ -3,6 +3,7 @@ package io.oneo.agon.modules.funcionario.resource;
 import io.oneo.agon.modules.funcionario.service.FuncionarioService;
 import io.oneo.agon.modules.funcionario.support.dto.FuncionarioDTO;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
+import org.modelmapper.ModelMapper;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

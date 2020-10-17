@@ -20,7 +20,7 @@ public class Empresa extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = 8639359712230992611L;
 
-    @Column(name = "nome_fantasia", length = 75)
+    @Column(name = "nomefantasia", length = 75)
     @NotNull
     public String nomeFantasia;
 
@@ -41,11 +41,11 @@ public class Empresa extends PanacheEntity implements Serializable
     public String cnae;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    @JoinColumn(name = "endereco_id", referencedColumnName = "iddrc")
     public Endereco endereco;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "telefone_id", referencedColumnName = "id")
+    @JoinColumn(name = "telefone_id", referencedColumnName = "idtel")
     public List<Telefone> telefoneLista = new ArrayList<Telefone>();
 
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)

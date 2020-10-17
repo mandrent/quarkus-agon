@@ -9,7 +9,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class FuncionarioRepository implements PanacheRepository<Funcionario>
 {
-    public Optional<Funcionario> buscarPorMatricula(String matricula)
+    public Optional<Funcionario> findByRegistrationn(String matricula)
     {
         Funcionario funcionario = this.find("matricula", matricula).firstResult();
         return Optional.of(funcionario);
