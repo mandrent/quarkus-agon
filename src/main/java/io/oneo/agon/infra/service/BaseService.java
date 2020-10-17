@@ -35,6 +35,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public T atualizar(T t)
     {
+        logger.info("# atualizando os dados do objeto #");
         this.repo.persistAndFlush(t);
         return t;
     }
@@ -69,7 +70,6 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public <T> T convertOne(Object source, Class<T> target)
     {
-        this.logger.info("# conversão de único objeto #");
         return source == null ? null : this.mapper.map(source, target);
     }
 
@@ -79,8 +79,9 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
         this.logger.info("# conversão de uma lista objetos #");
         return sourceList.size() > 0 ? sourceList.stream()
                 .map(source -> this.mapper.map(source, target))
-                .collect(Collectors.toList()) :  new ArrayList<>();
+                .collect(Collectors.toList()) : new ArrayList<>();
     }
+
 
 
 }
