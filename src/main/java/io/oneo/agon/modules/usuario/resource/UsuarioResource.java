@@ -1,10 +1,8 @@
 package io.oneo.agon.modules.usuario.resource;
 
-import io.oneo.agon.modules.usuario.client.UsuarioClient;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
 import io.oneo.agon.modules.usuario.support.dto.UsuarioDTO;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -18,10 +16,6 @@ import java.util.Optional;
 public class UsuarioResource
 {
     @Inject UsuarioService service;
-
-    @Inject
-    @RestClient
-    UsuarioClient client;
 
     @GET
     public Response listar()
@@ -39,33 +33,34 @@ public class UsuarioResource
     {
         Optional<Usuario> opt = this.service.buscarPorID(id);
         UsuarioDTO dto = this.service.convertOne(opt.get(), UsuarioDTO.class);
-        dto.setId(opt.get().id);
+        if (dto.getId() == null)
+        {
+            dto.setId(opt.get().id);
+        }
         return Response
                 .ok(dto)
                 .build();
     }
 
     @GET
-    @Path("findByLoginLocal")
+    @Path("/{login}/login")
     public Response findByLogin(@PathParam("login") String login)
     {
-        Usuario usuario = this.client.findByLogin(login);
-        UsuarioDTO dto = this.service.convertOne(usuario, UsuarioDTO.class);
+        Optional<Usuario> usuario = this.service.findByLogin(login);
+        if (!usuario.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
+        UsuarioDTO dto = this.service.convertOne(usuario.get(), UsuarioDTO.class);
+        if (dto.getId() == null)
+        {
+            dto.setId(usuario.get().id);
+        }
         return Response
                 .ok(dto)
                 .build();
-    }
-
-//    public Response buscarPorLogin(@PathParam("login") String login)
-//    findByLogin(@QueryParam("login") String login);
-
-    @GET
-    @Path("/test")
-    public List<Usuario> test()
-    {
-
-
-        return null;
     }
 
 }

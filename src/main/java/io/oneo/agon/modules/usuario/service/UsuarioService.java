@@ -9,13 +9,20 @@ import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class UsuarioService extends BaseService<Usuario, Long> implements IUsuarioService
 {
     @Inject UsuarioRepository repo;
 
-    public UsuarioRepository getRepo() { return this.repo; }
-
-
+    public Optional<Usuario> findByLogin(String login)
+    {
+        Optional<Usuario> usuario = this.repo.buscarPorLogin(login);
+        if (!usuario.isPresent())
+        {
+            return Optional.empty();
+        }
+        return usuario;
+    }
 }

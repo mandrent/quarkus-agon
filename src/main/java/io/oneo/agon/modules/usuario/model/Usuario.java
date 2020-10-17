@@ -1,11 +1,10 @@
 package io.oneo.agon.modules.usuario.model;
 
+import io.oneo.agon.modules.common.support.model.BaseEntity;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,21 +16,19 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "usuario", schema = "agondb")
-public class Usuario extends PanacheEntity implements Serializable
+public class Usuario extends BaseEntity implements Serializable
 {
     private static final long serialVersionUID = 1188263128951105903L;
 
-    @Column(name = "login", unique = true)
+    @Column(name = "login", unique = true, length = 20)
     @NotNull
-    @Size(min = 6, max = 20)
     public String login;
 
-    @Column(name = "senha")
+    @Column(name = "senha", length = 20)
     @NotNull
-    @Size(min = 4, max = 20)
     public String senha;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 75)
     @Size(min = 10, max = 75)
     public String email;
 

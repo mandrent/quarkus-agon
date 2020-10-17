@@ -8,11 +8,16 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario>
 {
-    public Usuario buscarPorLogin(String login) { return this.find("login", login).firstResult(); }
+    public Optional<Usuario> buscarPorLogin(String login)
+    {
+        Usuario usuario = this.find("login", login).firstResult();
+        return Optional.of(usuario);
+    }
 
     public Usuario buscarPorEmail(String email)
     {
