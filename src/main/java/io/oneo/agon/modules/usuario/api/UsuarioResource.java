@@ -1,8 +1,13 @@
-package io.oneo.agon.modules.usuario.resource;
+package io.oneo.agon.modules.usuario.api;
 
+import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.usuario.model.Usuario;
+import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
-import io.oneo.agon.modules.usuario.support.dto.UsuarioDTO;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -58,6 +63,20 @@ public class UsuarioResource
         {
             dto.setId(usuario.get().id);
         }
+        return Response
+                .ok(dto)
+                .build();
+    }
+
+    @POST
+    @Operation(description = "Cadastra um novo usuário")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response create(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    {
+        Usuario usuario = this.service.convertOne(dto, Usuario.class);
+        this.service.addEdit(usuario);
+        dto = this.service.convertOne(usuario, UsuarioDTO.class);
         return Response
                 .ok(dto)
                 .build();

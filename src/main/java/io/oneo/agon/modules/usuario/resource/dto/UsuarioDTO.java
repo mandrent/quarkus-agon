@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.usuario.support.dto;
+package io.oneo.agon.modules.usuario.resource.dto;
 
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
@@ -27,7 +27,7 @@ public class UsuarioDTO implements Serializable
 
     private LocalDateTime criacao;
 
-    private LocalDateTime acessData;
+    private LocalDateTime acesso;
 
     private LocalDateTime update;
 }
