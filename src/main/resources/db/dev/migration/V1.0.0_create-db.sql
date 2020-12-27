@@ -4,7 +4,7 @@ create table grupousuario
 	idgrp integer auto_increment,
 	tipo varchar(20) not null,
 	descricao varchar(20) null,
-	constraint sec_grupo_pk	primary key (idgrp)
+	constraint grupo_pk	primary key (idgrp)
 );
 
 insert into agondb.grupousuario (tipo, descricao)
@@ -18,22 +18,23 @@ insert into agondb.grupousuario (tipo, descricao)
 -- usuario
 create table usuario
 (
-	idusr integer auto_increment,
-	login varchar(20) not null,
-	senha varchar(10) not null,
-	email varchar(50) not null,
-	grupo_id integer not null,
-	status_usr int not null,
-	criacao_dt datetime not null,
-	acesso_dt datetime not null,
-	update_dt datetime null,
-	constraint usuario_pk
-		primary key (idusr)
+    idusr      int auto_increment
+        primary key,
+    login      varchar(20) not null,
+    senha      varchar(10) not null,
+    email      varchar(50) not null,
+    grupo_id   int         not null,
+    status_usr int         not null,
+    criacao_dt datetime    not null,
+    acesso_dt  datetime    not null,
+    update_dt  datetime    null,
+    constraint usuario_email_uindex
+        unique (email),
+    constraint usuario_login_uindex
+        unique (login),
+    constraint usuario_fk_grupo
+        foreign key (grupo_id) references grupousuario (idgrp)
 );
-create unique index usuario_email_uindex
-	on usuario (email);
-create unique index usuario_login_uindex
-	on usuario (login);
 
 
 -- telefone
@@ -99,7 +100,7 @@ create table enderecocomplemento
     bloco             varchar(4)  null,
     andar             int         null,
     numero            int         null,
-    constraint fk_endereco foreign key (endereco_id) references endereco (iddrc)
+    constraint fk_endereco foreign key (endereco_id) references endereco (idend)
         on update cascade on delete cascade
 );
 
@@ -116,7 +117,7 @@ create table empresa
     endereco_id  int not null,
     telefone_id  int not null,
     constraint empresa_fk_endereco
-        foreign key (endereco_id) references endereco (iddrc)
+        foreign key (endereco_id) references endereco (idend)
             on update cascade on delete cascade,
     constraint empresa_fk_telefone
         foreign key (telefone_id) references telefone (idtel)
@@ -125,14 +126,14 @@ create table empresa
 
 
 -- setorempresa
-create table setorempresa
+create table empresasetor
 (
-	idstremp integer auto_increment,
+	idempstr integer auto_increment,
 	empresa_id integer not null,
 	nome varchar(20) not null,
 	descricao varchar(50) null,
-	constraint setorempresa_pk primary key (idstremp),
-	constraint setorempresa_fk_empresa
+	constraint empresasetor_pk primary key (idempstr),
+	constraint empresasetor_fk_empresa
 	    foreign key (empresa_id) references empresa (idemp)
 	        on update cascade on delete cascade
 );
@@ -147,7 +148,7 @@ create table cargo
     funcao     varchar(20) null,
     referencia varchar(20) null,
     descricao  varchar(50) null,
-    constraint crg_fk_setor foreign key (setor_id) references setorempresa (idstremp)
+    constraint crg_fk_setor foreign key (setor_id) references setorempresa (idempstr)
 );
 
 
@@ -165,7 +166,7 @@ create table funcionario
         foreign key (cargo_id) references cargo (idcrg)
             on update cascade,
     constraint funcionario_fk_endereco
-        foreign key (endereco_id) references endereco (iddrc)
+        foreign key (endereco_id) references endereco (idend)
             on update cascade,
     constraint funcionario_fk_telefone
         foreign key (telefone_id) references telefone (idtel)
@@ -238,7 +239,65 @@ create table funcionariodocumento
 );
 
 
--- tabela de operacoes para usuarios
+-- fabricante
+create table fabricante
+(
+    idfab        int auto_increment primary key,
+    nome         varchar(20) null,
+    codigo       varchar(20) null,
+    referencia   varchar(20) null,
+    descricao    varchar(50) null,
+    adicao_dt    datetime    not null,
+    alteracao_dt datetime    null,
+    constraint fabricante_nome_uindex unique (nome)
+);
+
+
+-- equipamento
+create table equipamento
+(
+    ideqp int auto_increment primary key,
+    fabricante_id int not null,
+    nome          varchar(20) not null,
+    marca         varchar(20) null,
+    modelo        varchar(20) null,
+    descricao     varchar(50) null,
+    referencia    varchar(20) null,
+    nroserie      varchar(20) null,
+    spec          varchar(20) null,
+    localfab      varchar(20) null,
+    paisfab       varchar(20) null,
+    fabricacao_dt datetime    null,
+    estrutura     varchar(20) null,
+    internomat    varchar(20) null,
+    externomat    varchar(20) null,
+    acabamento    varchar(20) null,
+    cor           varchar(20) null,
+    tamanho       varchar(20) null,
+    comprimento   varchar(20) null,
+    embalagem     varchar(20) null,
+    constraint equipamento_fk_fabricante
+        foreign key (fabricante_id) references fabricante (idfab)
+);
+
+
+-- epi
+create table epi
+(
+    idepi int auto_increment primary key,
+    nome           varchar(30) not null,
+    caepi          varchar(30) null,
+    equipamento_id int         not null,
+    funcionario_id int         not null,
+    constraint epi_fk_equipamento
+        foreign key (equipamento_id) references equipamento (ideqp),
+    constraint epi_fk_funcionario
+        foreign key (funcionario_id) references funcionario (idfnc)
+);
+
+
+
+
 
 -- tabela de operacoes para usuarios
 
