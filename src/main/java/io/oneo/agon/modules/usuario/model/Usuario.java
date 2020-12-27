@@ -46,7 +46,6 @@ public class Usuario extends BaseEntity implements Serializable
     public LocalDateTime criacao;
 
     @Column(name = "acesso_dt", insertable = true)
-    @NotNull
     public LocalDateTime acesso;
 
     @Column(name = "update_dt")

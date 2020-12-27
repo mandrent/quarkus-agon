@@ -6,18 +6,15 @@ import io.oneo.agon.modules.geral.endereco.type.MoradiaComplementoTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "endereco_complemento", schema = "agondb")
+@Table(name = "enderecocomplemento", schema = "agondb")
 public class EnderecoComplemento extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -1031847733190560481L;
@@ -52,4 +49,6 @@ public class EnderecoComplemento extends PanacheEntity implements Serializable
 
     @Column(name = "numero")
     public int numero;
+
+    public EnderecoComplemento() { }
 }

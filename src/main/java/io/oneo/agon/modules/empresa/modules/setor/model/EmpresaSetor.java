@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "setorempresa", schema = "agondb")
-public class SetorEmpresa extends PanacheEntity implements Serializable
+@Table(name = "empresasetor", schema = "agondb")
+public class EmpresaSetor extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = 3729557140271763536L;
 
@@ -34,5 +34,5 @@ public class SetorEmpresa extends PanacheEntity implements Serializable
     @OneToMany(mappedBy = "setor", fetch = FetchType.LAZY)
     public List<Cargo> cargoList = new ArrayList<Cargo>();
 
-    public SetorEmpresa() { }
+    public EmpresaSetor() { }
 }

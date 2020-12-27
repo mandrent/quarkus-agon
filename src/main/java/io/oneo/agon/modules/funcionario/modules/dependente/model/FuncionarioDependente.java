@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "funcionario_dependente", schema = "agondb")
+@Table(name = "funcionariodependente", schema = "agondb")
 public class FuncionarioDependente extends PanacheEntity implements Serializable
 {
     public static final long serialVersionUID = 5674229360067270924L;

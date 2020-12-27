@@ -9,7 +9,6 @@ import io.oneo.agon.modules.geral.telefone.model.Telefone;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "funcionario", schema = "agondb")
@@ -58,4 +56,6 @@ public class Funcionario extends PanacheEntity implements Serializable
 
     @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<FuncionarioDependente> dependenteLista = new ArrayList<FuncionarioDependente>();
+
+    public Funcionario() { }
 }

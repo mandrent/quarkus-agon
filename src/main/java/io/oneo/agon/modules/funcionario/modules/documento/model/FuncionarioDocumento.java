@@ -6,7 +6,6 @@ import io.oneo.agon.modules.funcionario.modules.documento.type.SexoTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "funcionario_documento", schema = "agondb")
+@Table(name = "funcionariodocumento", schema = "agondb")
 public class FuncionarioDocumento extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = 5217427445688373069L;

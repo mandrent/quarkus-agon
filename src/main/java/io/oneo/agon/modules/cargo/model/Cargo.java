@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.cargo.model;
 
-import io.oneo.agon.modules.empresa.modules.setor.model.SetorEmpresa;
+import io.oneo.agon.modules.empresa.modules.setor.model.EmpresaSetor;
 import io.oneo.agon.modules.funcionario.model.Funcionario;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class Cargo extends PanacheEntity implements Serializable
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "setor_id", referencedColumnName = "id")
-    public SetorEmpresa setor;
+    public EmpresaSetor setor;
 
     @Column(name = "nome", length = 20)
     @NotNull
