@@ -12,9 +12,9 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity @Table(name = "medico")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "medico")
 public class Medico extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -1333576479605572347L;
@@ -28,12 +28,5 @@ public class Medico extends PanacheEntity implements Serializable
     @Size(min = 3, max = 10)
     public String crm;
 
-//    @OneToMany(mappedBy = "medicoID", fetch = FetchType.LAZY)
-//    public List<Pcmso> pcmsoLista3;
-
-//    @OneToMany(mappedBy = "medicoID", fetch = FetchType.LAZY)
-//    public List<AtestadoASO> asoLista;
-
-//    @OneToMany(mappedBy = "medicoID", fetch = FetchType.LAZY)
-//    public List<Exames> exameLista;
+    public Medico() { }
 }

@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Entity @Table(name = "estado", schema = "agondb")
+@Entity
+@Table(name = "estado", schema = "agondb")
 public class Estado extends PanacheEntity implements Serializable
 {
     @Column(name = "nome", unique = true)
@@ -28,4 +28,6 @@ public class Estado extends PanacheEntity implements Serializable
     @Column(name = "regiao")
     @NotNull
     public String regiao;
+
+    public Estado() { }
 }
