@@ -27,9 +27,6 @@ public class Endereco extends PanacheEntity implements Serializable
     @NotNull
     public int numero;
 
-    @OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    public EnderecoComplemento complemento;
-
     @Column(name = "bairro", length = 30)
     public String bairro;
 
@@ -42,6 +39,9 @@ public class Endereco extends PanacheEntity implements Serializable
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
     public Cidade cidade;
+
+    @OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    public EnderecoComplemento complemento;
 
     public Endereco() { }
 }

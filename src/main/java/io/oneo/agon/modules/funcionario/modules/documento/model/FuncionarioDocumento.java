@@ -40,7 +40,7 @@ public class FuncionarioDocumento extends PanacheEntity implements Serializable
     @NotNull
     public String maeSobre;
 
-    @Column(name = "estado_cvl", length = 12)
+    @Column(name = "estadocivil", length = 12)
     @NotNull
     @Enumerated(EnumType.STRING)
     public EstadoCivilTipo estadoCivilTipo;

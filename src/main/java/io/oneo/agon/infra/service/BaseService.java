@@ -29,6 +29,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public void criar(T t)
     {
+        logger.info("# salvando uma nova entidade #");
         this.repo.persist(t);
     }
 
@@ -36,7 +37,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     public T atualizar(T t)
     {
         logger.info("# atualizando os dados do objeto #");
-        this.repo.persistAndFlush(t);
+        this.repo.getEntityManager().merge(t);
         return t;
     }
 
@@ -50,6 +51,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public void remover(T t)
     {
+        logger.info("# removendo a entidade #");
         this.repo.delete(t);
     }
 

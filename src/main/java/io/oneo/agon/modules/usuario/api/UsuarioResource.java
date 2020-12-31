@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +26,14 @@ public class UsuarioResource
     @GET
     public Response listar()
     {
-        List<Usuario> list = this.service.listar();
-        List<UsuarioDTO> dtos = this.service.convertList(list, UsuarioDTO.class);
+        List<UsuarioDTO> dtoList = new ArrayList<>();
+        this.service.listar().forEach(usr -> {
+            UsuarioDTO dto = this.service.convertOne(usr, UsuarioDTO.class);
+            dto.setId(usr.getId());
+            dtoList.add(dto);
+        });
         return Response
-                .ok(dtos)
+                .ok(dtoList)
                 .build();
     }
 
@@ -38,10 +43,7 @@ public class UsuarioResource
     {
         Optional<Usuario> opt = this.service.buscarPorID(id);
         UsuarioDTO dto = this.service.convertOne(opt.get(), UsuarioDTO.class);
-        if (dto.getId() == null)
-        {
-            dto.setId(opt.get().id);
-        }
+        dto.setId(opt.get().getId());
         return Response
                 .ok(dto)
                 .build();
@@ -61,7 +63,7 @@ public class UsuarioResource
         UsuarioDTO dto = this.service.convertOne(usuario.get(), UsuarioDTO.class);
         if (dto.getId() == null)
         {
-            dto.setId(usuario.get().id);
+            dto.setId(usuario.get().getId());
         }
         return Response
                 .ok(dto)
@@ -73,6 +75,20 @@ public class UsuarioResource
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    {
+        Usuario usuario = this.service.convertOne(dto, Usuario.class);
+        this.service.addEdit(usuario);
+        dto = this.service.convertOne(usuario, UsuarioDTO.class);
+        return Response
+                .ok(dto)
+                .build();
+    }
+
+    @PUT
+    @Operation(description = "Atualiza os dados do usuário")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response update(@RequestBody UsuarioDTO dto) throws BaseServiceException
     {
         Usuario usuario = this.service.convertOne(dto, Usuario.class);
         this.service.addEdit(usuario);
