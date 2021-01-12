@@ -13,55 +13,60 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
 @Entity
 @Table(name = "funcionariodependente", schema = "agondb")
-public class FuncionarioDependente extends PanacheEntity implements Serializable
+public class FuncionarioDependente implements Serializable
 {
-    public static final long serialVersionUID = 5674229360067270924L;
+    private static final long serialVersionUID = 5674229360067270924L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "funcionario_id", referencedColumnName = "id")
-    public Funcionario funcionario;
+    private Funcionario funcionario;
 
     @Column(name = "nome")
     @NotNull
     @Size(min = 3, max = 30)
-    public String nome;
+    private String nome;
 
-    @Column(name = "sobre_nome")
+    @Column(name = "sobrenome")
     @NotNull
     @Size(min = 3, max = 50)
-    public String sobreNome;
+    private String sobreNome;
 
     @Column(name = "sexo")
     @NotNull
     @Enumerated(EnumType.STRING)
-    public DependenteSexoTipo sexoTipo;
+    private DependenteSexoTipo sexoTipo;
 
     @Column(name = "idade")
     @NotNull
     @Size(min = 1, max = 2)
-    public int idade;
+    private int idade;
 
     @Column(name = "filiacao")
     @NotNull
     @Enumerated(EnumType.STRING)
-    public DependenteTipo dependenteTipo;
+    private DependenteTipo dependenteTipo;
 
     @Column(name = "rgdoc", unique = true, length = 15)
-    public String rgdoc;
+    private String rgdoc;
 
     @Column(name = "cpf", unique = true, length = 11)
-    public String cpf;
+    private String cpf;
 
-    @Column(name = "nasc_cert", length = 20)
-    public String certidaoNascimento;
+    @Column(name = "nascimento_crt", length = 20)
+    private String certidaoNascimento;
 
-    @Column(name = "casa_cert", length = 30)
-    public String certidaoCasamento;
+    @Column(name = "casamento_crt", length = 30)
+    private String certidaoCasamento;
 
     @Column(name = "vacina_cart", length = 20)
-    public String carteiraVacina;
+    private String carteiraVacina;
 
     public FuncionarioDependente() { }
 }

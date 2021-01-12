@@ -19,5 +19,5 @@ public class SetorEmpresaDTO implements Serializable
 
     private String descricao;
 
-    private List<CargoDTO> cargoList = new ArrayList<CargoDTO>();
+    private List<CargoDTO> cargoList = new ArrayList<>();
 }

@@ -1,7 +1,7 @@
-package io.oneo.agon.modules.funcionario.support.dto;
+package io.oneo.agon.modules.funcionario.resource;
 
 import io.oneo.agon.modules.cargo.support.dto.CargoDTO;
-import io.oneo.agon.modules.epi_epc.support.dto.EquipamentoEPIDTO;
+import io.oneo.agon.modules.epi_epc.support.dto.EquipamentoEpiDTO;
 import io.oneo.agon.modules.geral.endereco.support.dto.EnderecoDTO;
 import io.oneo.agon.modules.geral.telefone.support.dto.TelefoneDTO;
 import lombok.Getter;
@@ -26,10 +26,6 @@ public class FuncionarioDTO implements Serializable
     private LocalDateTime admissao;
 
     private LocalDateTime demissao;
-
-    private List<EquipamentoEPIDTO> epiLista;
-
-    private FuncionarioDocumentoDTO documento;
 
     private List<FuncionarioDependenteDTO> dependenteLista = new ArrayList<FuncionarioDependenteDTO>();
 }

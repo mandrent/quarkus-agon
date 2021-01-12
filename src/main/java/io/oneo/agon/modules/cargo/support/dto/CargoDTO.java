@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.cargo.support.dto;
 
 import io.oneo.agon.modules.empresa.support.dto.SetorEmpresaDTO;
-import io.oneo.agon.modules.funcionario.support.dto.FuncionarioDTO;
+import io.oneo.agon.modules.funcionario.resource.FuncionarioDTO;
 import lombok.Getter;
 import lombok.Setter;
 

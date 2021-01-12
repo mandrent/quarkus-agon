@@ -50,23 +50,19 @@ public class UsuarioResource
     }
 
     @GET
-    @Path("/{login}/login")
+    @Path("/login/{login}")
     public Response findByLogin(@PathParam("login") String login)
     {
         Optional<Usuario> usuario = this.service.findByLogin(login);
-        if (!usuario.isPresent())
+        if (usuario.isPresent())
         {
+            UsuarioDTO dto = this.service.convertOne(usuario.get(), UsuarioDTO.class);
             return Response
-                    .noContent()
+                    .ok(dto)
                     .build();
         }
-        UsuarioDTO dto = this.service.convertOne(usuario.get(), UsuarioDTO.class);
-        if (dto.getId() == null)
-        {
-            dto.setId(usuario.get().getId());
-        }
         return Response
-                .ok(dto)
+                .noContent()
                 .build();
     }
 

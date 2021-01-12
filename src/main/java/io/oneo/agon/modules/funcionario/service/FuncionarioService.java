@@ -3,10 +3,11 @@ package io.oneo.agon.modules.funcionario.service;
 import io.oneo.agon.infra.service.BaseService;
 import io.oneo.agon.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.funcionario.repository.FuncionarioRepository;
-import io.oneo.agon.modules.funcionario.support.dto.FuncionarioDTO;
+import io.oneo.agon.modules.funcionario.resource.FuncionarioDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Optional;
 
 @ApplicationScoped
 public class FuncionarioService extends BaseService<Funcionario, Long>
@@ -18,6 +19,11 @@ public class FuncionarioService extends BaseService<Funcionario, Long>
         Funcionario funcionario = this.convertOne(dto, Funcionario.class);
         this.criar(funcionario);
         return funcionario;
+    }
+
+    public Optional<Funcionario> findByID(Long id)
+    {
+        return this.buscarPorID(id);
     }
 
 

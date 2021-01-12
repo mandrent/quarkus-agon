@@ -1,12 +1,12 @@
-package io.oneo.agon.modules.funcionario.modules.documento.type;
+package io.oneo.agon.modules.funcionario.type;
 
 public enum EstadoCivilTipo
 {
     CASADA,
     CASADO,
-    UNI_ESTAVEL,
+    UNIAO_ESTAVEL,
     SEPARADA,
-    SEPRADO,
+    SEPARADO,
     SOLTEIRA,
     SOLTEIRO,
     VIUVA,

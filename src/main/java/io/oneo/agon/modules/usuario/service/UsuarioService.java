@@ -14,13 +14,13 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @ApplicationScoped
-@Transactional
 public class UsuarioService extends BaseService<Usuario, Long> implements IUsuarioService
 {
     private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     @Inject UsuarioRepository repo;
 
+    @Transactional
     public Usuario addEdit(Usuario usuario) throws BaseServiceException
     {
         try
@@ -50,8 +50,4 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     }
 
 
-    public Usuario validarUpdate(UsuarioDTO dto)
-    {
-        return null;
-    }
 }

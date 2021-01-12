@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.funcionario.support.dto;
+package io.oneo.agon.modules.funcionario.resource;
 
 import io.oneo.agon.modules.funcionario.modules.dependente.type.DependenteSexoTipo;
 import io.oneo.agon.modules.funcionario.modules.dependente.type.DependenteTipo;
@@ -11,8 +11,6 @@ import java.io.Serializable;
 public class FuncionarioDependenteDTO implements Serializable
 {
     private static final long serialVersionUID = -4327026731494165689L;
-
-    private FuncionarioDTO funcionario;
 
     private String nome;
 
