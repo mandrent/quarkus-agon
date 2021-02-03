@@ -28,7 +28,7 @@ public class Cargo implements Serializable
     @Column(name = "funcao", length = 20)
     private String funcao;
 
-    @Column(name = "funcao", length = 20)
+    @Column(name = "setor", length = 20)
     private String setor;
 
     @Column(name = "referencia", length = 20)
@@ -36,9 +36,6 @@ public class Cargo implements Serializable
 
     @Column(name = "descricao", length = 50)
     private String descricao;
-
-//    @OneToMany(mappedBy = "cargo", fetch = FetchType.EAGER)
-//    private List<Funcionario> funcionarioLista = new ArrayList<Funcionario>();
 
     public Cargo() { }
 }

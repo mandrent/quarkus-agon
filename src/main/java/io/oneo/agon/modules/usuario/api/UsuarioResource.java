@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Path("/usuarios")
+@Path("usuarios")
 @Produces("application/json")
 @Consumes("application/json")
 public class UsuarioResource
@@ -24,14 +24,13 @@ public class UsuarioResource
     @Inject UsuarioService service;
 
     @GET
+    @Operation(description = "Lista todos os usuários")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
     public Response listar()
     {
-        List<UsuarioDTO> dtoList = new ArrayList<>();
-        this.service.listar().forEach(usr -> {
-            UsuarioDTO dto = this.service.convertOne(usr, UsuarioDTO.class);
-            dto.setId(usr.getId());
-            dtoList.add(dto);
-        });
+        List<Usuario> list = this.service.listar();
+        List<UsuarioDTO> dtoList = this.service.convertList(list, UsuarioDTO.class);
         return Response
                 .ok(dtoList)
                 .build();
@@ -39,11 +38,13 @@ public class UsuarioResource
 
     @GET
     @Path("/{id}")
+    @Operation(description = "Buscar usuário pelo ID")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
     public Response buscarPorID(@PathParam("id") Long id)
     {
         Optional<Usuario> opt = this.service.buscarPorID(id);
         UsuarioDTO dto = this.service.convertOne(opt.get(), UsuarioDTO.class);
-        dto.setId(opt.get().getId());
         return Response
                 .ok(dto)
                 .build();
@@ -51,6 +52,9 @@ public class UsuarioResource
 
     @GET
     @Path("/login/{login}")
+    @Operation(description = "Buscar usuário pelo LOGIN")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
     public Response findByLogin(@PathParam("login") String login)
     {
         Optional<Usuario> usuario = this.service.findByLogin(login);

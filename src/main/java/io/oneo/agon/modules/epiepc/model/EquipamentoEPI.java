@@ -1,14 +1,13 @@
-package io.oneo.agon.modules.epi_epc.model;
+package io.oneo.agon.modules.epiepc.model;
 
-import io.oneo.agon.modules.epi_epc.type.AtenuacaoTipo;
+import io.oneo.agon.modules.epiepc.type.AtenuacaoTipo;
 import io.oneo.agon.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.geral.fabricante.model.Fabricante;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -16,9 +15,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "epi_equipamento", schema = "agondb")
-public class EquipamentoEPI extends PanacheEntity implements Serializable
+public class EquipamentoEPI implements Serializable
 {
     public static final long serialVersionUID = 1016746741607364245L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "descricao", length = 50)
     @NotNull

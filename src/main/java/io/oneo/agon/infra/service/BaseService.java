@@ -1,7 +1,6 @@
 package io.oneo.agon.infra.service;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import org.jooq.DSLContext;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,23 +19,21 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
 
     @Inject PanacheRepositoryBase<T, ID> repo;
 
-    @Inject protected DSLContext dsl;
-
-    private ModelMapper mapper = new ModelMapper();
+    ModelMapper mapper = new ModelMapper();
 
     public BaseService() { }
 
     @Override
     public void criar(T t)
     {
-        logger.info("# salvando uma nova entidade #");
+        logger.info("# salvando nova entidade #");
         this.repo.persist(t);
     }
 
     @Override
     public T atualizar(T t)
     {
-        logger.info("# atualizando os dados do objeto #");
+        logger.info("# atualizando entidade # ");
         this.repo.getEntityManager().merge(t);
         return t;
     }
@@ -72,6 +69,7 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public <T> T convertOne(Object source, Class<T> target)
     {
+        this.logger.info("# conversão de um objeto #");
         return source == null ? null : this.mapper.map(source, target);
     }
 

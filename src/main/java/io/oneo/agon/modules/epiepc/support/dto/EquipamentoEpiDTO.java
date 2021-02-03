@@ -1,6 +1,6 @@
-package io.oneo.agon.modules.epi_epc.support.dto;
+package io.oneo.agon.modules.epiepc.support.dto;
 
-import io.oneo.agon.modules.epi_epc.type.AtenuacaoTipo;
+import io.oneo.agon.modules.epiepc.type.AtenuacaoTipo;
 import io.oneo.agon.modules.funcionario.resource.FuncionarioDTO;
 import io.oneo.agon.modules.geral.fabricante.support.dto.FabricanteDTO;
 import lombok.Getter;

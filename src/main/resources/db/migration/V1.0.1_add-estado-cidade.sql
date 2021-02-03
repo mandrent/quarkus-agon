@@ -15,6 +15,7 @@ values
 
 
 -- insert cidades
+alter table agondb.cidade AUTO_INCREMENT = 1;
 insert into agondb.cidade (nome, codigo, estado_id)
     values
     ('Acrelândia',

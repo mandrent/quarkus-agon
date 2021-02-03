@@ -1,7 +1,6 @@
 package io.oneo.agon.modules.funcionario.model;
 
 import io.oneo.agon.modules.cargo.model.Cargo;
-import io.oneo.agon.modules.epi_epc.model.EquipamentoEPI;
 import io.oneo.agon.modules.funcionario.modules.dependente.model.FuncionarioDependente;
 import io.oneo.agon.modules.funcionario.type.EstadoCivilTipo;
 import io.oneo.agon.modules.funcionario.type.SexoTipo;
@@ -10,10 +9,8 @@ import io.oneo.agon.modules.geral.telefone.model.Telefone;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter @Setter
+@Getter
 @Entity
 @Table(name = "funcionario", schema = "agondb")
 public class Funcionario implements Serializable
@@ -32,38 +29,34 @@ public class Funcionario implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
+    private Cargo cargo;
+
     @Column(name = "matricula", unique = true, length = 15)
-    @NotNull
     private String matricula;
 
     @Column(name = "nome", length = 30)
-    @NotNull
     private String nome;
 
     @Column(name = "sobrenome", length = 50)
-    @NotNull
     private String sobreNome;
 
     @Column(name = "maenome", length = 30)
-    @NotNull
     private String maeNome;
 
     @Column(name = "maesobrenome", length = 50)
-    @NotNull
-    private String maeSobre;
+    private String maeSobrenome;
 
     @Column(name = "estadocivil", length = 12)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private EstadoCivilTipo estadoCivilTipo;
 
     @Column(name = "sexo", length = 9)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private SexoTipo sexo;
 
     @Column(name = "idade")
-    @NotNull
     private int idade;
 
     @Column(name = "nascimento_dt")
@@ -77,19 +70,38 @@ public class Funcionario implements Serializable
     @JoinColumn(name = "telefone_id", referencedColumnName = "id")
     private Telefone telefone;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
-    private Cargo cargo;
+    @Column(name = "rgdoc", unique = true, length = 30)
+    private String rgdoc;
+
+    @Column(name = "cpf", unique = true, length = 30)
+    private String cpf;
+
+    @Column(name = "ctps", unique = true, length = 30)
+    private String ctps;
+
+    @Column(name = "titulo", unique = true, length = 30)
+    private String titulo;
+
+    @Column(name = "pis", unique = true, length = 30)
+    private String pis;
+
+    @Column(name = "cnh", unique = true, length = 30)
+    private String cnh;
+
+    @Column(name = "reservista", unique = true, length = 30)
+    private String reservista;
+
+    @Column(name = "passaporte", unique = true, length = 30)
+    private String passaporte;
+
+    @Column(name = "certidao_csnt", unique = true, length = 30)
+    private String certidaoCasamento;
 
     @Column(name = "admissao_dt")
-    @NotNull
     private LocalDateTime admissao;
 
     @Column(name = "demissao_dt")
     private LocalDateTime demissao;
-
-    @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<EquipamentoEPI> epiLista;
 
     @OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<FuncionarioDependente> dependenteLista = new ArrayList<FuncionarioDependente>();

@@ -1,28 +1,43 @@
 package io.oneo.agon.modules.geral.endereco.support.dto;
 
 import io.oneo.agon.modules.geral.cidade.support.dto.CidadeDTO;
+import io.oneo.agon.modules.geral.endereco.type.LogradouroComplementoTipo;
 import io.oneo.agon.modules.geral.endereco.type.LogradouroTipo;
+import io.oneo.agon.modules.geral.endereco.type.MoradiaComplementoTipo;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
+//@Getter
+//@Setter
 public class EnderecoDTO implements Serializable
 {
     private static final long serialVersionUID = 603746338423548723L;
 
-    private LogradouroTipo logradouro;
+    public Long id;
 
-    private int numero;
+    public CidadeDTO cidade;
 
-    private EnderecoComplementoDTO complemento;
+    public LogradouroTipo logradouroTipo;
 
-    private String bairro;
+    public LogradouroComplementoTipo complementoTipo;
 
-    private String setor;
+    public int numero;
 
-    private String cep;
+    public String bairro;
 
-    private CidadeDTO cidade;
+    public String setor;
+
+    public String cep;
+
+    public MoradiaComplementoTipo moradiaTipo;
+
+    public String referencia;
+
+    public String bloco;
+
+    public int andar;
+
+    public int aptoNumero;
 }

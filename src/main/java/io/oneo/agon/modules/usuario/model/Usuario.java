@@ -5,7 +5,6 @@ import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter @Setter
+@Getter
 @Entity
 @Table(name = "usuario", schema = "agondb")
 public class Usuario implements Serializable

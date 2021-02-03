@@ -6,7 +6,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CidadeDTO implements Serializable
 {
     private static final long serialVersionUID = -1349343623571914416L;

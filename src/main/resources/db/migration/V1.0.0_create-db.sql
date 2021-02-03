@@ -136,15 +136,17 @@ create table empresacargo
     empresa_id integer not null,
     constraint cargoempresa_pk primary key (id),
     constraint cargoempresa_cargo_fk
-        foreign key (cargo_id) references cargo (id) on update cascade on delete cascade
-            constraint cargoempresa_empresa_fk,
-    foreign key (empresa_id) references empresa (id) on update cascade on delete cascade
+        foreign key (cargo_id) references cargo (id) on update cascade on delete cascade,
+    constraint cargoempresa_empresa_fk
+        foreign key (empresa_id) references empresa (id) on update cascade on delete cascade
 );
+
 
 -- funcionario
 create table funcionario
 (
     id int auto_increment,
+    cargo_id int not null,
     matricula varchar(15) not null,
     nome varchar(30) not null,
     sobrenome varchar(50) not null,
@@ -156,45 +158,6 @@ create table funcionario
     nascimento_dt datetime not null,
     endereco_id int not null,
     telefone_id int not null,
-    cargo_id int not null,
-    admissao_dt datetime not null,
-    demissao_dt datetime null,
-    constraint funcionario_pk primary key (id),
-    constraint funcionario_cargo_fk
-        foreign key (cargo_id) references cargo (id) on update cascade,
-    constraint funcionario_endereco_fk
-        foreign key (endereco_id) references endereco (id) on update cascade,
-    constraint funcionario_telefone_fk
-        foreign key (telefone_id) references telefone (id) on update cascade
-);
-
-
--- funcionariodependente
-create table funcionariodependente
-(
-    id int auto_increment,
-    funcionario_id int not null,
-    nome_dpdt varchar(30) not null,
-    sobrenome_dpdt varchar(50) not null,
-    sexo_dpdt varchar(9)  not null,
-    idade_dpdt int not null,
-    filiacao_dpdt varchar(7)  not null,
-    rgdoc_dpdt varchar(15) null,
-    cpf_dpdt varchar(11) null,
-    nascimento_dpdt varchar(20) not null,
-    casamento_dpdt varchar(20) null,
-    vacina_dpdt varchar(20) null,
-    constraint funcionariodependente_pk primary key (id),
-    constraint funcionariodependente_funcionario_fk
-        foreign key (funcionario_id) references funcionario (id)
-);
-
-
--- funcionariodocumento
-create table funcionariodocumento
-(
-    id int auto_increment,
-    funcionario_id int not null,
     rgdoc varchar(15) not null,
     cpf varchar(15) not null,
     ctps varchar(15) not null,
@@ -203,9 +166,11 @@ create table funcionariodocumento
     cnh varchar(20) null,
     reservista varchar(20) null,
     passaporte varchar(30) null,
-    certidao_csmnt varchar(40) null,
+    certidao_csnt varchar(40) null,
+    admissao_dt datetime not null,
+    demissao_dt datetime null,
     constraint funcionario_documento_certidaoCasa_uindex
-        unique (certidao_csmnt),
+        unique (certidao_csnt),
     constraint funcionario_documento_cnh_uindex
         unique (cnh),
     constraint funcionario_documento_cpf_uindex
@@ -222,8 +187,32 @@ create table funcionariodocumento
         unique (rgdoc),
     constraint funcionario_documento_titulo_uindex
         unique (titulo),
-    constraint funcionariodocumento_pk primary key (id),
-    constraint funcionariodocumento_funcionario_fk
+    constraint funcionario_pk primary key (id),
+    constraint funcionario_cargo_fk
+        foreign key (cargo_id) references cargo (id) on update cascade,
+    constraint funcionario_endereco_fk
+        foreign key (endereco_id) references endereco (id) on update cascade,
+    constraint funcionario_telefone_fk
+        foreign key (telefone_id) references telefone (id) on update cascade
+);
+
+
+-- funcionariodependente
+create table funcionariodependente
+(
+    id int auto_increment,
+    funcionario_id int not null,
+    nome varchar(30) not null,
+    sobrenome varchar(50) not null,
+    sexo varchar(9)  not null,
+    idade int not null,
+    filiacao varchar(7)  not null,
+    rgdoc varchar(15) null,
+    cpf varchar(11) null,
+    nascimento_crt varchar(20) null,
+    vacinacart varchar(20) null,
+    constraint funcionariodependente_pk primary key (id),
+    constraint funcionariodependente_funcionario_fk
         foreign key (funcionario_id) references funcionario (id)
 );
 

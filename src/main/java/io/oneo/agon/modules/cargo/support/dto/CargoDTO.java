@@ -9,18 +9,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CargoDTO implements Serializable
 {
-    private SetorEmpresaDTO setor;
-
     private String nome;
 
     private String funcao;
 
+    private String setor;
+
     private String referencia;
 
     private String descricao;
-
-    private List<FuncionarioDTO> funcionarioLista = new ArrayList<FuncionarioDTO>();
 }

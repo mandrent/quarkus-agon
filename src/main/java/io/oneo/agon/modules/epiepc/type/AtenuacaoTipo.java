@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.epi_epc.type;
+package io.oneo.agon.modules.epiepc.type;
 
 public enum AtenuacaoTipo
 {

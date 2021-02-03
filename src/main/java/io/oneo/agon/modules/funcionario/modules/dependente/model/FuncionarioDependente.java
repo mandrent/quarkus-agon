@@ -62,10 +62,7 @@ public class FuncionarioDependente implements Serializable
     @Column(name = "nascimento_crt", length = 20)
     private String certidaoNascimento;
 
-    @Column(name = "casamento_crt", length = 30)
-    private String certidaoCasamento;
-
-    @Column(name = "vacina_cart", length = 20)
+    @Column(name = "vacinacart", length = 20)
     private String carteiraVacina;
 
     public FuncionarioDependente() { }

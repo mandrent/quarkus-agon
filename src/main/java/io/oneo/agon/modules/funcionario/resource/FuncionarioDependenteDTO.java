@@ -7,7 +7,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FuncionarioDependenteDTO implements Serializable
 {
     private static final long serialVersionUID = -4327026731494165689L;
@@ -28,8 +29,5 @@ public class FuncionarioDependenteDTO implements Serializable
 
     private String certidaoNascimento;
 
-    private String certidaoCasamento;
-
     private String carteiraVacina;
 }
-

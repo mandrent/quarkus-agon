@@ -4,7 +4,6 @@ import io.oneo.agon.infra.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.repository.UsuarioRepository;
-import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +40,12 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 
     public Optional<Usuario> findByLogin(String login)
     {
-        Optional<Usuario> usuario = this.repo.buscarPorLogin(login);
+        return this.repo.buscarPorLogin(login);
+    }
+
+    public Optional<Usuario> findByID(Long id)
+    {
+        Optional<Usuario> usuario = this.buscarPorID(id);
         if (!usuario.isPresent())
         {
             return Optional.empty();
