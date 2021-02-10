@@ -1,17 +1,14 @@
 package io.oneo.agon.infra.service;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 public abstract class BaseService<T extends Serializable, ID extends Serializable> implements IService<T, ID>
 {
@@ -19,19 +16,16 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
 
     @Inject PanacheRepositoryBase<T, ID> repo;
 
-    ModelMapper mapper = new ModelMapper();
-
-    public BaseService() { }
-
     @Override
-    public void criar(T t)
+    public T create(T t)
     {
         logger.info("# salvando nova entidade #");
         this.repo.persist(t);
+        return t;
     }
 
     @Override
-    public T atualizar(T t)
+    public T update(T t)
     {
         logger.info("# atualizando entidade # ");
         this.repo.getEntityManager().merge(t);
@@ -39,48 +33,34 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     }
 
     @Override
-    public Optional<T> buscarPorID(ID id)
+    public Optional<T> findByID(ID id)
     {
-        logger.info("# retornando um objeto pelo ID #");
+        logger.info("# retornando objeto pelo ID #");
         return this.repo.findByIdOptional(id);
     }
 
     @Override
-    public void remover(T t)
+    public void remove(T t)
     {
         logger.info("# removendo a entidade #");
         this.repo.delete(t);
     }
 
     @Override
-    public void removerPorID(ID id)
+    public void removeByID(ID id)
     {
         logger.info("# removendo uma entidade pelo ID #");
         this.repo.deleteById(id);
     }
 
     @Override
-    public List<T> listar()
+    public List<T> list()
     {
         logger.info("# listando todos os objetos #");
         return this.repo.listAll();
     }
 
-    @Override
-    public <T> T convertOne(Object source, Class<T> target)
-    {
-        this.logger.info("# conversão de um objeto #");
-        return source == null ? null : this.mapper.map(source, target);
-    }
 
-    @Override
-    public <D, T> List<D> convertList(final Collection<T> sourceList, Class<D> target)
-    {
-        this.logger.info("# conversão de uma lista objetos #");
-        return sourceList.size() > 0 ? sourceList.stream()
-                .map(source -> this.mapper.map(source, target))
-                .collect(Collectors.toList()) : new ArrayList<>();
-    }
 
 
 

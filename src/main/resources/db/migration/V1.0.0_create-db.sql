@@ -68,7 +68,7 @@ create table cidade
     codigo varchar(10) not null,
     estado_id integer not null,
     constraint cidade_pk primary key (id),
-    constraint estado_fk foreign key (estado_id) references estado (id)
+    constraint cidade_estado_fk foreign key (estado_id) references estado (id)
 );
 create unique index cidade_codigo_uindex
     on cidade (codigo);
@@ -79,20 +79,19 @@ create table endereco
 (
     id int auto_increment,
     cidade_id int not null,
-    logradouro int not null,
-    complemento varchar(10) null,
+    logradouro varchar(20) not null,
+    moradia varchar(20) not null,
+    complemento varchar(20) null,
     numero int not null,
     bairro varchar(30) not null,
     setor varchar(15) null,
     cep varchar(8) not null,
-    localidade varchar(10) not null,
-    moradia varchar(12) null,
     referencia varchar(75) null,
     bloco varchar(4) null,
     andar int null,
-    aptonumero int null,
+    aptonro int null,
     constraint endereco_pk primary key (id),
-    constraint cidade_fk foreign key (cidade_id) references cidade (id)
+    constraint endereco_cidade_fk foreign key (cidade_id) references cidade (id)
 );
 
 
@@ -129,7 +128,7 @@ create table cargo
 
 
 -- cargo_empresa
-create table empresacargo
+create table cargoempresa
 (
     id integer auto_increment,
     cargo_id integer not null,
@@ -277,10 +276,31 @@ create table epi
 );
 
 
-
+-- profissional
+create table profissional
+(
+    id int auto_increment,
+    usuario_id int not null,
+    nome varchar(30) not null,
+    sobrenome varchar(30) not null,
+    area varchar(25) not null,
+    tipo varchar(25) not null,
+    drt varchar(15) not null,
+    sesmt int not null,
+    crm varchar(15) null,
+    crea varchar(15) null,
+    coren varchar(15) null,
+    telefone_id int null,
+    constraint profissional_pk primary key (id),
+    constraint profissional_fk_usuario
+        foreign key (usuario_id) references usuario (id),
+    constraint profissional_fk_telefone
+        foreign key (telefone_id) references telefone (id)
+);
 
 
 -- tabela de operacoes para usuarios
+
 
 -- tabela de operacoes para usuarios
 

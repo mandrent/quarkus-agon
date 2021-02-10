@@ -13,23 +13,23 @@ import java.util.Optional;
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario>
 {
-    public Optional<Usuario> buscarPorLogin(String login)
+    public Optional<Usuario> findByLogin(String login)
     {
         Usuario usuario = this.find("login", login).firstResult();
         return Optional.of(usuario);
     }
 
-    public Usuario buscarPorEmail(String email)
+    public Usuario findByEmail(String email)
     {
         return this.find("email", email).firstResult();
     }
 
-    public List<Usuario> listarPorGrupo(GrupoTipo grupo)
+    public List<Usuario> listByGroup(GrupoTipo grupo)
     {
         return this.list("grupo", grupo);
     }
 
-    public List<Usuario> listarPorStatus(StatusUsuarioTipo status) { return this.list("status", status); }
+    public List<Usuario> listByStatus(StatusUsuarioTipo status) { return this.list("status", status); }
 
 
 

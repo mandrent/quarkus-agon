@@ -1,19 +1,24 @@
 package io.oneo.agon.modules.empresa.model;
 
-import io.oneo.agon.modules.empresa.modules.setor.model.EmpresaSetor;
-import io.oneo.agon.modules.geral.endereco.model.Endereco;
-import io.oneo.agon.modules.geral.telefone.model.Telefone;
+import io.oneo.agon.modules.empresa.modules.cargo.model.Cargo;
+import io.oneo.agon.modules.endereco.model.Endereco;
+import io.oneo.agon.modules.telefone.model.Telefone;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter @Setter
 @Entity
 @Table(name = "empresa", schema = "agondb")
 public class Empresa implements Serializable
@@ -48,13 +53,28 @@ public class Empresa implements Serializable
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "telefone_id", referencedColumnName = "id")
     private List<Telefone> telefoneLista = new ArrayList<Telefone>();
 
-    @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY)
-    private List<EmpresaSetor> setorLista = new ArrayList<EmpresaSetor>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "cargoempresa",
+            joinColumns = { @JoinColumn(name = "cargo_id") },
+            inverseJoinColumns = { @JoinColumn(name = "empresa_id") })
+    private Set<Cargo> cargos = new HashSet<Cargo>();
 
     public Empresa() { }
+
+    public void addCargo(Cargo cargo)
+    {
+        this.cargos.add(cargo);
+        cargo.getEmpresas().add(this);
+    }
+
+    public void removeCargo(Cargo cargo)
+    {
+        this.cargos.remove(cargo);
+        cargo.getEmpresas().remove(this);
+    }
+
 }

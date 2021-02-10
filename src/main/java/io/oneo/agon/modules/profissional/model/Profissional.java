@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.profissional.model;
 
 import io.oneo.agon.modules.usuario.model.Usuario;
-import io.oneo.agon.modules.geral.telefone.model.Telefone;
+import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;

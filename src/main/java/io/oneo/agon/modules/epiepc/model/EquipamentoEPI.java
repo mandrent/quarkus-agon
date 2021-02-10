@@ -1,8 +1,8 @@
 package io.oneo.agon.modules.epiepc.model;
 
+import io.oneo.agon.modules.empresa.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.epiepc.type.AtenuacaoTipo;
-import io.oneo.agon.modules.funcionario.model.Funcionario;
-import io.oneo.agon.modules.geral.fabricante.model.Fabricante;
+import io.oneo.agon.modules.fabricante.model.Fabricante;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 

@@ -2,14 +2,17 @@ package io.oneo.agon.modules.usuario.service;
 
 import io.oneo.agon.infra.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.repository.UsuarioRepository;
+import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -19,6 +22,10 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 
     @Inject UsuarioRepository repo;
 
+    @Inject UsuarioMapper mapper;
+
+    public UsuarioMapper getMapper() { return this.mapper; }
+
     @Transactional
     public Usuario addEdit(Usuario usuario) throws BaseServiceException
     {
@@ -26,10 +33,10 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         {
             if (usuario.getId() == null)
             {
-                this.criar(usuario);
+                this.create(usuario);
                 return usuario;
             }
-            return this.atualizar(usuario);
+            return this.update(usuario);
         }
         catch (Exception e)
         {
@@ -40,18 +47,24 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 
     public Optional<Usuario> findByLogin(String login)
     {
-        return this.repo.buscarPorLogin(login);
-    }
-
-    public Optional<Usuario> findByID(Long id)
-    {
-        Optional<Usuario> usuario = this.buscarPorID(id);
+        Optional<Usuario> usuario = this.repo.findByLogin(login);
         if (!usuario.isPresent())
         {
             return Optional.empty();
         }
         return usuario;
     }
+
+    public Optional<Usuario> findByID(Long id)
+    {
+        Optional<Usuario> usuario = super.findByID(id);
+        if (!usuario.isPresent())
+        {
+            return Optional.empty();
+        }
+        return usuario;
+    }
+
 
 
 }
