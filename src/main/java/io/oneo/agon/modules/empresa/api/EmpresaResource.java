@@ -28,10 +28,9 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        List<Empresa> list = this.service.list();
-        List<EmpresaDTO> dtoList = this.service.getMapper().convertToDtoList(list);
+        var list = this.service.getMapper().convertToDtoList(this.service.list());
         return Response
-                .ok(dtoList)
+                .ok(list)
                 .build();
     }
 
@@ -42,8 +41,8 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByID(@PathParam("id") Long id)
     {
-        Optional<Empresa> Empresa = this.service.findByID(id);
-        EmpresaDTO dto = this.service.getMapper().convertToDTO(Empresa.get());
+        var empresa = this.service.findByID(id);
+        var dto = this.service.getMapper().convertToDTO(empresa.get());
         return Response
                 .ok(dto)
                 .build();
@@ -56,16 +55,16 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByCNPJ(@PathParam("cnpj") String cnpj)
     {
-        Optional<Empresa> empresa = this.service.findByCNPJ(cnpj);
-        if (empresa.isPresent())
+        var empresa = this.service.findByCNPJ(cnpj);
+        if (!empresa.isPresent())
         {
-            EmpresaDTO dto = this.service.getMapper().convertToDTO(empresa.get());
             return Response
-                    .ok(dto)
+                    .noContent()
                     .build();
         }
+        var dto = this.service.getMapper().convertToDTO(empresa.get());
         return Response
-                .noContent()
+                .ok(dto)
                 .build();
     }
 
@@ -75,7 +74,7 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody EmpresaDTO dto) throws BaseServiceException
     {
-        Empresa empresa = this.service.getMapper().convertToModel(dto);
+        var empresa = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(empresa);
         dto = this.service.getMapper().convertToDTO(empresa);
         return Response
@@ -89,7 +88,7 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody EmpresaDTO dto) throws BaseServiceException
     {
-        Empresa empresa = this.service.getMapper().convertToModel(dto);
+        var empresa = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(empresa);
         dto = this.service.getMapper().convertToDTO(empresa);
         return Response

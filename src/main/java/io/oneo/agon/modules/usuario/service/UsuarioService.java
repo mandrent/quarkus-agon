@@ -5,14 +5,12 @@ import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.repository.UsuarioRepository;
-import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -31,10 +29,9 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     {
         try
         {
-            if (usuario.getId() == null)
+            if (usuario.id == null)
             {
-                this.create(usuario);
-                return usuario;
+                return this.create(usuario);
             }
             return this.update(usuario);
         }
@@ -54,17 +51,5 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
         return usuario;
     }
-
-    public Optional<Usuario> findByID(Long id)
-    {
-        Optional<Usuario> usuario = super.findByID(id);
-        if (!usuario.isPresent())
-        {
-            return Optional.empty();
-        }
-        return usuario;
-    }
-
-
 
 }

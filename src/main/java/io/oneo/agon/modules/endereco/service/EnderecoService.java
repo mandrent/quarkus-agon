@@ -24,17 +24,6 @@ public class EnderecoService extends BaseService<Endereco, Long> implements IEnd
 
     public EnderecoMapper getMapper() { return this.mapper; }
 
-    @Override
-    public Optional<Endereco> findByID(Long id)
-    {
-        var endereco = super.findByID(id);
-        if (endereco.isPresent())
-        {
-            return endereco;
-        }
-        return Optional.empty();
-    }
-
     @Transactional
     public Endereco addEdit(Endereco endereco) throws BaseServiceException
     {

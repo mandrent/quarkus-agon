@@ -2,57 +2,46 @@ package io.oneo.agon.modules.usuario.model;
 
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@AttributeOverride(name = "id", column = @Column(name = "id"))
 @Entity
 @Table(name = "usuario", schema = "agondb")
-public class Usuario implements Serializable
+public class Usuario extends PanacheEntity implements Serializable
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "login", unique = true, length = 20)
-    @NotNull
-    private String login;
+    public String login;
 
     @Column(name = "senha", length = 20)
-    @NotNull
-    private String senha;
+    public String senha;
 
     @Column(name = "email", length = 75)
-    @Size(min = 10, max = 75)
-    private String email;
+    public String email;
 
-    @NotNull
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "grupo_id")
-    private GrupoTipo grupo;
+    public GrupoTipo grupo;
 
     @Column(name = "status_usr")
     @Enumerated(EnumType.ORDINAL)
-    private StatusUsuarioTipo status;
+    public StatusUsuarioTipo status;
 
     @Column(name = "criacao_dt", insertable = true)
-    @NotNull
-    private LocalDateTime criacao;
+    public LocalDateTime criacao;
 
     @Column(name = "acesso_dt", insertable = true)
-    private LocalDateTime acesso;
+    public LocalDateTime acesso;
 
     @Column(name = "update_dt")
-    private LocalDateTime update;
+    public LocalDateTime update;
 
     public Usuario() { }
 

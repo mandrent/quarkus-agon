@@ -1,32 +1,35 @@
 package io.oneo.agon.modules.estado.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@Getter @Setter
 @Entity
 @Table(name = "estado", schema = "agondb")
-public class Estado extends PanacheEntity implements Serializable
+public class Estado implements Serializable
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "nome", unique = true)
-    @NotNull
-    public String nome;
+    private String nome;
 
     @Column(name = "sigla", unique = true)
     @NotNull
-    public String sigla;
+    private String sigla;
 
     @Column(name = "regiao")
     @NotNull
-    public String regiao;
+    private String regiao;
 
     public Estado() { }
 }

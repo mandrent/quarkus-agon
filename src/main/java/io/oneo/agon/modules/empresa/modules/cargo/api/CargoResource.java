@@ -1,6 +1,7 @@
 package io.oneo.agon.modules.empresa.modules.cargo.api;
 
 import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.empresa.modules.cargo.model.Cargo;
 import io.oneo.agon.modules.empresa.modules.cargo.resource.dto.CargoDTO;
 import io.oneo.agon.modules.empresa.modules.cargo.service.CargoService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -11,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Path("empresas/cargos")
 @Produces("application/json")
@@ -25,10 +27,9 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.list();
-        var dtoList = this.service.getMapper().convertToDtoList(list);
+        var list = this.service.getMapper().convertToDtoList(this.service.list());
         return Response
-                .ok(dtoList)
+                .ok(list)
                 .build();
     }
 
@@ -52,6 +53,25 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody CargoDTO dto) throws BaseServiceException
     {
+        var cargo = this.service.getMapper().convertToModel(dto);
+        this.service.addEdit(cargo);
+        dto = this.service.getMapper().convertToDTO(cargo);
+        return Response
+                .ok(dto)
+                .build();
+    }
+
+    @POST
+    @Path("/validate")
+    @Operation(description = "Valida o cargo")
+    @Tag(name="cargos")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response validate(@RequestBody CargoDTO dto) throws BaseServiceException
+    {
+        if (dto.getId() != null)
+        {
+            return this.findByID(dto.getId());
+        }
         var cargo = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(cargo);
         dto = this.service.getMapper().convertToDTO(cargo);

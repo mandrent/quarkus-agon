@@ -32,30 +32,29 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
     {
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(numero);
-        String novo = matcher.group();
-        return novo;
+        return matcher.group();
     }
 
     public Optional<Telefone> findByNumber(String numero)
     {
-        if (!numero.equalsIgnoreCase(null))
+        if (numero.equalsIgnoreCase(null))
         {
-            String novo = this.validaFormatoNumero(numero);
-            return this.repo.findByNumber(novo);
+            return Optional.empty();
         }
-        return Optional.empty();
+        String novo = this.validaFormatoNumero(numero);
+        return this.repo.findByNumber(novo);
     }
 
     @Transactional
-    public void addEdit(Telefone telefone) throws BaseServiceException
+    public Telefone addEdit(Telefone telefone) throws BaseServiceException
     {
         try
         {
-            if (telefone.getId() == null)
+            if (telefone.id == null)
             {
-                this.create(telefone);
+                return this.create(telefone);
             }
-            this.update(telefone);
+            return this.update(telefone);
         }
         catch (Exception e)
         {

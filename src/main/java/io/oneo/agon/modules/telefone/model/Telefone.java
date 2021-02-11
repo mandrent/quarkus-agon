@@ -1,6 +1,7 @@
 package io.oneo.agon.modules.telefone.model;
 
 import io.oneo.agon.modules.telefone.type.TelefoneTipo;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,26 +12,22 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter @Setter
+@AttributeOverride(name = "id", column = @Column(name = "id"))
 @Entity
 @Table(name = "telefone", schema = "agondb")
-public class Telefone implements Serializable
+public class Telefone extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -2069305261353665287L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "ddd", length = 2)
-    private String ddd;
+    public String ddd;
 
     @Column(name = "numero", length = 9)
-    private String numero;
+    public String numero;
 
     @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
-    private TelefoneTipo tipo;
+    public TelefoneTipo tipo;
 
     public Telefone() { }
 }

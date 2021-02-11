@@ -28,10 +28,9 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        List<Usuario> list = this.service.list();
-        List<UsuarioDTO> dtoList = this.service.getMapper().convertToDtoList(list);
+        var list = this.service.getMapper().convertToDtoList(this.service.list());
         return Response
-                .ok(dtoList)
+                .ok(list)
                 .build();
     }
 
@@ -42,8 +41,8 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByID(@PathParam("id") Long id)
     {
-        Optional<Usuario> usuario = this.service.findByID(id);
-        UsuarioDTO dto = this.service.getMapper().convertToDTO(usuario.get());
+        var usuario = this.service.findByID(id);
+        var dto = this.service.getMapper().convertToDTO(usuario.get());
         return Response
                 .ok(dto)
                 .build();
@@ -56,16 +55,16 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByLogin(@PathParam("login") String login)
     {
-        Optional<Usuario> usuario = this.service.findByLogin(login);
-        if (usuario.isPresent())
+        var usuario = this.service.findByLogin(login);
+        if (!usuario.isPresent())
         {
-            UsuarioDTO dto = this.service.getMapper().convertToDTO(usuario.get());
             return Response
-                    .ok(dto)
+                    .noContent()
                     .build();
         }
+        var dto = this.service.getMapper().convertToDTO(usuario.get());
         return Response
-                .noContent()
+                .ok(null)
                 .build();
     }
 
@@ -75,7 +74,7 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody UsuarioDTO dto) throws BaseServiceException
     {
-        Usuario usuario = this.service.getMapper().convertToModel(dto);
+        var usuario = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(usuario);
         dto = this.service.getMapper().convertToDTO(usuario);
         return Response
@@ -89,13 +88,12 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody UsuarioDTO dto) throws BaseServiceException
     {
-        Usuario usuario = this.service.getMapper().convertToModel(dto);
+        var usuario = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(usuario);
         dto = this.service.getMapper().convertToDTO(usuario);
         return Response
                 .ok(dto)
                 .build();
     }
-
 
 }

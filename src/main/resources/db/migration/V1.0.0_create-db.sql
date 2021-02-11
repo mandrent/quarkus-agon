@@ -283,8 +283,8 @@ create table profissional
     usuario_id int not null,
     nome varchar(30) not null,
     sobrenome varchar(30) not null,
-    area varchar(25) not null,
-    tipo varchar(25) not null,
+    area varchar(30) not null,
+    tipo varchar(30) not null,
     drt varchar(15) not null,
     sesmt int not null,
     crm varchar(15) null,
@@ -292,9 +292,9 @@ create table profissional
     coren varchar(15) null,
     telefone_id int null,
     constraint profissional_pk primary key (id),
-    constraint profissional_fk_usuario
+    constraint profissional_usuario_fk
         foreign key (usuario_id) references usuario (id),
-    constraint profissional_fk_telefone
+    constraint profissional_telefone_fk
         foreign key (telefone_id) references telefone (id)
 );
 

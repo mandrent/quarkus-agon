@@ -27,13 +27,12 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.list();
-        var dtoList = this.service.getMapper().convertToDtoList(list);
-//                .convertToDtoList(list);
+        var list = this.service.getMapper().convertToDtoList(this.service.list());
         return Response
-                .ok(dtoList)
+                .ok(list)
                 .build();
     }
+
     @GET
     @Path("/{id}")
     @Operation(description = "Busca telefone por ID")
@@ -56,15 +55,15 @@ public class TelefoneResource
     public Response findByName(@PathParam("numero") String numero)
     {
         var telefone = this.service.findByNumber(numero);
-        if (telefone.isPresent())
+        if (!telefone.isPresent())
         {
-            var dto = this.service.getMapper().convertToDTO(telefone.get());
             return Response
-                    .ok(dto)
+                    .noContent()
                     .build();
         }
+        var dto = this.service.getMapper().convertToDTO(telefone.get());
         return Response
-                .noContent()
+                .ok(dto)
                 .build();
     }
 

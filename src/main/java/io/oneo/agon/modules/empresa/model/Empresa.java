@@ -11,9 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -53,9 +51,9 @@ public class Empresa implements Serializable
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "telefone_id", referencedColumnName = "id")
-    private List<Telefone> telefoneLista = new ArrayList<Telefone>();
+    private Telefone telefone;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cargoempresa",

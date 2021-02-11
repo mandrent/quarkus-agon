@@ -28,16 +28,6 @@ public class FuncionarioService extends BaseService<Funcionario, Long> implement
 
     public FuncionarioMapper getMapper() { return this.mapper; }
 
-    public Optional<Funcionario> findByID(Long id)
-    {
-        Optional<Funcionario> funcionario = super.findByID(id);
-        if (!funcionario.isPresent())
-        {
-            Optional.empty();
-        }
-        return funcionario;
-    }
-
     @Transactional
     public Funcionario addEdit(Funcionario funcionario) throws BaseServiceException
     {

@@ -35,7 +35,12 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     @Override
     public Optional<T> findByID(ID id)
     {
-        logger.info("# retornando objeto pelo ID #");
+        if (id == null)
+        {
+            this.logger.info("# objeto naun encontrado pelo ID #");
+            return Optional.empty();
+        }
+        this.logger.info("# retorna objeto pelo ID #");
         return this.repo.findByIdOptional(id);
     }
 

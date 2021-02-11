@@ -1,57 +1,66 @@
 package io.oneo.agon.modules.profissional.model;
 
-import io.oneo.agon.modules.usuario.model.Usuario;
-import io.oneo.agon.modules.telefone.model.Telefone;
+import io.oneo.agon.modules.profissional.type.AreaTipo;
 import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.oneo.agon.modules.telefone.model.Telefone;
+import io.oneo.agon.modules.usuario.model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter @Setter
 @Entity
 @Table(name = "profissional", schema = "agondb")
-public class Profissional extends PanacheEntity implements Serializable
+public class Profissional implements Serializable
 {
     private static final long serialVersionUID = -2283230030471863819L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     public Usuario usuario;
 
-    @Column(name = "nome")
-    @NotNull
-    @Size(min = 3, max = 30)
+    @Column(name = "nome", length = 30)
     public String nome;
 
-    @Column(name = "sobrenome")
-    @NotNull
-    @Size(min = 3, max = 30)
+    @Column(name = "sobrenome", length = 30)
     public String sobreNome;
 
-    @Column(name = "drt_code")
-    @NotNull
-    @Size(min = 3, max = 10)
-    public String codigoDRT;
+    @Column(name = "area", length = 30)
+    @Enumerated(EnumType.STRING)
+    private AreaTipo area;
 
-    @Column(name = "categoria")
-    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "tipo", length = 30)
+    @Enumerated(EnumType.STRING)
     public ProfissionalTipo tipo;
 
-    @Column(name = "sesmt_id")
-    @NotNull
-    @Size(min = 3, max = 10)
-    public int sesmtID;
+    @Column(name = "drt", length = 10)
+    public String drt;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @Column(name = "sesmt")
+    public int sesmt;
+
+    @Column(name = "crm", length = 15)
+    public String crm;
+
+    @Column(name = "crea", length = 15)
+    public String crea;
+
+    @Column(name = "coren", length = 15)
+    public String coren;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "telefone_id", referencedColumnName = "id")
-    public Set<Telefone> telefones;
+    public Telefone telefone;
+
+    public Profissional() { }
 }

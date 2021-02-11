@@ -5,14 +5,12 @@ import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.empresa.modules.cargo.mapper.CargoMapper;
 import io.oneo.agon.modules.empresa.modules.cargo.model.Cargo;
 import io.oneo.agon.modules.empresa.modules.cargo.repository.CargoRepository;
-import io.oneo.agon.modules.empresa.modules.cargo.resource.dto.CargoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -29,20 +27,11 @@ public class CargoService extends BaseService<Cargo, Long> implements ICargoServ
     public Optional<Cargo> findByName(String name)
     {
         var cargo = this.repo.findByName(name);
-        if (cargo.isPresent())
+        if (!cargo.isPresent())
         {
-            return cargo;
+            return Optional.empty();
         }
-        return  Optional.empty();
-    }
-
-    public Optional<Cargo> findByID(Long id)
-    {
-        if (id == null)
-        {
-            Optional.empty();
-        }
-        return super.findByID(id);
+        return cargo;
     }
 
     @Transactional

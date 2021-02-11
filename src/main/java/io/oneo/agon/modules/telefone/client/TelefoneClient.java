@@ -19,4 +19,8 @@ public interface TelefoneClient
 
     @POST
     TelefoneDTO create(@RequestBody TelefoneDTO dto) throws BaseServiceException;
+
+    @POST
+    @Path("/validate")
+    TelefoneDTO validate(@RequestBody TelefoneDTO dto) throws BaseServiceException;
 }

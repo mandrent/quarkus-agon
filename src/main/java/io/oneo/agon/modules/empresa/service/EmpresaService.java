@@ -1,16 +1,15 @@
 package io.oneo.agon.modules.empresa.service;
 
 import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.empresa.mapper.EmpresaMapper;
 import io.oneo.agon.modules.empresa.model.Empresa;
 import io.oneo.agon.modules.empresa.repository.EmpresaRepository;
-import io.oneo.agon.modules.empresa.resource.dto.EmpresaDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -24,18 +23,6 @@ public class EmpresaService extends BaseService<Empresa, Long> implements IEmpre
 
     public EmpresaMapper getMapper() { return this.mapper; }
 
-    @Override
-    public Optional<Empresa> findByID(Long id)
-    {
-        Optional<Empresa> empresa = super.findByID(id);
-        if (empresa.isPresent())
-        {
-            this.logger.info("# retorna uma empresa pelo ID #");
-            return empresa;
-        }
-        return Optional.empty();
-    }
-
     public Optional<Empresa> findByCNPJ(String cnpj)
     {
         var empresa = this.repo.findByCNPJ(cnpj);
@@ -47,8 +34,20 @@ public class EmpresaService extends BaseService<Empresa, Long> implements IEmpre
         return Optional.empty();
     }
 
-    public void addEdit(Empresa empresa)
+    public Empresa addEdit(Empresa empresa) throws BaseServiceException
     {
-
+        try
+        {
+            if (empresa.getId() == null)
+            {
+                return this.create(empresa);
+            }
+            return this.update(empresa);
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage());
+            throw new BaseServiceException("Erro ao gravar os dados do empresa!", e);
+        }
     }
 }

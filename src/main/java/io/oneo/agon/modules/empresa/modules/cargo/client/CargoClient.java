@@ -19,4 +19,7 @@ public interface CargoClient
     @POST
     CargoDTO create(@RequestBody CargoDTO dto) throws BaseServiceException;
 
+    @POST
+    @Path("/validate")
+    CargoDTO validate(@RequestBody CargoDTO dto) throws BaseServiceException;
 }

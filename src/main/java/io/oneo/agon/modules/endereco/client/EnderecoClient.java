@@ -17,4 +17,8 @@ public interface EnderecoClient
 
     @POST
     EnderecoDTO create(@RequestBody EnderecoDTO dto) throws BaseServiceException;
+
+    @POST
+    @Path("/validate")
+    EnderecoDTO validate(@RequestBody EnderecoDTO dto) throws BaseServiceException;
 }
