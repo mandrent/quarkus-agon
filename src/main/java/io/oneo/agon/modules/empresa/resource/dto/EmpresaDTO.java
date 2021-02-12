@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,5 +28,5 @@ public class EmpresaDTO implements Serializable
 
     private EnderecoDTO endereco;
 
-    private List<TelefoneDTO> telefoneLista = new ArrayList<TelefoneDTO>();
+    private TelefoneDTO telefone;
 }

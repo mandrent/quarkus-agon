@@ -1,11 +1,11 @@
 package io.oneo.agon.modules.empresa.modules.funcionario.api;
 
 import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.empresa.modules.cargo.client.CargoClient;
+import io.oneo.agon.modules.empresa.modules.cargo.proxy.CargoProxy;
 import io.oneo.agon.modules.empresa.modules.funcionario.resource.FuncionarioDTO;
 import io.oneo.agon.modules.empresa.modules.funcionario.service.FuncionarioService;
-import io.oneo.agon.modules.endereco.client.EnderecoClient;
-import io.oneo.agon.modules.telefone.client.TelefoneClient;
+import io.oneo.agon.modules.endereco.proxy.EnderecoProxy;
+import io.oneo.agon.modules.telefone.proxy.TelefoneProxy;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -26,15 +26,15 @@ public class FuncionarioResource
 
     @Inject
     @RestClient
-    CargoClient cargoClient;
+    CargoProxy cargoProxy;
 
     @Inject
     @RestClient
-    TelefoneClient telefoneClient;
+    TelefoneProxy telefoneProxy;
 
     @Inject
     @RestClient
-    EnderecoClient enderecoClient;
+    EnderecoProxy enderecoProxy;
 
     @POST
     @Operation(description = "Cadastra um novo funcionário")
@@ -42,12 +42,9 @@ public class FuncionarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody FuncionarioDTO dto) throws BaseServiceException
     {
-        var cargo = this.cargoClient.validate(dto.getCargo());
-        var telefone = this.telefoneClient.validate(dto.getTelefone());
-        var endereco = this.enderecoClient.validate(dto.getEndereco());
-        dto.setCargo(cargo);
-        dto.setTelefone(telefone);
-        dto.setEndereco(endereco);
+        dto.setCargo(this.cargoProxy.validate(dto.getCargo()));
+        dto.setTelefone(this.telefoneProxy.validate(dto.getTelefone()));
+        dto.setEndereco(this.enderecoProxy.validate(dto.getEndereco()));
         var funcionario = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(funcionario);
         dto = this.service.getMapper().convertToDTO(funcionario);

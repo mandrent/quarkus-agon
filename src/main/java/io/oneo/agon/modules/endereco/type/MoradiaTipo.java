@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.endereco.type;
 
-public enum MoradiaComplementoTipo
+public enum MoradiaTipo
 {
     CASA,
     CONDOMINIO,

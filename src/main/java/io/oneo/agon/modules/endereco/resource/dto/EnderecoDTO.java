@@ -1,10 +1,10 @@
 package io.oneo.agon.modules.endereco.resource.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.oneo.agon.modules.cidade.support.dto.CidadeDTO;
-import io.oneo.agon.modules.endereco.type.ComplementoLogradouroTipo;
+import io.oneo.agon.modules.cidade.resource.dto.CidadeDTO;
+import io.oneo.agon.modules.endereco.type.ComplementoTipo;
 import io.oneo.agon.modules.endereco.type.LogradouroTipo;
-import io.oneo.agon.modules.endereco.type.MoradiaComplementoTipo;
+import io.oneo.agon.modules.endereco.type.MoradiaTipo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +22,9 @@ public class EnderecoDTO implements Serializable
 
     private LogradouroTipo logradouroTipo;
 
-    private MoradiaComplementoTipo moradiaTipo;
+    private MoradiaTipo moradiaTipo;
 
-    private ComplementoLogradouroTipo complementoTipo;
+    private ComplementoTipo complementoTipo;
 
     private int numero;
 

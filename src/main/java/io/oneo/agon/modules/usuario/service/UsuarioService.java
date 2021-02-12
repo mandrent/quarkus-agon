@@ -52,4 +52,16 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         return usuario;
     }
 
+    @Override
+    public void remove(Usuario usuario)
+    {
+        if (usuario.id != null)
+        {
+            super.removeByID(usuario.id);
+        }
+        super.remove(usuario);
+    }
+
+
+
 }

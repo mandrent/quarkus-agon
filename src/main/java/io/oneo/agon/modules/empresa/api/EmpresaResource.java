@@ -4,10 +4,13 @@ import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.empresa.model.Empresa;
 import io.oneo.agon.modules.empresa.resource.dto.EmpresaDTO;
 import io.oneo.agon.modules.empresa.service.EmpresaService;
+import io.oneo.agon.modules.endereco.proxy.EnderecoProxy;
+import io.oneo.agon.modules.telefone.proxy.TelefoneProxy;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -21,6 +24,14 @@ import java.util.Optional;
 public class EmpresaResource
 {
     @Inject EmpresaService service;
+
+    @Inject
+    @RestClient
+    EnderecoProxy enderecoProxy;
+
+    @Inject
+    @RestClient
+    TelefoneProxy telefoneProxy;
 
     @GET
     @Operation(description = "Lista Empresa")
@@ -74,6 +85,8 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody EmpresaDTO dto) throws BaseServiceException
     {
+        dto.setEndereco(this.enderecoProxy.validate(dto.getEndereco()));
+        dto.setTelefone(this.telefoneProxy.validate(dto.getTelefone()));
         var empresa = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(empresa);
         dto = this.service.getMapper().convertToDTO(empresa);

@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 
 @RegisterRestClient(baseUri = "http://localhost:8181/agon/usuarios")
 @Produces("application/json")
-public interface UsuarioClient
+public interface UsuarioProxy
 {
     @GET
     @Path("/{id}")

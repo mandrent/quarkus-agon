@@ -1,16 +1,15 @@
 package io.oneo.agon.modules.endereco.model;
 
 import io.oneo.agon.modules.cidade.model.Cidade;
-import io.oneo.agon.modules.endereco.type.ComplementoLogradouroTipo;
+import io.oneo.agon.modules.endereco.type.ComplementoTipo;
 import io.oneo.agon.modules.endereco.type.LogradouroTipo;
-import io.oneo.agon.modules.endereco.type.MoradiaComplementoTipo;
+import io.oneo.agon.modules.endereco.type.MoradiaTipo;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @AllArgsConstructor
@@ -36,11 +35,11 @@ public class Endereco implements Serializable
 
     @Column(name = "moradia")
     @Enumerated(EnumType.STRING)
-    private MoradiaComplementoTipo moradiaTipo;
+    private MoradiaTipo moradiaTipo;
 
     @Column(name = "complemento")
     @Enumerated(EnumType.STRING)
-    private ComplementoLogradouroTipo complementoTipo;
+    private ComplementoTipo complementoTipo;
 
     @Column(name = "numero")
     private int numero;

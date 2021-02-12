@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.endereco.type;
 
-public enum ComplementoLogradouroTipo
+public enum ComplementoTipo
 {
     ALAMEDA,
     AVENIDA,

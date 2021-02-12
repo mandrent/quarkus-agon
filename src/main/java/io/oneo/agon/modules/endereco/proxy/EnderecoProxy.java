@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.endereco.client;
+package io.oneo.agon.modules.endereco.proxy;
 
 import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 
 @RegisterRestClient(baseUri = "http://localhost:8181/agon/enderecos")
 @Produces("application/json")
-public interface EnderecoClient
+public interface EnderecoProxy
 {
     @GET
     @Path("/{id}")

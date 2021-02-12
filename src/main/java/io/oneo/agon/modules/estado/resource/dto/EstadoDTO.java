@@ -1,12 +1,11 @@
-package io.oneo.agon.modules.estado.support.dto;
+package io.oneo.agon.modules.estado.resource.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Getter @Setter
 public class EstadoDTO implements Serializable
 {
     private static final long serialVersionUID = -707397699058100216L;

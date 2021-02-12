@@ -96,4 +96,16 @@ public class UsuarioResource
                 .build();
     }
 
+    @DELETE
+    @Operation(description = "Deleta o usuário")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response delete(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    {
+        var usuario = this.service.getMapper().convertToModel(dto);
+        this.service.remove(usuario);
+        return Response
+                .noContent()
+                .build();
+    }
 }
