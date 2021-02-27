@@ -1,4 +1,4 @@
-package io.oneo.agon.infra.mapper;
+package io.oneo.agon.modules.common.mapper;
 
 import org.mapstruct.MapperConfig;
 

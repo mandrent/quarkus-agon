@@ -1,7 +1,6 @@
 package io.oneo.agon.modules.telefone.api;
 
 import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 import io.oneo.agon.modules.telefone.service.TelefoneService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -12,7 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 @Path("telefones")
 @Produces("application/json")
@@ -81,6 +79,20 @@ public class TelefoneResource
                 .build();
     }
 
+    @POST
+    @Path("/validate")
+    @Operation(description = "Valida o TelefoneProxy")
+    @Tag(name="telefones")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response validate(@RequestBody TelefoneDTO dto) throws BaseServiceException
+    {
+        if (dto.id != null)
+        {
+            return this.findByID(dto.id);
+        }
+        return this.create(dto);
+    }
+
     @PUT
     @Operation(description = "Atualiza os dados do telefone")
     @Tag(name="telefones")
@@ -94,8 +106,5 @@ public class TelefoneResource
                 .ok(dto)
                 .build();
     }
-
-
-
 
 }

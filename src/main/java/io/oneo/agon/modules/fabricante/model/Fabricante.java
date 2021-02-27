@@ -1,22 +1,26 @@
 package io.oneo.agon.modules.fabricante.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter @Setter
 @Entity
 @Table(name = "fabricante", schema = "agondb")
-public class Fabricante extends PanacheEntity implements Serializable
+public class Fabricante implements Serializable
 {
     private static final long serialVersionUID = 5558400895022890758L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "model", length = 20)
     @NotNull

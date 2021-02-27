@@ -1,35 +1,43 @@
 package io.oneo.agon.modules.usuario.resource.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter @Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class UsuarioDTO implements Serializable
 {
     private static final long serialVersionUID = 3457897005042647280L;
 
-    private Long id;
+    public Long id;
 
-    private String login;
+    public String login;
 
-    private String senha;
+    public String senha;
 
-    private String email;
+    public String email;
 
-    private GrupoTipo grupo;
+    public GrupoTipo grupo;
 
-    private StatusUsuarioTipo status;
+    public StatusUsuarioTipo status;
 
-    private LocalDateTime criacao;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("criacao")
+    public LocalDateTime criacao;
 
-    private LocalDateTime acesso;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("acesso")
+    public LocalDateTime acesso;
 
-    private LocalDateTime update;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("update")
+    public LocalDateTime update;
 }

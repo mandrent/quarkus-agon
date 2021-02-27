@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.empresa.modules.cargo.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.empresa.modules.cargo.mapper.CargoMapper;
 import io.oneo.agon.modules.empresa.modules.cargo.model.Cargo;
@@ -27,11 +27,11 @@ public class CargoService extends BaseService<Cargo, Long> implements ICargoServ
     public Optional<Cargo> findByName(String name)
     {
         var cargo = this.repo.findByName(name);
-        if (!cargo.isPresent())
+        if (cargo.isPresent())
         {
-            return Optional.empty();
+            return cargo;
         }
-        return cargo;
+        return  Optional.empty();
     }
 
     @Transactional

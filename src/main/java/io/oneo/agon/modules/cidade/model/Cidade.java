@@ -1,26 +1,29 @@
 package io.oneo.agon.modules.cidade.model;
 
 import io.oneo.agon.modules.estado.model.Estado;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-@AttributeOverride(name = "id", column = @Column(name = "id"))
+@Getter @Setter
 @Entity
 @Table(name = "cidade", schema = "agondb")
-public class Cidade extends PanacheEntity implements Serializable
+public class Cidade implements Serializable
 {
     private static final long serialVersionUID = -701281650522286275L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "nome", length = 150)
     private String nome;
 
-    @Column(name = "codigo", unique = true, length = 7)
+    @Column(name = "codigo", unique = true)
     private String codigo;
 
     @ManyToOne(fetch = FetchType.LAZY)

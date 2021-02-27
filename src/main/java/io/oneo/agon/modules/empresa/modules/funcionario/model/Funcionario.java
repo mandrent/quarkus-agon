@@ -6,7 +6,6 @@ import io.oneo.agon.modules.empresa.modules.funcionario.type.EstadoCivilTipo;
 import io.oneo.agon.modules.empresa.modules.funcionario.type.SexoTipo;
 import io.oneo.agon.modules.endereco.model.Endereco;
 import io.oneo.agon.modules.telefone.model.Telefone;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Getter @Setter
 @Entity
 @Table(name = "funcionario", schema = "agondb")

@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.usuario.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
@@ -29,7 +29,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     {
         try
         {
-            if (usuario.id == null)
+            if (usuario.getId() == null)
             {
                 return this.create(usuario);
             }
@@ -44,22 +44,12 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 
     public Optional<Usuario> findByLogin(String login)
     {
-        Optional<Usuario> usuario = this.repo.findByLogin(login);
+        var usuario = this.repo.buscarPorLogin(login);
         if (!usuario.isPresent())
         {
             return Optional.empty();
         }
         return usuario;
-    }
-
-    @Override
-    public void remove(Usuario usuario)
-    {
-        if (usuario.id != null)
-        {
-            super.removeByID(usuario.id);
-        }
-        super.remove(usuario);
     }
 
 

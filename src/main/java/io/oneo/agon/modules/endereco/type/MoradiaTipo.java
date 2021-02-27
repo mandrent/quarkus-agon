@@ -5,6 +5,7 @@ public enum MoradiaTipo
     CASA,
     CONDOMINIO,
     CONJUNTO,
+    EDIFICIO,
     RESIDENCIAL,
     VILA;
 }

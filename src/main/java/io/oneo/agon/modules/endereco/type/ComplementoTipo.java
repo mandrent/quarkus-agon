@@ -2,8 +2,8 @@ package io.oneo.agon.modules.endereco.type;
 
 public enum ComplementoTipo
 {
-    ALAMEDA,
     AVENIDA,
+    ALAMEDA,
     BECO,
     PASSAGEM,
     RUA,

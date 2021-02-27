@@ -2,8 +2,8 @@ package io.oneo.agon.modules.endereco.type;
 
 public enum LogradouroTipo
 {
-    ALAMEDA,
     AVENIDA,
+    ALAMEDA,
     BECO,
     ESTRADA,
     PASSAGEM,

@@ -63,15 +63,19 @@ public class CargoResource
 
     @POST
     @Path("/validate")
-    @Operation(description = "Valida o cargo")
+    @Operation(description = "Valida o CargoProxy")
     @Tag(name="cargos")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody CargoDTO dto) throws BaseServiceException
     {
         if (dto.getId() != null)
         {
-            return this.findByID(dto.getId());
+            var cargo = this.service.findByID(dto.getId());
+            dto = this.service.getMapper().convertToDTO(cargo.get());
+            return Response.ok(dto)
+                    .build();
         }
+
         var cargo = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(cargo);
         dto = this.service.getMapper().convertToDTO(cargo);

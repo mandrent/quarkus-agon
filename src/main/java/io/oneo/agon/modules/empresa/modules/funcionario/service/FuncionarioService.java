@@ -1,20 +1,16 @@
 package io.oneo.agon.modules.empresa.modules.funcionario.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.empresa.modules.cargo.service.CargoService;
 import io.oneo.agon.modules.empresa.modules.funcionario.mapper.FuncionarioMapper;
 import io.oneo.agon.modules.empresa.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.empresa.modules.funcionario.repository.FuncionarioRepository;
-import io.oneo.agon.modules.empresa.modules.funcionario.resource.FuncionarioDTO;
-import io.oneo.agon.modules.empresa.service.EmpresaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -27,6 +23,16 @@ public class FuncionarioService extends BaseService<Funcionario, Long> implement
     @Inject FuncionarioMapper mapper;
 
     public FuncionarioMapper getMapper() { return this.mapper; }
+
+    public Optional<Funcionario> findByID(Long id)
+    {
+        Optional<Funcionario> funcionario = super.findByID(id);
+        if (!funcionario.isPresent())
+        {
+            Optional.empty();
+        }
+        return funcionario;
+    }
 
     @Transactional
     public Funcionario addEdit(Funcionario funcionario) throws BaseServiceException
@@ -48,12 +54,14 @@ public class FuncionarioService extends BaseService<Funcionario, Long> implement
 
     public Optional<Funcionario> findByRegistrationn(String matricula)
     {
-        Optional<Funcionario> funcionario = this.repo.findByRegistrationn(matricula);
-        if (!funcionario.isPresent())
+        if (matricula.equalsIgnoreCase(null))
         {
-            Optional.empty();
+            Optional<Funcionario> funcionario = this.repo.findByRegistrationn(matricula);
+            return funcionario.isPresent() ? funcionario : Optional.empty();
         }
-        return funcionario;
+        return Optional.empty();
     }
+
+
 
 }

@@ -5,38 +5,35 @@ import io.oneo.agon.modules.profissional.type.AreaTipo;
 import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProfissionalDTO implements Serializable
 {
-    private static final long serialVersionUID = 9123656346626668497L;
+    private static final long serialVersionUID = -6542982507537015835L;
 
-    private Long id;
+    public Long id;
 
-    private UsuarioDTO usuario;
+    public UsuarioDTO usuario;
 
-    private String nome;
+    public String nome;
 
-    private String sobreNome;
+    public String sobreNome;
 
-    private AreaTipo area;
+    public AreaTipo area;
 
-    private ProfissionalTipo tipo;
+    public ProfissionalTipo tipo;
 
-    private String drt;
+    public String drt;
 
-    private int sesmt;
+    public int sesmt;
 
-    private String crm;
+    public String crm;
 
-    private String crea;
+    public String crea;
 
-    private String coren;
+    public String coren;
 
     public TelefoneDTO telefone;
 }

@@ -299,8 +299,19 @@ create table profissional
 );
 
 
--- tabela de operacoes para usuarios
-
+-- arquivos
+create table arquivo
+(
+    id int auto_increment,
+    tipo varchar(20) not null,
+    hash varchar(255) null,
+    nome varchar(150) not null,
+    extensao varchar(4) not null,
+    tamanho integer not null,
+    localizacao varchar(100) not null,
+    inclusao_dt datetime not null,
+    constraint arquivo_pk primary key (id)
+);
 
 -- tabela de operacoes para usuarios
 

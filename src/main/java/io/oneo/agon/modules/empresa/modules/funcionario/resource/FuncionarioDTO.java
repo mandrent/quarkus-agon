@@ -10,76 +10,73 @@ import io.oneo.agon.modules.empresa.modules.funcionario.type.EstadoCivilTipo;
 import io.oneo.agon.modules.empresa.modules.funcionario.type.SexoTipo;
 import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FuncionarioDTO implements Serializable
 {
     private static final long serialVersionUID = 4660590782409539353L;
 
-    private Long id;
+    public Long id;
 
-    private CargoDTO cargo;
+    public CargoDTO cargo;
 
-    private String matricula;
+    public String matricula;
 
-    private String nome;
+    public String nome;
 
-    private String sobreNome;
+    public String sobreNome;
 
-    private String maeNome;
+    public String maeNome;
 
-    private String maeSobrenome;
+    public String maeSobrenome;
 
-    private EstadoCivilTipo estadoCivilTipo;
+    public EstadoCivilTipo estadoCivilTipo;
 
-    private SexoTipo sexo;
+    public SexoTipo sexo;
 
-    private int idade;
+    public int idade;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("nascimento")
-    private LocalDateTime nascimento;
+    public LocalDateTime nascimento;
 
-    private EnderecoDTO endereco;
+    public EnderecoDTO endereco;
 
-    private TelefoneDTO telefone;
+    public TelefoneDTO telefone;
 
-    private String rgdoc;
+    public String rgdoc;
 
-    private String cpf;
+    public String cpf;
 
-    private String ctps;
+    public String ctps;
 
-    private String titulo;
+    public String titulo;
 
-    private String pis;
+    public String pis;
 
-    private String cnh;
+    public String cnh;
 
-    private String reservista;
+    public String reservista;
 
-    private String passaporte;
+    public String passaporte;
 
-    private String certidaoCasamento;
+    public String certidaoCasamento;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("admissao")
-    private LocalDateTime admissao;
+    public LocalDateTime admissao;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("demissao")
-    private LocalDateTime demissao;
+    public LocalDateTime demissao;
 
-    private List<FuncionarioDependenteDTO> dependenteLista = new ArrayList<FuncionarioDependenteDTO>();
+    public List<FuncionarioDependenteDTO> dependenteLista = new ArrayList<FuncionarioDependenteDTO>();
 }

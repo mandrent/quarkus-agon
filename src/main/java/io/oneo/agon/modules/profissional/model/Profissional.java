@@ -4,7 +4,6 @@ import io.oneo.agon.modules.profissional.type.AreaTipo;
 import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
 import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.usuario.model.Usuario;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Getter @Setter
 @Entity
 @Table(name = "profissional", schema = "agondb")
@@ -24,43 +22,44 @@ public class Profissional implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    public Usuario usuario;
+    private Usuario usuario;
 
     @Column(name = "nome", length = 30)
-    public String nome;
+    private String nome;
 
     @Column(name = "sobrenome", length = 30)
-    public String sobreNome;
+    private String sobreNome;
 
-    @Column(name = "area", length = 30)
+    @Column(name = "area")
     @Enumerated(EnumType.STRING)
     private AreaTipo area;
 
-    @Column(name = "tipo", length = 30)
+    @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
-    public ProfissionalTipo tipo;
+    private ProfissionalTipo tipo;
 
-    @Column(name = "drt", length = 10)
-    public String drt;
+    @Column(name = "drt", length = 15)
+    private String drt;
 
-    @Column(name = "sesmt")
-    public int sesmt;
+    @Column(name = "sesmt", length = 10)
+    private int sesmt;
 
     @Column(name = "crm", length = 15)
-    public String crm;
+    private String crm;
 
     @Column(name = "crea", length = 15)
-    public String crea;
+    private String crea;
 
     @Column(name = "coren", length = 15)
-    public String coren;
+    private String coren;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "telefone_id", referencedColumnName = "id")
-    public Telefone telefone;
+    private Telefone telefone;
 
     public Profissional() { }
+
 }

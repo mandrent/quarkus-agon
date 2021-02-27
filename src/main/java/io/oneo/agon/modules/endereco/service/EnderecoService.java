@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.endereco.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.endereco.mapper.EnderecoMapper;
 import io.oneo.agon.modules.endereco.model.Endereco;
@@ -23,6 +23,17 @@ public class EnderecoService extends BaseService<Endereco, Long> implements IEnd
     @Inject EnderecoMapper mapper;
 
     public EnderecoMapper getMapper() { return this.mapper; }
+
+    @Override
+    public Optional<Endereco> findByID(Long id)
+    {
+        var endereco = super.findByID(id);
+        if (!endereco.isPresent())
+        {
+            return Optional.empty();
+        }
+        return endereco;
+    }
 
     @Transactional
     public Endereco addEdit(Endereco endereco) throws BaseServiceException

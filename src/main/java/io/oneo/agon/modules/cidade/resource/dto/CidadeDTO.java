@@ -1,19 +1,20 @@
 package io.oneo.agon.modules.cidade.resource.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.oneo.agon.modules.estado.resource.dto.EstadoDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CidadeDTO implements Serializable
 {
     private static final long serialVersionUID = -1349343623571914416L;
 
-    private String nome;
+    public Long id;
 
-    private String codigo;
+    public String nome;
 
-    private EstadoDTO estado;
+    public String codigo;
+
+    public EstadoDTO estado;
 }

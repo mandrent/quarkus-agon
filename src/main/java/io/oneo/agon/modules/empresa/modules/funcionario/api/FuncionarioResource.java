@@ -42,9 +42,9 @@ public class FuncionarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody FuncionarioDTO dto) throws BaseServiceException
     {
-        dto.setCargo(this.cargoProxy.validate(dto.getCargo()));
-        dto.setTelefone(this.telefoneProxy.validate(dto.getTelefone()));
-        dto.setEndereco(this.enderecoProxy.validate(dto.getEndereco()));
+        dto.cargo = this.cargoProxy.validate(dto.cargo);
+        dto.telefone = this.telefoneProxy.validate(dto.telefone);
+        dto.endereco = this.enderecoProxy.validate(dto.endereco);
         var funcionario = this.service.getMapper().convertToModel(dto);
         this.service.addEdit(funcionario);
         dto = this.service.getMapper().convertToDTO(funcionario);
@@ -78,5 +78,6 @@ public class FuncionarioResource
                 .ok(dto)
                 .build();
     }
+
 
 }

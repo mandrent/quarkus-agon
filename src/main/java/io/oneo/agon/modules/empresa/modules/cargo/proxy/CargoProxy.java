@@ -7,8 +7,8 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.ws.rs.*;
 
-@RegisterRestClient(baseUri = "http://localhost:8181/agon/empresas/cargos")
 @Produces("application/json")
+@RegisterRestClient(configKey = "cargoProxy")
 public interface CargoProxy
 {
     @GET

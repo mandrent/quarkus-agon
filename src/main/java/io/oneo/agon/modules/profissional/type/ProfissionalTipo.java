@@ -3,10 +3,10 @@ package io.oneo.agon.modules.profissional.type;
 public enum ProfissionalTipo
 {
     ZERO,
-    AUXILIAR,
+    AUXILIAR_ENFERMAGEM,
     ENFERMEIRO,
     ENGENHEIRO,
-    MEDICO,
-    TECNICO,
+    MEDICO_TRABALHO,
+    TECNICO_SEGURANCA,
     PSICOLOGO;
 }

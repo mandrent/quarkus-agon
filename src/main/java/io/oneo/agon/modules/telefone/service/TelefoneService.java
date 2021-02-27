@@ -1,18 +1,16 @@
 package io.oneo.agon.modules.telefone.service;
 
-import io.oneo.agon.infra.service.BaseService;
+import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.telefone.mapper.TelefoneMapper;
 import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.telefone.repository.TelefoneRepository;
-import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,7 +48,7 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
     {
         try
         {
-            if (telefone.id == null)
+            if (telefone.getId() == null)
             {
                 return this.create(telefone);
             }
@@ -58,7 +56,7 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
         }
         catch (Exception e)
         {
-            logger.error(e.getMessage());
+            this.logger.error(e.getMessage());
             throw new BaseServiceException("Erro ao gravar os dados do telefone!", e);
         }
     }

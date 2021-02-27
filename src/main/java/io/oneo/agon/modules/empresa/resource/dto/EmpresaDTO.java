@@ -1,6 +1,5 @@
 package io.oneo.agon.modules.empresa.resource.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 import lombok.Getter;
@@ -8,25 +7,23 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmpresaDTO implements Serializable
 {
     private static final long serialVersionUID = 1156444578272868373L;
 
-    private Long id;
+    public Long id;
 
-    private String nomeFantasia;
+    public String nomeFantasia;
 
-    private String razaoSocial;
+    public String razaoSocial;
 
-    private String cnpj;
+    public String cnpj;
 
-    private String email;
+    public String email;
 
-    private String cnae;
+    public String cnae;
 
-    private EnderecoDTO endereco;
+    public EnderecoDTO endereco;
 
-    private TelefoneDTO telefone;
+    public TelefoneDTO telefone;
 }

@@ -56,15 +56,15 @@ public class UsuarioResource
     public Response findByLogin(@PathParam("login") String login)
     {
         var usuario = this.service.findByLogin(login);
-        if (!usuario.isPresent())
+        if (usuario.isPresent())
         {
+            var dto = this.service.getMapper().convertToDTO(usuario.get());
             return Response
-                    .noContent()
+                    .ok(dto)
                     .build();
         }
-        var dto = this.service.getMapper().convertToDTO(usuario.get());
         return Response
-                .ok(null)
+                .noContent()
                 .build();
     }
 
@@ -82,6 +82,20 @@ public class UsuarioResource
                 .build();
     }
 
+    @POST
+    @Path("/validate")
+    @Operation(description = "Cadastra um novo usuário")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response validate(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    {
+        if (dto.id != null)
+        {
+            return this.findByID(dto.id);
+        }
+        return this.create(dto);
+    }
+
     @PUT
     @Operation(description = "Atualiza os dados do usuário")
     @Tag(name="usuarios")
@@ -96,16 +110,5 @@ public class UsuarioResource
                 .build();
     }
 
-    @DELETE
-    @Operation(description = "Deleta o usuário")
-    @Tag(name="usuarios")
-    @APIResponse(responseCode = "200", description = "Ok")
-    public Response delete(@RequestBody UsuarioDTO dto) throws BaseServiceException
-    {
-        var usuario = this.service.getMapper().convertToModel(dto);
-        this.service.remove(usuario);
-        return Response
-                .noContent()
-                .build();
-    }
+
 }

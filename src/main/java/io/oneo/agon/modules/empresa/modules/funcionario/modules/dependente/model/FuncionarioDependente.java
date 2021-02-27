@@ -3,10 +3,12 @@ package io.oneo.agon.modules.empresa.modules.funcionario.modules.dependente.mode
 import io.oneo.agon.modules.empresa.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.empresa.modules.funcionario.modules.dependente.type.DependenteSexoTipo;
 import io.oneo.agon.modules.empresa.modules.funcionario.modules.dependente.type.DependenteTipo;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -28,27 +30,22 @@ public class FuncionarioDependente implements Serializable
     private Funcionario funcionario;
 
     @Column(name = "nome")
-    @NotNull
     @Size(min = 3, max = 30)
     private String nome;
 
     @Column(name = "sobrenome")
-    @NotNull
     @Size(min = 3, max = 50)
     private String sobreNome;
 
     @Column(name = "sexo")
-    @NotNull
     @Enumerated(EnumType.STRING)
     private DependenteSexoTipo sexoTipo;
 
     @Column(name = "idade")
-    @NotNull
     @Size(min = 1, max = 2)
     private int idade;
 
     @Column(name = "filiacao")
-    @NotNull
     @Enumerated(EnumType.STRING)
     private DependenteTipo dependenteTipo;
 

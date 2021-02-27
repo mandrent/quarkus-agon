@@ -7,8 +7,8 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.ws.rs.*;
 
-@RegisterRestClient(baseUri = "http://localhost:8181/agon/enderecos")
 @Produces("application/json")
+@RegisterRestClient(configKey = "enderecoProxy")
 public interface EnderecoProxy
 {
     @GET
