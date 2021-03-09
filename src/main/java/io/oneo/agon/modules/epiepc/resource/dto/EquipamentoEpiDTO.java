@@ -3,30 +3,27 @@ package io.oneo.agon.modules.epiepc.resource.dto;
 import io.oneo.agon.modules.empresa.modules.funcionario.resource.FuncionarioDTO;
 import io.oneo.agon.modules.epiepc.type.AtenuacaoTipo;
 import io.oneo.agon.modules.fabricante.support.dto.FabricanteDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter @Setter
 public class EquipamentoEpiDTO implements Serializable
 {
     private static final long serialVersionUID = 5707153998197043291L;
 
-    private String descricao;
+    public String descricao;
 
-    private FabricanteDTO fabricante;
+    public FabricanteDTO fabricante;
 
-    private FuncionarioDTO funcionario;
+    public FuncionarioDTO funcionario;
 
-    private String codigoCA;
+    public String codigoCA;
 
-    private AtenuacaoTipo atenuacao;
+    public AtenuacaoTipo atenuacao;
 
-    private int quantidade;
+    public int quantidade;
 
-    private LocalDateTime entrega;
+    public LocalDateTime entrega;
 
-    private LocalDateTime devolucao;
+    public LocalDateTime devolucao;
 }

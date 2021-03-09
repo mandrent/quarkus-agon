@@ -1,7 +1,6 @@
 package io.oneo.agon.modules.usuario.api;
 
 import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -12,8 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.Optional;
 
 @Path("usuarios")
 @Produces("application/json")

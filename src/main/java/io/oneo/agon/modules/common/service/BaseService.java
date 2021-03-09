@@ -1,6 +1,7 @@
 package io.oneo.agon.modules.common.service;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import org.jooq.DSLContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,10 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     private final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     @Inject PanacheRepositoryBase<T, ID> repo;
+
+    @Inject DSLContext dsl;
+
+    public DSLContext dsl() { return this.dsl; }
 
     @Override
     public T create(T t)

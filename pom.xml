@@ -9,12 +9,14 @@
     
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
+        <java.version>11</java.version>
+        <jooq.version>3.13.2</jooq.version>
         <lombok.version>1.18.18</lombok.version>
         <mapstruct.processor.version>1.4.2.Final</mapstruct.processor.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus-plugin.version>1.12.0.Final</quarkus-plugin.version>
@@ -100,6 +102,21 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-config-yaml</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
     </dependencies>
     
     <build>
@@ -127,6 +144,44 @@
                     <systemProperties>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                     </systemProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.quarkus</groupId>
+                        <artifactId>quarkus-jdbc-mysql</artifactId>
+                        <version>1.12.0.Final</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <jdbc>
+                        <driver>com.mysql.cj.jdbc.Driver</driver>
+                        <url>jdbc:mysql://localhost:3306/agondb</url>
+                        <user>root</user>
+                        <password>lipi</password>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <name>org.jooq.meta.mysql.MySQLDatabase</name>
+                            <includes>.*</includes>
+                            <inputSchema>agondb</inputSchema>
+                        </database>
+                        <target>
+                            <packageName>model</packageName>
+                            <directory>target/generated-sources/jooq</directory>
+                        </target>
+                    </generator>
                 </configuration>
             </plugin>
         </plugins>

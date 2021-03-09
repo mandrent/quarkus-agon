@@ -2,6 +2,7 @@ package io.oneo.agon.modules.usuario.model;
 
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@AllArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "usuario", schema = "agondb")
