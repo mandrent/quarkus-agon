@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.endereco.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.endereco.exception.EnderecoServiceException;
 import io.oneo.agon.modules.endereco.mapper.EnderecoMapper;
 import io.oneo.agon.modules.endereco.model.Endereco;
 import io.oneo.agon.modules.endereco.repository.EnderecoRepository;
@@ -36,7 +36,7 @@ public class EnderecoService extends BaseService<Endereco, Long> implements IEnd
     }
 
     @Transactional
-    public Endereco addEdit(Endereco endereco) throws BaseServiceException
+    public Endereco addEdit(Endereco endereco) throws EnderecoServiceException
     {
         try
         {
@@ -49,7 +49,7 @@ public class EnderecoService extends BaseService<Endereco, Long> implements IEnd
         catch (Exception e)
         {
             logger.error(e.getMessage());
-            throw new BaseServiceException("Erro ao gravar os dados do endereco", e);
+            throw new EnderecoServiceException("Erro ao gravar os dados do endereco", e);
         }
     }
 

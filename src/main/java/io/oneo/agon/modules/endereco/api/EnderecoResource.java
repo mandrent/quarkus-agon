@@ -1,7 +1,6 @@
 package io.oneo.agon.modules.endereco.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.endereco.model.Endereco;
+import io.oneo.agon.modules.endereco.exception.EnderecoServiceException;
 import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
 import io.oneo.agon.modules.endereco.service.EnderecoService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -26,7 +25,7 @@ public class EnderecoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
+        var list = this.service.getMapper().dtoList(this.service.list());
         return Response
                 .ok(list)
                 .build();
@@ -40,7 +39,7 @@ public class EnderecoResource
     public Response findByID(@PathParam("id") Long id)
     {
         var endereco = this.service.findByID(id);
-        var dto = this.service.getMapper().convertToDTO(endereco.get());
+        var dto = this.service.getMapper().getDTO(endereco.get());
         return Response
                 .ok(dto)
                 .build();
@@ -50,11 +49,11 @@ public class EnderecoResource
     @Operation(description = "Cadastra novo endereco")
     @Tag(name="enderecos")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody EnderecoDTO dto) throws BaseServiceException
+    public Response create(@RequestBody EnderecoDTO dto) throws EnderecoServiceException
     {
-        var endereco = this.service.getMapper().convertToModel(dto);
+        var endereco = this.service.getMapper().getModel(dto);
         this.service.addEdit(endereco);
-        dto = this.service.getMapper().convertToDTO(endereco);
+        dto = this.service.getMapper().getDTO(endereco);
         return Response
                 .ok(dto)
                 .build();
@@ -65,7 +64,7 @@ public class EnderecoResource
     @Operation(description = "Valida o Endereco")
     @Tag(name="enderecos")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody EnderecoDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody EnderecoDTO dto) throws EnderecoServiceException
     {
         if (dto.id != null)
         {
@@ -78,11 +77,11 @@ public class EnderecoResource
     @Operation(description = "Atualiza os dados do endereco")
     @Tag(name="enderecos")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody EnderecoDTO dto) throws BaseServiceException
+    public Response update(@RequestBody EnderecoDTO dto) throws EnderecoServiceException
     {
-        var endereco= this.service.getMapper().convertToModel(dto);
+        var endereco= this.service.getMapper().getModel(dto);
         this.service.addEdit(endereco);
-        dto = this.service.getMapper().convertToDTO(endereco);
+        dto = this.service.getMapper().getDTO(endereco);
         return Response
                 .ok(dto)
                 .build();

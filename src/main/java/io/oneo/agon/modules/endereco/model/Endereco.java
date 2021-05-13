@@ -14,7 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Getter @Setter
 @Entity
 @Table(name = "endereco", schema = "agondb")
