@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.empresa.modules.cargo.proxy;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.empresa.modules.cargo.exception.CargoServiceException;
 import io.oneo.agon.modules.empresa.modules.cargo.resource.dto.CargoDTO;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -16,9 +16,9 @@ public interface CargoProxy
     CargoDTO findByID(@PathParam("id") Long id);
 
     @POST
-    CargoDTO create(@RequestBody CargoDTO dto) throws BaseServiceException;
+    CargoDTO create(@RequestBody CargoDTO dto) throws CargoServiceException;
 
     @POST
     @Path("/validate")
-    CargoDTO validate(@RequestBody CargoDTO dto) throws BaseServiceException;
+    CargoDTO validate(@RequestBody CargoDTO dto) throws CargoServiceException;
 }

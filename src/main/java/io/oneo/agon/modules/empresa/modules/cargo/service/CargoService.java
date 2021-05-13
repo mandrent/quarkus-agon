@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.empresa.modules.cargo.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.empresa.modules.cargo.exception.CargoServiceException;
 import io.oneo.agon.modules.empresa.modules.cargo.mapper.CargoMapper;
 import io.oneo.agon.modules.empresa.modules.cargo.model.Cargo;
 import io.oneo.agon.modules.empresa.modules.cargo.repository.CargoRepository;
@@ -35,7 +35,7 @@ public class CargoService extends BaseService<Cargo, Long> implements ICargoServ
     }
 
     @Transactional
-    public Cargo addEdit(Cargo cargo) throws BaseServiceException
+    public Cargo addEdit(Cargo cargo) throws CargoServiceException
     {
         try
         {
@@ -48,7 +48,7 @@ public class CargoService extends BaseService<Cargo, Long> implements ICargoServ
         catch (Exception e)
         {
             this.logger.error(e.getMessage());
-            throw new BaseServiceException("Erro ao gravar os dados do cargo", e);
+            throw new CargoServiceException("Erro ao gravar os dados do cargo", e);
         }
     }
 }

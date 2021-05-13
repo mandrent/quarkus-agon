@@ -1,7 +1,6 @@
 package io.oneo.agon.modules.empresa.modules.cargo.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.empresa.modules.cargo.model.Cargo;
+import io.oneo.agon.modules.empresa.modules.cargo.exception.CargoServiceException;
 import io.oneo.agon.modules.empresa.modules.cargo.resource.dto.CargoDTO;
 import io.oneo.agon.modules.empresa.modules.cargo.service.CargoService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -12,7 +11,6 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 @Path("empresas/cargos")
 @Produces("application/json")
@@ -27,7 +25,7 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
+        var list = this.service.getMapper().dtoList(this.service.list());
         return Response
                 .ok(list)
                 .build();
@@ -41,7 +39,7 @@ public class CargoResource
     public Response findByID(@PathParam("id") Long id)
     {
         var cargo = this.service.findByID(id);
-        var dto = this.service.getMapper().convertToDTO(cargo.get());
+        var dto = this.service.getMapper().getDTO(cargo.get());
         return Response
                 .ok(dto)
                 .build();
@@ -51,11 +49,11 @@ public class CargoResource
     @Operation(description = "Cadastra novo cargo")
     @Tag(name="cargos")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody CargoDTO dto) throws BaseServiceException
+    public Response create(@RequestBody CargoDTO dto) throws CargoServiceException
     {
-        var cargo = this.service.getMapper().convertToModel(dto);
+        var cargo = this.service.getMapper().getModel(dto);
         this.service.addEdit(cargo);
-        dto = this.service.getMapper().convertToDTO(cargo);
+        dto = this.service.getMapper().getDTO(cargo);
         return Response
                 .ok(dto)
                 .build();
@@ -66,19 +64,19 @@ public class CargoResource
     @Operation(description = "Valida o CargoProxy")
     @Tag(name="cargos")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody CargoDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody CargoDTO dto) throws CargoServiceException
     {
         if (dto.getId() != null)
         {
             var cargo = this.service.findByID(dto.getId());
-            dto = this.service.getMapper().convertToDTO(cargo.get());
+            dto = this.service.getMapper().getDTO(cargo.get());
             return Response.ok(dto)
                     .build();
         }
 
-        var cargo = this.service.getMapper().convertToModel(dto);
+        var cargo = this.service.getMapper().getModel(dto);
         this.service.addEdit(cargo);
-        dto = this.service.getMapper().convertToDTO(cargo);
+        dto = this.service.getMapper().getDTO(cargo);
         return Response
                 .ok(dto)
                 .build();
@@ -94,7 +92,7 @@ public class CargoResource
         var cargo = this.service.findByName(name);
         if (cargo.isPresent())
         {
-            var dto = this.service.getMapper().convertToDTO(cargo.get());
+            var dto = this.service.getMapper().getDTO(cargo.get());
             return Response
                     .ok(dto)
                     .build();
@@ -108,11 +106,11 @@ public class CargoResource
     @Operation(description = "Atualiza os dados do usuário")
     @Tag(name="cargos")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody CargoDTO dto) throws BaseServiceException
+    public Response update(@RequestBody CargoDTO dto) throws CargoServiceException
     {
-        var cargo = this.service.getMapper().convertToModel(dto);
+        var cargo = this.service.getMapper().getModel(dto);
         this.service.addEdit(cargo);
-        dto = this.service.getMapper().convertToDTO(cargo);
+        dto = this.service.getMapper().getDTO(cargo);
         return Response
                 .ok(dto)
                 .build();
