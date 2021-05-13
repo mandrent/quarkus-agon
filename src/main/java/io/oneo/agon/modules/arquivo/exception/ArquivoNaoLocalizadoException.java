@@ -13,5 +13,4 @@ public class ArquivoNaoLocalizadoException extends FileNotFoundException
         super.printStackTrace(s);
     }
 
-    //    public ArquivoNaoLocalizadoException(String message, Throwable cause) { (message, cause); }
 }

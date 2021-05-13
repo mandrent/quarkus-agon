@@ -1,12 +1,12 @@
 package io.oneo.agon.modules.arquivo.service;
 
+import io.oneo.agon.modules.arquivo.exception.ArquivoServiceException;
 import io.oneo.agon.modules.common.service.BaseService;
 import io.oneo.agon.modules.arquivo.exception.ArquivoNaoLocalizadoException;
 import io.oneo.agon.modules.arquivo.mapper.ArquivoMapper;
 import io.oneo.agon.modules.arquivo.model.Arquivo;
 import io.oneo.agon.modules.arquivo.repository.ArquivoRepository;
 import io.oneo.agon.modules.arquivo.support.ArquivoSupport;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +80,7 @@ public class ArquivoService extends BaseService<Arquivo, Long> implements IArqui
     }
 
 
-    public Arquivo addEdit(Arquivo arquivo) throws BaseServiceException
+    public Arquivo addEdit(Arquivo arquivo) throws ArquivoServiceException
     {
         try
         {
@@ -93,7 +93,7 @@ public class ArquivoService extends BaseService<Arquivo, Long> implements IArqui
         catch (Exception e)
         {
             logger.error(e.getMessage());
-            throw new BaseServiceException("Erro ao gravar o arquivo", e);
+            throw new ArquivoServiceException("Erro ao gravar o arquivo", e);
         }
     }
 
@@ -151,8 +151,6 @@ public class ArquivoService extends BaseService<Arquivo, Long> implements IArqui
                 e.printStackTrace();
             }
         });
-
-
 
         return null;
     }
