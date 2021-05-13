@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.cidade.api;
 
+import io.oneo.agon.modules.cidade.exception.CidadeServiceException;
 import io.oneo.agon.modules.cidade.service.CidadeService;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.cidade.resource.dto.CidadeDTO;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-@Path("cidades")
+@Path("/api/cidades")
 @Produces("application/json")
 @Consumes("application/json")
 public class CidadeResource
@@ -25,7 +25,7 @@ public class CidadeResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
+        var list = this.service.getMapper().dtoList(this.service.list());
         return Response
                 .ok(list)
                 .build();
@@ -33,7 +33,7 @@ public class CidadeResource
 
     @GET
     @Path("/{id}")
-    @Operation(description = "Busca cidade por ID")
+    @Operation(description = "Busca por ID")
     @Tag(name="cidades")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByID(@PathParam("id") Long id)
@@ -45,15 +45,15 @@ public class CidadeResource
                     .noContent()
                     .build();
         }
-        var dto = this.service.getMapper().convertToDTO(cidade.get());
+        var dto = this.service.getMapper().getDTO(cidade.get());
         return Response
                 .ok(dto)
                 .build();
     }
     
     @GET
-    @Path("/{code}")
-    @Operation(description = "Busca cidade por codigo")
+    @Path("/codigo/{code}")
+    @Operation(description = "Busca por codigo")
     @Tag(name="cidades")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByCode(@PathParam("code") String code)
@@ -65,23 +65,8 @@ public class CidadeResource
                     .noContent()
                     .build();
         }
-        var dto = this.service.getMapper().convertToDTO(cidade.get());
         return Response
-                .ok(dto)
-                .build();
-    }
-
-    @POST
-    @Operation(description = "Adiciona novo cidade")
-    @Tag(name="cidades")
-    @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody CidadeDTO dto) throws BaseServiceException
-    {
-        var cidade = this.service.getMapper().convertToModel(dto);
-        this.service.addEdit(cidade);
-        dto = this.service.getMapper().convertToDTO(cidade);
-        return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(cidade.get()))
                 .build();
     }
 
@@ -90,12 +75,15 @@ public class CidadeResource
     @Operation(description = "Valida a cidade")
     @Tag(name="cidades")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody CidadeDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody CidadeDTO dto) throws CidadeServiceException
     {
-        if (dto.id != null)
+        var cidade = this.service.findByModel(this.service.getMapper().getModel(dto));
+        if (!cidade.isPresent())
         {
-            return this.findByID(dto.id);
+            return Response
+                    .noContent()
+                    .build();
         }
-        return this.create(dto);
+        return this.findByID(dto.id);
     }
 }

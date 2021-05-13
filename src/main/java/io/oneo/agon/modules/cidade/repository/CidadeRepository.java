@@ -14,13 +14,13 @@ public class CidadeRepository implements PanacheRepository<Cidade>
     public Optional<Cidade> findByName(String name)
     {
         var cidade = this.find("name", name).firstResult();
-        return Optional.of(cidade);
+        return Optional.ofNullable(cidade);
     }
 
-    public Optional<Cidade> findByCode(String code)
+    public Optional<Cidade> findByCode(String codigo)
     {
-        var cidade = this.find("code", code).firstResult();
-        return Optional.of(cidade);
+        var cidade = this.find("codigo", codigo).firstResult();
+        return Optional.ofNullable(cidade);
     }
 
     public List<Cidade> listByState(Estado estado)
