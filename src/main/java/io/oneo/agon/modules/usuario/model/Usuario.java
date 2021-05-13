@@ -2,18 +2,15 @@ package io.oneo.agon.modules.usuario.model;
 
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-@AllArgsConstructor
 @Getter @Setter
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "usuario", schema = "agondb")
 public class Usuario implements Serializable

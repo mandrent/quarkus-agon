@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.usuario.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
 import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-@Path("usuarios")
+@Path("/api/usuarios")
 @Produces("application/json")
 @Consumes("application/json")
 public class UsuarioResource
@@ -25,9 +25,8 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
         return Response
-                .ok(list)
+                .ok(this.service.getMapper().dtoList(this.service.list()))
                 .build();
     }
 
@@ -39,9 +38,14 @@ public class UsuarioResource
     public Response findByID(@PathParam("id") Long id)
     {
         var usuario = this.service.findByID(id);
-        var dto = this.service.getMapper().convertToDTO(usuario.get());
+        if (!usuario.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(usuario.get()))
                 .build();
     }
 
@@ -53,15 +57,14 @@ public class UsuarioResource
     public Response findByLogin(@PathParam("login") String login)
     {
         var usuario = this.service.findByLogin(login);
-        if (usuario.isPresent())
+        if (!usuario.isPresent())
         {
-            var dto = this.service.getMapper().convertToDTO(usuario.get());
             return Response
-                    .ok(dto)
+                    .noContent()
                     .build();
         }
         return Response
-                .noContent()
+                .ok(this.service.getMapper().getDTO(usuario.get()))
                 .build();
     }
 
@@ -69,26 +72,28 @@ public class UsuarioResource
     @Operation(description = "Cadastra um novo usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    public Response create(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var usuario = this.service.getMapper().convertToModel(dto);
-        this.service.addEdit(usuario);
-        dto = this.service.getMapper().convertToDTO(usuario);
+        var usuario = this.service.getMapper().getModel(dto);
+        usuario = this.service.addEdit(usuario);
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(usuario))
                 .build();
     }
 
     @POST
     @Path("/validate")
-    @Operation(description = "Cadastra um novo usuário")
+    @Operation(description = "Valida um usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        if (dto.id != null)
+        var user = this.service.findByModel(this.service.getMapper().getModel(dto));
+        if (user.isPresent())
         {
-            return this.findByID(dto.id);
+            return Response
+                    .ok(this.service.getMapper().getDTO(user.get()))
+                    .build();
         }
         return this.create(dto);
     }
@@ -97,13 +102,12 @@ public class UsuarioResource
     @Operation(description = "Atualiza os dados do usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody UsuarioDTO dto) throws BaseServiceException
+    public Response update(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var usuario = this.service.getMapper().convertToModel(dto);
-        this.service.addEdit(usuario);
-        dto = this.service.getMapper().convertToDTO(usuario);
+        var usuario = this.service.getMapper().getModel(dto);
+        usuario = this.service.addEdit(usuario);
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(usuario))
                 .build();
     }
 
