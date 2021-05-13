@@ -17,16 +17,26 @@ quarkus:
     table: flyway_quarkus_history
     locations: db/migration
 
-cargoProxy/mp-rest/uri: http://localhost:8080/agon/empresas/cargos
-cargoProxy/mp-rest/scope: javax.inject.Singleton
-enderecoProxy/mp-rest: http://localhost:8080/agon/enderecos
-enderecoProxy/scope: javax.inject.Singleton
-funcionarioProxy/mp-rest/uri: http://localhost:8080/agon/empresas/funcionarios
-funcionarioProxy/mp-rest/scope: javax.inject.Singleton
-usuarioProxy/mp-rest/uri: http://localhost:8080/agon/usuarios
-usuarioProxy/mp-rest/scope: javax.inject.Singleton
-telefoneProxy/mp-rest/uri: http://localhost:8080/agon/telefones
-telefoneProxy/scope: javax.inject.Singleton
+cargoProxy/mp-rest/uri:
+  http://localhost:8080/agon/api/empresas/cargos
+cargoProxy/mp-rest/scope:
+  javax.inject.Singleton
+enderecoProxy/mp-rest:
+  http://localhost:8080/agon/enderecos
+enderecoProxy/scope:
+  javax.inject.Singleton
+funcionarioProxy/mp-rest/uri:
+  http://localhost:8080/agon/api/empresas/funcionarios
+funcionarioProxy/mp-rest/scope:
+  javax.inject.Singleton
+usuarioProxy/mp-rest/uri:
+  http://localhost:8080/agon/api/usuarios
+usuarioProxy/mp-rest/scope:
+  javax.inject.Singleton
+telefoneProxy/mp-rest/uri:
+  http://localhost:8080/agon/api/telefones
+telefoneProxy/scope:
+  javax.inject.Singleton
 
 "%dev":
   quarkus:
