@@ -9,7 +9,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class ProfissionalRepository implements PanacheRepository<Profissional>
 {
-    public Optional<Profissional> findByCodeDRT(String drt)
+    public Optional<Profissional> findByDRT(String drt)
     {
         var profissional = this.find("drt", drt).firstResult();
         return Optional.of(profissional);

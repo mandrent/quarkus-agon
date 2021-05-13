@@ -1,10 +1,10 @@
 package io.oneo.agon.modules.profissional.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.profissional.exception.ProfissionalServiceException;
 import io.oneo.agon.modules.profissional.resource.dto.ProfissionalDTO;
 import io.oneo.agon.modules.profissional.service.ProfissionalService;
 import io.oneo.agon.modules.telefone.proxy.TelefoneProxy;
-import io.oneo.agon.modules.usuario.proxy.UsuarioClient;
+import io.oneo.agon.modules.usuario.proxy.UsuarioProxy;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-@Path("profissionais")
+@Path("/api/profissionais")
 @Produces("application/json")
 @Consumes("application/json")
 public class ProfissionalResource
@@ -24,7 +24,7 @@ public class ProfissionalResource
 
     @Inject
     @RestClient
-    UsuarioClient usuarioClient;
+    UsuarioProxy usuarioProxy;
 
     @Inject
     @RestClient
@@ -36,9 +36,8 @@ public class ProfissionalResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
         return Response
-                .ok(list)
+                .ok(this.service.getMapper().dtoList(this.service.list()))
                 .build();
     }
 
@@ -56,9 +55,8 @@ public class ProfissionalResource
                     .noContent()
                     .build();
         }
-        var dto = this.service.getMapper().convertToDTO(profissional.get());
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(profissional.get()))
                 .build();
     }
 
@@ -66,15 +64,14 @@ public class ProfissionalResource
     @Operation(description = "Adiciona novo profissional")
     @Tag(name="profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody ProfissionalDTO dto) throws BaseServiceException
+    public Response create(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
-        dto.usuario = this.usuarioClient.validate(dto.usuario);
+        dto.usuario = this.usuarioProxy.validate(dto.usuario);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
-        var profissional = this.service.getMapper().convertToModel(dto);
+        var profissional = this.service.getMapper().getModel(dto);
         this.service.addEdit(profissional);
-        dto = this.service.getMapper().convertToDTO(profissional);
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(profissional))
                 .build();
     }
 
@@ -83,7 +80,7 @@ public class ProfissionalResource
     @Operation(description = "Valida o usuario")
     @Tag(name="profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody ProfissionalDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
         if (dto.id != null)
         {

@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.profissional.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.profissional.exception.ProfissionalServiceException;
 import io.oneo.agon.modules.profissional.mapper.ProfissionalMapper;
 import io.oneo.agon.modules.profissional.model.Profissional;
 import io.oneo.agon.modules.profissional.repository.ProfissionalRepository;
@@ -23,8 +23,14 @@ public class ProfissionalService extends BaseService<Profissional, Long>
 
     public ProfissionalMapper getMapper() { return this.mapper; }
 
+    public Profissional findByModel(Profissional profissional) throws ProfissionalServiceException
+    {
+
+        return null;
+    }
+
     @Transactional
-    public Profissional addEdit(Profissional profissional) throws BaseServiceException
+    public Profissional addEdit(Profissional profissional) throws ProfissionalServiceException
     {
         try
         {
@@ -37,7 +43,7 @@ public class ProfissionalService extends BaseService<Profissional, Long>
         catch (Exception e)
         {
             logger.error(e.getMessage());
-            throw new BaseServiceException("Erro ao gravar os dados do usuário", e);
+            throw new ProfissionalServiceException("Erro ao gravar os dados do usuário", e);
         }
     }
 
