@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.telefone.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.telefone.exception.TelefoneServiceException;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 import io.oneo.agon.modules.telefone.service.TelefoneService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-@Path("telefones")
+@Path("/api/telefones")
 @Produces("application/json")
 @Consumes("application/json")
 public class TelefoneResource
@@ -25,7 +25,7 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
+        var list = this.service.getMapper().dtoList(this.service.list());
         return Response
                 .ok(list)
                 .build();
@@ -39,7 +39,7 @@ public class TelefoneResource
     public Response findByID(@PathParam("id") Long id)
     {
         var cargo = this.service.findByID(id);
-        var dto = this.service.getMapper().convertToDTO(cargo.get());
+        var dto = this.service.getMapper().getDTO(cargo.get());
         return Response
                 .ok(dto)
                 .build();
@@ -50,7 +50,7 @@ public class TelefoneResource
     @Operation(description = "Busca por numero")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response findByName(@PathParam("numero") String numero)
+    public Response findByNumber(@PathParam("numero") String numero)
     {
         var telefone = this.service.findByNumber(numero);
         if (!telefone.isPresent())
@@ -59,9 +59,8 @@ public class TelefoneResource
                     .noContent()
                     .build();
         }
-        var dto = this.service.getMapper().convertToDTO(telefone.get());
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(telefone.get()))
                 .build();
     }
 
@@ -69,13 +68,12 @@ public class TelefoneResource
     @Operation(description = "Cadastra novo telefone")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody TelefoneDTO dto) throws BaseServiceException
+    public Response create(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
     {
-        var telefone = this.service.getMapper().convertToModel(dto);
+        var telefone = this.service.getMapper().getModel(dto);
         this.service.addEdit(telefone);
-        dto = this.service.getMapper().convertToDTO(telefone);
         return Response
-                .ok(dto)
+                .ok(this.service.getMapper().getDTO(telefone))
                 .build();
     }
 
@@ -84,11 +82,14 @@ public class TelefoneResource
     @Operation(description = "Valida o TelefoneProxy")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody TelefoneDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
     {
-        if (dto.id != null)
+        var telefone = this.service.findByModel(this.service.getMapper().getModel(dto));
+        if (telefone.isPresent())
         {
-            return this.findByID(dto.id);
+            return Response
+                    .ok(this.service.getMapper().getDTO(telefone.get()))
+                    .build();
         }
         return this.create(dto);
     }
@@ -97,11 +98,11 @@ public class TelefoneResource
     @Operation(description = "Atualiza os dados do telefone")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody TelefoneDTO dto) throws BaseServiceException
+    public Response update(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
     {
-        var telefone= this.service.getMapper().convertToModel(dto);
+        var telefone= this.service.getMapper().getModel(dto);
         this.service.addEdit(telefone);
-        dto = this.service.getMapper().convertToDTO(telefone);
+        dto = this.service.getMapper().getDTO(telefone);
         return Response
                 .ok(dto)
                 .build();

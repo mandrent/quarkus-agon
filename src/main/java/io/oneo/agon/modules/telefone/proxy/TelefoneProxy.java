@@ -1,7 +1,6 @@
 package io.oneo.agon.modules.telefone.proxy;
 
-
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.telefone.exception.TelefoneServiceException;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -17,9 +16,9 @@ public interface TelefoneProxy
     TelefoneDTO findByID(@PathParam("id") Long id);
 
     @POST
-    TelefoneDTO create(@RequestBody TelefoneDTO dto) throws BaseServiceException;
+    TelefoneDTO create(@RequestBody TelefoneDTO dto) throws TelefoneServiceException;
 
     @POST
     @Path("/validate")
-    TelefoneDTO validate(@RequestBody TelefoneDTO dto) throws BaseServiceException;
+    TelefoneDTO validate(@RequestBody TelefoneDTO dto) throws TelefoneServiceException;
 }

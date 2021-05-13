@@ -13,8 +13,8 @@ public class TelefoneRepository implements PanacheRepositoryBase<Telefone, Long>
 {
     public Optional<Telefone> findByNumber(String numero)
     {
-        Telefone telefone = this.find("numero", numero).firstResult();
-        return Optional.of(telefone);
+        var telefone = this.find("numero", numero).firstResult();
+        return Optional.ofNullable(telefone);
     }
 
     public List<Telefone> listByDDD(String ddd) { return this.find("ddd", ddd).list(); }
