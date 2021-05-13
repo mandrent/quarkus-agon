@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.empresa.modules.funcionario.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
 import io.oneo.agon.modules.empresa.modules.cargo.proxy.CargoProxy;
+import io.oneo.agon.modules.empresa.modules.funcionario.exception.FuncionarioServiceException;
 import io.oneo.agon.modules.empresa.modules.funcionario.resource.FuncionarioDTO;
 import io.oneo.agon.modules.empresa.modules.funcionario.service.FuncionarioService;
 import io.oneo.agon.modules.endereco.proxy.EnderecoProxy;
@@ -40,14 +40,14 @@ public class FuncionarioResource
     @Operation(description = "Cadastra um novo funcionário")
     @Tag(name="funcionarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody FuncionarioDTO dto) throws BaseServiceException
+    public Response create(@RequestBody FuncionarioDTO dto) throws FuncionarioServiceException
     {
         dto.cargo = this.cargoProxy.validate(dto.cargo);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
         dto.endereco = this.enderecoProxy.validate(dto.endereco);
-        var funcionario = this.service.getMapper().convertToModel(dto);
+        var funcionario = this.service.getMapper().getModel(dto);
         this.service.addEdit(funcionario);
-        dto = this.service.getMapper().convertToDTO(funcionario);
+        dto = this.service.getMapper().getDTO(funcionario);
         return Response
                 .ok(dto)
                 .build();
@@ -59,7 +59,7 @@ public class FuncionarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
+        var list = this.service.getMapper().dtoList(this.service.list());
         return Response
                 .ok(list)
                 .build();
@@ -73,7 +73,7 @@ public class FuncionarioResource
     public Response findByID(@PathParam("id") Long id)
     {
         var funcionario = this.service.findByID(id).get();
-        var dto = this.service.getMapper().convertToDTO(funcionario);
+        var dto = this.service.getMapper().getDTO(funcionario);
         return Response
                 .ok(dto)
                 .build();

@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.empresa.modules.funcionario.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.empresa.modules.funcionario.exception.FuncionarioServiceException;
 import io.oneo.agon.modules.empresa.modules.funcionario.mapper.FuncionarioMapper;
 import io.oneo.agon.modules.empresa.modules.funcionario.model.Funcionario;
 import io.oneo.agon.modules.empresa.modules.funcionario.repository.FuncionarioRepository;
@@ -35,7 +35,7 @@ public class FuncionarioService extends BaseService<Funcionario, Long> implement
     }
 
     @Transactional
-    public Funcionario addEdit(Funcionario funcionario) throws BaseServiceException
+    public Funcionario addEdit(Funcionario funcionario) throws FuncionarioServiceException
     {
         try
         {
@@ -48,7 +48,7 @@ public class FuncionarioService extends BaseService<Funcionario, Long> implement
         catch (Exception e)
         {
             logger.error(e.getMessage());
-            throw new BaseServiceException("Erro ao gravar os dados do funcionário", e);
+            throw new FuncionarioServiceException("Erro ao gravar os dados do funcionário", e);
         }
     }
 
