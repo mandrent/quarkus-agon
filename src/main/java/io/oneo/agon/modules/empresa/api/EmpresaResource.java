@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.empresa.api;
 
-import io.oneo.agon.modules.common.exception.BaseServiceException;
-import io.oneo.agon.modules.empresa.resource.dto.EmpresaDTO;
+import io.oneo.agon.modules.empresa.exception.EmpresaServiceException;
+import io.oneo.agon.modules.empresa.resource.EmpresaDTO;
 import io.oneo.agon.modules.empresa.service.EmpresaService;
 import io.oneo.agon.modules.endereco.proxy.EnderecoProxy;
 import io.oneo.agon.modules.telefone.proxy.TelefoneProxy;
@@ -36,7 +36,7 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().convertToDtoList(this.service.list());
+        var list = this.service.getMapper().dtoList(this.service.list());
         return Response
                 .ok(list)
                 .build();
@@ -50,7 +50,7 @@ public class EmpresaResource
     public Response findByID(@PathParam("id") Long id)
     {
         var empresa = this.service.findByID(id);
-        var dto = this.service.getMapper().convertToDTO(empresa.get());
+        var dto = this.service.getMapper().getDTO(empresa.get());
         return Response
                 .ok(dto)
                 .build();
@@ -71,7 +71,7 @@ public class EmpresaResource
                     .build();
         }
 
-        var dto = this.service.getMapper().convertToDTO(empresa.get());
+        var dto = this.service.getMapper().getDTO(empresa.get());
         return Response
                 .ok(dto)
                 .build();
@@ -81,13 +81,13 @@ public class EmpresaResource
     @Operation(description = "Cadastra um novo usuário")
     @Tag(name="empresas")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody EmpresaDTO dto) throws BaseServiceException
+    public Response create(@RequestBody EmpresaDTO dto) throws EmpresaServiceException
     {
         dto.endereco = this.enderecoProxy.validate(dto.endereco);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
-        var empresa = this.service.getMapper().convertToModel(dto);
+        var empresa = this.service.getMapper().getModel(dto);
         this.service.addEdit(empresa);
-        dto = this.service.getMapper().convertToDTO(empresa);
+        dto = this.service.getMapper().getDTO(empresa);
         return Response
                 .ok(dto)
                 .build();
@@ -98,7 +98,7 @@ public class EmpresaResource
     @Operation(description = "Valida usuário")
     @Tag(name="empresas")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody EmpresaDTO dto) throws BaseServiceException
+    public Response validate(@RequestBody EmpresaDTO dto) throws EmpresaServiceException
     {
         if (dto.id != null)
         {
@@ -111,11 +111,11 @@ public class EmpresaResource
     @Operation(description = "Atualiza os dados do usuário")
     @Tag(name="empresas")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody EmpresaDTO dto) throws BaseServiceException
+    public Response update(@RequestBody EmpresaDTO dto) throws EmpresaServiceException
     {
-        var empresa = this.service.getMapper().convertToModel(dto);
+        var empresa = this.service.getMapper().getModel(dto);
         this.service.addEdit(empresa);
-        dto = this.service.getMapper().convertToDTO(empresa);
+        dto = this.service.getMapper().getDTO(empresa);
         return Response
                 .ok(dto)
                 .build();

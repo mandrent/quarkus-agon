@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.empresa.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.common.exception.BaseServiceException;
+import io.oneo.agon.modules.empresa.exception.EmpresaServiceException;
 import io.oneo.agon.modules.empresa.mapper.EmpresaMapper;
 import io.oneo.agon.modules.empresa.model.Empresa;
 import io.oneo.agon.modules.empresa.repository.EmpresaRepository;
@@ -36,7 +36,7 @@ public class EmpresaService extends BaseService<Empresa, Long> implements IEmpre
     }
 
     @Transactional
-    public Empresa addEdit(Empresa empresa) throws BaseServiceException
+    public Empresa addEdit(Empresa empresa) throws EmpresaServiceException
     {
         try
         {
@@ -49,7 +49,7 @@ public class EmpresaService extends BaseService<Empresa, Long> implements IEmpre
         catch (Exception e)
         {
             this.logger.error(e.getMessage());
-            throw new BaseServiceException("Erro ao gravar os dados do empresa", e);
+            throw new EmpresaServiceException("Erro ao gravar os dados do empresa", e);
         }
     }
 
