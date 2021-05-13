@@ -10,34 +10,34 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseService<T extends Serializable, ID extends Serializable> implements IService<T, ID>
+public abstract class BaseService<E extends Serializable, ID extends Serializable> implements IService<E, ID>
 {
     private final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
-    @Inject PanacheRepositoryBase<T, ID> repo;
+    @Inject PanacheRepositoryBase<E, ID> repo;
 
     @Inject DSLContext dsl;
 
     public DSLContext dsl() { return this.dsl; }
 
     @Override
-    public T create(T t)
+    public E create(E t)
     {
         this.repo.persist(t);
-        this.logger.info("# salvando nova entidade #");
+        this.logger.info("# add entidade #");
         return t;
     }
 
     @Override
-    public T update(T t)
+    public E update(E t)
     {
         this.repo.getEntityManager().merge(t);
-        this.logger.info("# atualizando entidade # ");
+        this.logger.info("# update entidade # ");
         return t;
     }
 
     @Override
-    public Optional<T> findByID(ID id)
+    public Optional<E> findByID(ID id)
     {
         if (id == null)
         {
@@ -49,28 +49,24 @@ public abstract class BaseService<T extends Serializable, ID extends Serializabl
     }
 
     @Override
-    public void remove(T t)
+    public void remove(E t)
     {
         this.repo.delete(t);
-        this.logger.info("# removendo a entidade #");
+        this.logger.info("# remove entidade #");
     }
 
     @Override
     public void removeByID(ID id)
     {
         this.repo.deleteById(id);
-        this.logger.info("# removendo uma entidade pelo ID #");
+        this.logger.info("# remove por ID #");
     }
 
     @Override
-    public List<T> list()
+    public List<E> list()
     {
-        this.logger.info("# listando todos os objetos #");
+        this.logger.info("# lista entidades #");
         return this.repo.listAll();
     }
-
-
-
-
 
 }

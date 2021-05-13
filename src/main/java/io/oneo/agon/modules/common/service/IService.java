@@ -4,17 +4,18 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface IService<T extends Serializable, ID extends Serializable>
+public interface IService<E extends Serializable, ID extends Serializable>
 {
-    T create(T t);
+    E create(E t);
 
-    T update(T t);
+    E update(E t);
 
-    Optional<T> findByID(ID id);
+    Optional<E> findByID(ID id);
 
-    void remove(T t);
+    void remove(E t);
 
     void removeByID(ID id);
 
-    List<T> list();
+    List<E> list();
+
 }
