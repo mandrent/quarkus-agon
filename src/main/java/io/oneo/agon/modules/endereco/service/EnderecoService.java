@@ -22,29 +22,32 @@ public class EnderecoService extends BaseService<Endereco, Long> implements IEnd
 
     @Inject EnderecoMapper mapper;
 
-    public EnderecoMapper getMapper() { return this.mapper; }
+    public EnderecoMapper mapper() { return this.mapper; }
 
     @Override
     public Optional<Endereco> findByID(Long id)
     {
         var endereco = super.findByID(id);
-        if (!endereco.isPresent())
-        {
-            return Optional.empty();
-        }
-        return endereco;
+        return endereco.isPresent() ? endereco : Optional.empty();
+    }
+
+    public Optional<Endereco> validate(Endereco endereco)
+    {
+        var result = super.findByID(endereco.getId());
+        return result.isPresent() ? result : this.repo.findByReferences(endereco.getLogradouroTipo(),
+                endereco.getMoradiaTipo(), endereco.getComplementoTipo());
     }
 
     @Transactional
-    public Endereco addEdit(Endereco endereco) throws EnderecoServiceException
+    public void addEdit(Endereco endereco) throws EnderecoServiceException
     {
         try
         {
             if (endereco.getId() == null)
             {
-                return this.create(endereco);
+                super.create(endereco);
             }
-            return this.update(endereco);
+            super.update(endereco);
         }
         catch (Exception e)
         {

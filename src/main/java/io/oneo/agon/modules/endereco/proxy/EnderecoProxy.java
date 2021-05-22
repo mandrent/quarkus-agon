@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.endereco.proxy;
 
 import io.oneo.agon.modules.endereco.exception.EnderecoServiceException;
-import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
+import io.oneo.agon.modules.endereco.resource.EnderecoDTO;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 

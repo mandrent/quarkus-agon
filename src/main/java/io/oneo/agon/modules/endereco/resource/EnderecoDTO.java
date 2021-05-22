@@ -1,6 +1,6 @@
-package io.oneo.agon.modules.endereco.resource.dto;
+package io.oneo.agon.modules.endereco.resource;
 
-import io.oneo.agon.modules.cidade.resource.dto.CidadeDTO;
+import io.oneo.agon.modules.cidade.resource.CidadeDTO;
 import io.oneo.agon.modules.endereco.type.ComplementoTipo;
 import io.oneo.agon.modules.endereco.type.LogradouroTipo;
 import io.oneo.agon.modules.endereco.type.MoradiaTipo;

@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.endereco.api;
 
 import io.oneo.agon.modules.endereco.exception.EnderecoServiceException;
-import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
+import io.oneo.agon.modules.endereco.resource.EnderecoDTO;
 import io.oneo.agon.modules.endereco.service.EnderecoService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -25,9 +25,9 @@ public class EnderecoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().dtoList(this.service.list());
+        var list = this.service.list();
         return Response
-                .ok(list)
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -39,9 +39,14 @@ public class EnderecoResource
     public Response findByID(@PathParam("id") Long id)
     {
         var endereco = this.service.findByID(id);
-        var dto = this.service.getMapper().getDTO(endereco.get());
+        if (!endereco.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(endereco.get()))
                 .build();
     }
 
@@ -51,11 +56,10 @@ public class EnderecoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody EnderecoDTO dto) throws EnderecoServiceException
     {
-        var endereco = this.service.getMapper().getModel(dto);
+        var endereco = this.service.mapper().getModel(dto);
         this.service.addEdit(endereco);
-        dto = this.service.getMapper().getDTO(endereco);
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(endereco))
                 .build();
     }
 
@@ -66,9 +70,12 @@ public class EnderecoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody EnderecoDTO dto) throws EnderecoServiceException
     {
-        if (dto.id != null)
+        var endereco = this.service.validate(this.service.mapper().getModel(dto));
+        if (endereco.isPresent())
         {
-            return this.findByID(dto.id);
+            return Response
+                    .ok(this.service.mapper().getDTO(endereco.get()))
+                    .build();
         }
         return this.create(dto);
     }
@@ -79,11 +86,10 @@ public class EnderecoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody EnderecoDTO dto) throws EnderecoServiceException
     {
-        var endereco= this.service.getMapper().getModel(dto);
+        var endereco= this.service.mapper().getModel(dto);
         this.service.addEdit(endereco);
-        dto = this.service.getMapper().getDTO(endereco);
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(endereco))
                 .build();
     }
 
