@@ -2,7 +2,7 @@ package io.oneo.agon.modules.cidade.api;
 
 import io.oneo.agon.modules.cidade.exception.CidadeServiceException;
 import io.oneo.agon.modules.cidade.service.CidadeService;
-import io.oneo.agon.modules.cidade.resource.dto.CidadeDTO;
+import io.oneo.agon.modules.cidade.resource.CidadeDTO;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -25,9 +25,9 @@ public class CidadeResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().dtoList(this.service.list());
+        var list = this.service.list();
         return Response
-                .ok(list)
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -45,9 +45,8 @@ public class CidadeResource
                     .noContent()
                     .build();
         }
-        var dto = this.service.getMapper().getDTO(cidade.get());
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(cidade.get()))
                 .build();
     }
     
@@ -66,7 +65,26 @@ public class CidadeResource
                     .build();
         }
         return Response
-                .ok(this.service.getMapper().getDTO(cidade.get()))
+                .ok(this.service.mapper().getDTO(cidade.get()))
+                .build();
+    }
+
+    @GET
+    @Path("/name/{name}")
+    @Operation(description = "Busca por codigo")
+    @Tag(name="cidades")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response findByName(@PathParam("name") String code)
+    {
+        var cidade = this.service.findByName(code);
+        if (!cidade.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
+        return Response
+                .ok(this.service.mapper().getDTO(cidade.get()))
                 .build();
     }
 
@@ -77,13 +95,15 @@ public class CidadeResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody CidadeDTO dto) throws CidadeServiceException
     {
-        var cidade = this.service.findByModel(this.service.getMapper().getModel(dto));
+        var cidade = this.service.validate(this.service.mapper().getModel(dto));
         if (!cidade.isPresent())
         {
             return Response
                     .noContent()
                     .build();
         }
-        return this.findByID(dto.id);
+        return Response
+                .ok(this.service.mapper().getDTO(cidade.get()))
+                .build();
     }
 }

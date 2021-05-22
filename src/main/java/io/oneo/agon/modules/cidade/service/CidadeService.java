@@ -24,7 +24,7 @@ public class CidadeService extends BaseService<Cidade, Long>
 
     @Inject CidadeMapper mapper;
 
-    public CidadeMapper getMapper() { return this.mapper; }
+    public CidadeMapper mapper() { return this.mapper; }
 
     public Optional<Cidade> findByName(String name)
     {
@@ -32,7 +32,8 @@ public class CidadeService extends BaseService<Cidade, Long>
         {
             return Optional.empty();
         }
-        return this.repo.findByName(name);
+        var cidade = this.repo.findByName(name);
+        return cidade.isPresent() ? cidade : Optional.empty();
     }
 
     public Optional<Cidade> findByCode(String code)
@@ -41,7 +42,8 @@ public class CidadeService extends BaseService<Cidade, Long>
         {
             return Optional.empty();
         }
-        return this.repo.findByCode(code);
+        var cidade = this.repo.findByCode(code);
+        return cidade.isPresent() ? cidade : Optional.empty();
     }
 
     public List<Cidade> listByState(Estado estado)
@@ -49,32 +51,22 @@ public class CidadeService extends BaseService<Cidade, Long>
         return this.repo.listByState(estado);
     }
 
-    public Optional<Cidade> findByModel(Cidade cidade) throws CidadeServiceException
+    public Optional<Cidade> validate(Cidade cidade) throws CidadeServiceException
     {
-        var city = this.findByID(cidade.getId());
-        if (city.isPresent())
-        {
-            return city;
-        }
-
-        city = this.findByCode(cidade.getCodigo());
-        if (city.isPresent())
-        {
-            return city;
-        }
-        return Optional.empty();
+        var result = super.findByID(cidade.getId());
+        return result.isPresent() ? result : this.findByCode(cidade.getCodigo());
     }
 
     @Transactional
-    public Cidade addEdit(Cidade cidade) throws CidadeServiceException
+    public void addEdit(Cidade cidade) throws CidadeServiceException
     {
         try
         {
             if (cidade.getId() == null)
             {
-                return this.create(cidade);
+                super.create(cidade);
             }
-            return this.update(cidade);
+            super.update(cidade);
         }
         catch (Exception e)
         {

@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.cidade.resource.dto;
+package io.oneo.agon.modules.cidade.resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.oneo.agon.modules.estado.resource.dto.EstadoDTO;

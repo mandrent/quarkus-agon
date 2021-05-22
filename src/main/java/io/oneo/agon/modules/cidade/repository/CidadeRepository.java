@@ -19,8 +19,7 @@ public class CidadeRepository implements PanacheRepository<Cidade>
 
     public Optional<Cidade> findByCode(String codigo)
     {
-        var cidade = this.find("codigo", codigo).firstResult();
-        return Optional.ofNullable(cidade);
+        return this.find("codigo", codigo).firstResultOptional();
     }
 
     public List<Cidade> listByState(Estado estado)
