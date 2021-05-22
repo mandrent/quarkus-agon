@@ -36,9 +36,9 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().dtoList(this.service.list());
+        var list = this.service.list();
         return Response
-                .ok(list)
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -50,9 +50,14 @@ public class EmpresaResource
     public Response findByID(@PathParam("id") Long id)
     {
         var empresa = this.service.findByID(id);
-        var dto = this.service.getMapper().getDTO(empresa.get());
+        if (!empresa.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(empresa.get()))
                 .build();
     }
 
@@ -70,10 +75,8 @@ public class EmpresaResource
                     .noContent()
                     .build();
         }
-
-        var dto = this.service.getMapper().getDTO(empresa.get());
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(empresa.get()))
                 .build();
     }
 
@@ -85,11 +88,10 @@ public class EmpresaResource
     {
         dto.endereco = this.enderecoProxy.validate(dto.endereco);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
-        var empresa = this.service.getMapper().getModel(dto);
+        var empresa = this.service.mapper().getModel(dto);
         this.service.addEdit(empresa);
-        dto = this.service.getMapper().getDTO(empresa);
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(empresa))
                 .build();
     }
     
@@ -100,9 +102,12 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody EmpresaDTO dto) throws EmpresaServiceException
     {
-        if (dto.id != null)
+        var empresa = this.service.validate(this.service.mapper().getModel(dto));
+        if (!empresa.isPresent())
         {
-            return this.findByID(dto.id);
+            return Response
+                    .noContent()
+                    .build();
         }
         return this.create(dto);
     }
@@ -113,11 +118,10 @@ public class EmpresaResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody EmpresaDTO dto) throws EmpresaServiceException
     {
-        var empresa = this.service.getMapper().getModel(dto);
+        var empresa = this.service.mapper().getModel(dto);
         this.service.addEdit(empresa);
-        dto = this.service.getMapper().getDTO(empresa);
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(empresa))
                 .build();
     }
 

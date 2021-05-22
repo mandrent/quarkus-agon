@@ -11,7 +11,6 @@ public class EmpresaRepository implements PanacheRepository<Empresa>
 {
     public Optional<Empresa> findByCNPJ(String cnpj)
     {
-        var empresa = this.find("cnpj", cnpj).firstResult();
-        return Optional.ofNullable(empresa);
+        return this.find("cnpj", cnpj).firstResultOptional();
     }
 }

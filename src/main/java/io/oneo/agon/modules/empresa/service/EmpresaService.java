@@ -22,29 +22,31 @@ public class EmpresaService extends BaseService<Empresa, Long> implements IEmpre
 
     @Inject EmpresaMapper mapper;
 
-    public EmpresaMapper getMapper() { return this.mapper; }
+    public EmpresaMapper mapper() { return this.mapper; }
 
     public Optional<Empresa> findByCNPJ(String cnpj)
     {
-        if (cnpj.equalsIgnoreCase(null))
-        {
-            this.logger.info("# empresa naun localizada pelo CNPJ #");
-            return Optional.empty();
-        }
+        var empresa = this.repo.findByCNPJ(cnpj);
         this.logger.info("# retornando empresa pelo CNPJ #");
-        return this.repo.findByCNPJ(cnpj);
+        return empresa.isPresent() ? empresa : Optional.empty();
+    }
+
+    public Optional<Empresa> validate(Empresa empresa)
+    {
+        var result = super.findByID(empresa.getId());
+        return result.isPresent() ? result : this.findByCNPJ(empresa.getCnpj());
     }
 
     @Transactional
-    public Empresa addEdit(Empresa empresa) throws EmpresaServiceException
+    public void addEdit(Empresa empresa) throws EmpresaServiceException
     {
         try
         {
             if (empresa.getId() == null)
             {
-                return this.create(empresa);
+                super.create(empresa);
             }
-            return this.update(empresa);
+            super.update(empresa);
         }
         catch (Exception e)
         {
