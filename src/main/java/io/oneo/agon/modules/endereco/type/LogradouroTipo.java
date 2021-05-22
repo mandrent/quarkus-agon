@@ -8,5 +8,6 @@ public enum LogradouroTipo
     ESTRADA,
     PASSAGEM,
     RODOVIA,
-    RUA;
+    RUA,
+    QUADRA;
 }
