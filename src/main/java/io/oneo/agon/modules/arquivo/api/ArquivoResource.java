@@ -27,9 +27,9 @@ public class ArquivoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().dtoList(this.service.list());
+        var list = this.service.list();
         return Response
-                .ok(list)
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -48,9 +48,8 @@ public class ArquivoResource
                     .status(HttpStatus.SC_NOT_FOUND)
                     .build();
         }
-        var dto = this.service.getMapper().getDTO(arquivo.get());
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(arquivo.get()))
                 .build();
     }
 
@@ -69,9 +68,8 @@ public class ArquivoResource
                     .status(HttpStatus.SC_NOT_FOUND)
                     .build();
         }
-        var dto = this.service.getMapper().getDTO(arquivo.get());
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(arquivo.get()))
                 .build();
     }
 
@@ -87,9 +85,8 @@ public class ArquivoResource
         {
             is.read();
             var arquivo = this.service.upload(data);
-            var file = this.service.getMapper().getDTO(arquivo);
             return Response
-                    .ok(file)
+                    .ok(this.service.mapper().getDTO(arquivo))
                     .build();
         } catch (Exception e)
         {

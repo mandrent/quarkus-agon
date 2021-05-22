@@ -31,7 +31,7 @@ public class ArquivoService extends BaseService<Arquivo, Long> implements IArqui
 
     @Inject ArquivoSupport support;
 
-    public ArquivoMapper getMapper() { return this.mapper; }
+    public ArquivoMapper mapper() { return this.mapper; }
 
     @Override
     public Optional<Arquivo> findFileByID(Long id) throws ArquivoNaoLocalizadoException
@@ -80,15 +80,15 @@ public class ArquivoService extends BaseService<Arquivo, Long> implements IArqui
     }
 
 
-    public Arquivo addEdit(Arquivo arquivo) throws ArquivoServiceException
+    public void addEdit(Arquivo arquivo) throws ArquivoServiceException
     {
         try
         {
             if (arquivo.getId() == null)
             {
-                return this.create(arquivo);
+                super.create(arquivo);
             }
-            return this.update(arquivo);
+            super.update(arquivo);
         }
         catch (Exception e)
         {
