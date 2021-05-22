@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.empresa.modules.cargo.resource.dto;
+package io.oneo.agon.modules.empresa.modules.cargo.resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

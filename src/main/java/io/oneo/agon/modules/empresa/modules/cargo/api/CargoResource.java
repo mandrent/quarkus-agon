@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.empresa.modules.cargo.api;
 
 import io.oneo.agon.modules.empresa.modules.cargo.exception.CargoServiceException;
-import io.oneo.agon.modules.empresa.modules.cargo.resource.dto.CargoDTO;
+import io.oneo.agon.modules.empresa.modules.cargo.resource.CargoDTO;
 import io.oneo.agon.modules.empresa.modules.cargo.service.CargoService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
