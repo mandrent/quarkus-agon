@@ -21,29 +21,22 @@ public abstract class BaseService<E extends Serializable, ID extends Serializabl
     public DSLContext dsl() { return this.dsl; }
 
     @Override
-    public E create(E t)
+    public void create(E t)
     {
         this.repo.persist(t);
         this.logger.info("# add entidade #");
-        return t;
     }
 
     @Override
-    public E update(E t)
+    public void update(E t)
     {
         this.repo.getEntityManager().merge(t);
         this.logger.info("# update entidade # ");
-        return t;
     }
 
     @Override
     public Optional<E> findByID(ID id)
     {
-        if (id == null)
-        {
-            this.logger.info("# objeto naun localizado pelo ID #");
-            return Optional.empty();
-        }
         this.logger.info("# retornando objeto pelo ID #");
         return this.repo.findByIdOptional(id);
     }

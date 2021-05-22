@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface IService<E extends Serializable, ID extends Serializable>
 {
-    E create(E t);
+    void create(E t);
 
-    E update(E t);
+    void update(E t);
 
     Optional<E> findByID(ID id);
 
