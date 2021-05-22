@@ -25,9 +25,9 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().dtoList(this.service.list());
+        var list = this.service.list();
         return Response
-                .ok(list)
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -39,9 +39,14 @@ public class CargoResource
     public Response findByID(@PathParam("id") Long id)
     {
         var cargo = this.service.findByID(id);
-        var dto = this.service.getMapper().getDTO(cargo.get());
+        if (!cargo.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(cargo.get()))
                 .build();
     }
 
@@ -51,11 +56,10 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody CargoDTO dto) throws CargoServiceException
     {
-        var cargo = this.service.getMapper().getModel(dto);
+        var cargo = this.service.mapper().getModel(dto);
         this.service.addEdit(cargo);
-        dto = this.service.getMapper().getDTO(cargo);
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(cargo))
                 .build();
     }
 
@@ -66,20 +70,14 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody CargoDTO dto) throws CargoServiceException
     {
-        if (dto.getId() != null)
+        var cargo = this.service.validate(this.service.mapper().getModel(dto));
+        if (cargo.isPresent())
         {
-            var cargo = this.service.findByID(dto.getId());
-            dto = this.service.getMapper().getDTO(cargo.get());
-            return Response.ok(dto)
+            return Response
+                    .ok(this.service.mapper().getDTO(cargo.get()))
                     .build();
         }
-
-        var cargo = this.service.getMapper().getModel(dto);
-        this.service.addEdit(cargo);
-        dto = this.service.getMapper().getDTO(cargo);
-        return Response
-                .ok(dto)
-                .build();
+        return this.create(dto);
     }
 
     @GET
@@ -90,15 +88,14 @@ public class CargoResource
     public Response findByName(@PathParam("name") String name)
     {
         var cargo = this.service.findByName(name);
-        if (cargo.isPresent())
+        if (!cargo.isPresent())
         {
-            var dto = this.service.getMapper().getDTO(cargo.get());
             return Response
-                    .ok(dto)
+                    .noContent()
                     .build();
         }
         return Response
-                .noContent()
+                .ok(this.service.mapper().getDTO(cargo.get()))
                 .build();
     }
 
@@ -108,11 +105,10 @@ public class CargoResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody CargoDTO dto) throws CargoServiceException
     {
-        var cargo = this.service.getMapper().getModel(dto);
+        var cargo = this.service.mapper().getModel(dto);
         this.service.addEdit(cargo);
-        dto = this.service.getMapper().getDTO(cargo);
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(cargo))
                 .build();
     }
 

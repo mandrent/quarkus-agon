@@ -22,28 +22,42 @@ public class CargoService extends BaseService<Cargo, Long> implements ICargoServ
 
     @Inject CargoMapper mapper;
 
-    public CargoMapper getMapper() { return this.mapper; }
+    public CargoMapper mapper() { return this.mapper; }
 
     public Optional<Cargo> findByName(String name)
     {
         var cargo = this.repo.findByName(name);
-        if (cargo.isPresent())
-        {
-            return cargo;
-        }
-        return  Optional.empty();
+        return cargo.isPresent() ? cargo : Optional.empty();
+    }
+
+    private Optional<Cargo> findByNameOrID(Cargo cargo)
+    {
+        var result = super.findByID(cargo.getId());
+        return result.isPresent() ? result : this.findByName(cargo.getNome());
+    }
+
+    private Optional<Cargo> findByNameSectorOrFunction(Cargo cargo)
+    {
+        var result = this.repo.findByNameSectorFunction(cargo.getNome(), cargo.getSetor(), cargo.getFuncao());
+        return result.isPresent() ? result : Optional.empty();
+    }
+
+    public Optional<Cargo> validate(Cargo cargo)
+    {
+        var result = this.findByNameOrID(cargo);
+        return result.isPresent() ? result : this.findByNameSectorOrFunction(cargo);
     }
 
     @Transactional
-    public Cargo addEdit(Cargo cargo) throws CargoServiceException
+    public void addEdit(Cargo cargo) throws CargoServiceException
     {
         try
         {
             if (cargo.getId() == null)
             {
-                return this.create(cargo);
+                super.create(cargo);
             }
-            return this.update(cargo);
+            super.update(cargo);
         }
         catch (Exception e)
         {
