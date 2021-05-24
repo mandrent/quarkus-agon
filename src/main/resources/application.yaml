@@ -7,16 +7,6 @@ quarkus:
       url: jdbc:mysql://localhost:3306/agondb
       driver: com.mysql.cj.jdbc.Driver
 
-  flyway:
-    migrate-at-start: true
-    baseline-on-migrate: true
-    baseline-version: 0.0.11
-    baseline-description: Versão inicial do DB
-    validate-on-migrate: true
-    schemas: agondb
-    table: flyway_quarkus_history
-    locations: db/migration
-
 cargoProxy/mp-rest/uri:
   http://localhost:8080/agon/api/empresas/cargos
 cargoProxy/mp-rest/scope:
@@ -43,6 +33,16 @@ telefoneProxy/scope:
     http:
       root-path: /agon
       port: 8080
+    flyway:
+      migrate-at-start: true
+      baseline-on-migrate: true
+      baseline-version: 0.0.11
+      baseline-description: Versão inicial do DB
+      validate-on-migrate: true
+      schemas: agondb
+      table: flyway_quarkus_history
+      locations:
+        db/migration
 
 
 
