@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import io.oneo.agon.modules.empresa.modules.cargo.resource.dto.CargoDTO;
+import io.oneo.agon.modules.empresa.modules.cargo.resource.CargoDTO;
 import io.oneo.agon.modules.empresa.modules.funcionario.type.EstadoCivilTipo;
 import io.oneo.agon.modules.empresa.modules.funcionario.type.SexoTipo;
-import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
+import io.oneo.agon.modules.endereco.resource.EnderecoDTO;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
 
 import java.io.Serializable;
