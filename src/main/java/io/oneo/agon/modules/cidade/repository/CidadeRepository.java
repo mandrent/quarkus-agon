@@ -11,11 +11,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class CidadeRepository implements PanacheRepository<Cidade>
 {
-    public Optional<Cidade> findByName(String name)
-    {
-        var cidade = this.find("name", name).firstResult();
-        return Optional.ofNullable(cidade);
-    }
+    public Optional<Cidade> findByName(String name) { return this.find("name", name).firstResultOptional(); }
 
     public Optional<Cidade> findByCode(String codigo)
     {
