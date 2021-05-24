@@ -6,5 +6,4 @@ import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(config = BaseMapping.class)
-public interface UsuarioMapper extends BaseMapping<Usuario, UsuarioDTO>
-{ }
+public interface UsuarioMapper extends BaseMapping<Usuario, UsuarioDTO> { }

@@ -15,14 +15,12 @@ public class UsuarioRepository implements PanacheRepository<Usuario>
 {
     public Optional<Usuario> findByLogin(String login)
     {
-        var usuario = this.find("login", login).firstResult();
-        return Optional.ofNullable(usuario);
+        return this.find("login", login).firstResultOptional();
     }
 
     public Optional<Usuario> findByEmail(String email)
     {
-        var usuario = this.find("email", email).firstResult();
-        return Optional.ofNullable(usuario);
+        return this.find("email", email).firstResultOptional();
     }
 
     public List<Usuario> listByGrupo(GrupoTipo grupo)

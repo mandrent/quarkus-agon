@@ -27,10 +27,10 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 
     @Inject UsuarioMapper mapper;
 
-    public UsuarioMapper getMapper() { return this.mapper; }
+    public UsuarioMapper mapper() { return this.mapper; }
 
     @Override
-    public GrupoTipo validarGrupo(Integer grupoValor)
+    public GrupoTipo validateGroup(Integer grupoValor)
     {
         return switch (grupoValor) {
             case 1 -> GrupoTipo.ADMIN;
@@ -41,7 +41,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     }
 
     @Override
-    public StatusUsuarioTipo validarStatus(Integer statusValor)
+    public StatusUsuarioTipo validateStatus(Integer statusValor)
     {
         return switch (statusValor) {
             case 1 -> StatusUsuarioTipo.ATIVO;
@@ -55,12 +55,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     {
         try
         {
-            var usuario = this.repo.findByLogin(login);
-            if (!usuario.isPresent())
-            {
-                return Optional.empty();
-            }
-            return usuario;
+            return login.equals(null) ? Optional.empty() : this.repo.findByLogin(login);
         }
         catch (Exception e)
         {
@@ -74,12 +69,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     {
         try
         {
-            var usuario = this.repo.findByEmail(email);
-            if (!usuario.isPresent())
-            {
-                return Optional.empty();
-            }
-            return usuario;
+            return email.equals(null) ? Optional.empty() : this.repo.findByEmail(email);
         }
         catch (Exception e)
         {
@@ -88,23 +78,29 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
     }
 
-    public Optional<Usuario> findByModel(Usuario usuario) throws UsuarioServiceException
+    private int validateSearch(Usuario usuario)
+    {
+        if (usuario.getId() != null)
+        {
+            return 1;
+        }
+
+        if (!usuario.getEmail().equals(null))
+        {
+            return 2;
+        }
+        return 0;
+    }
+
+    public Optional<Usuario> validate(Usuario usuario) throws UsuarioServiceException
     {
         try
         {
-            var user = this.findByID(usuario.getId());
-            if (user.isPresent())
-            {
-                return user;
-            }
-
-            user = this.findByEmail(usuario.getEmail());
-            if (user.isPresent())
-            {
-                return user;
-            }
-
-            return this.findByLogin(usuario.getLogin());
+            return switch (this.validateSearch(usuario)) {
+                case 1 -> super.findByID(usuario.getId());
+                case 2 -> this.findByEmail(usuario.getEmail());
+                default -> this.findByLogin(usuario.getLogin());
+            };
         }
         catch (Exception e)
         {
@@ -113,28 +109,25 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
     }
 
-    public List<Usuario> listByGroup(Integer grupoID)
-    {
-        return this.repo.listByGrupo(this.validarGrupo(grupoID));
-    }
+    public List<Usuario> listByGroup(Integer grupoID) { return this.repo.listByGrupo(this.validateGroup(grupoID)); }
 
     public List<Usuario> listByStatus(Integer statusID)
     {
-        return this.repo.listByStatus(this.validarStatus(statusID));
+        return this.repo.listByStatus(this.validateStatus(statusID));
     }
 
     @Transactional
-    public Usuario addEdit(Usuario usuario) throws UsuarioServiceException
+    public void addEdit(Usuario usuario) throws UsuarioServiceException
     {
         try
         {
             if (usuario.getId() == null)
             {
-                usuario.setGrupo(this.validarGrupo(usuario.getGrupo().ordinal()));
-                usuario.setStatus(this.validarStatus(usuario.getStatus().ordinal()));
-                return this.create(usuario);
+                usuario.setGrupo(this.validateGroup(usuario.getGrupo().ordinal()));
+                usuario.setStatus(this.validateStatus(usuario.getStatus().ordinal()));
+                super.create(usuario);
             }
-            return this.update(usuario);
+            super.update(usuario);
         }
         catch (Exception e)
         {

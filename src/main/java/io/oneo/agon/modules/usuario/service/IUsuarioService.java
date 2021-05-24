@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface IUsuarioService
 {
-    GrupoTipo validarGrupo(Integer grupoValor);
+    GrupoTipo validateGroup(Integer grupoValor);
 
-    StatusUsuarioTipo validarStatus(Integer statusValor);
+    StatusUsuarioTipo validateStatus(Integer statusValor);
 
     Optional<Usuario> findByLogin(String login) throws UsuarioServiceException;
 

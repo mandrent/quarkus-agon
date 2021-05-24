@@ -25,8 +25,9 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
+        var list = this.service.list();
         return Response
-                .ok(this.service.getMapper().dtoList(this.service.list()))
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -45,7 +46,7 @@ public class UsuarioResource
                     .build();
         }
         return Response
-                .ok(this.service.getMapper().getDTO(usuario.get()))
+                .ok(this.service.mapper().getDTO(usuario.get()))
                 .build();
     }
 
@@ -64,7 +65,7 @@ public class UsuarioResource
                     .build();
         }
         return Response
-                .ok(this.service.getMapper().getDTO(usuario.get()))
+                .ok(this.service.mapper().getDTO(usuario.get()))
                 .build();
     }
 
@@ -74,10 +75,10 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var usuario = this.service.getMapper().getModel(dto);
-        usuario = this.service.addEdit(usuario);
+        var usuario = this.service.mapper().getModel(dto);
+        this.service.addEdit(usuario);
         return Response
-                .ok(this.service.getMapper().getDTO(usuario))
+                .ok(this.service.mapper().getDTO(usuario))
                 .build();
     }
 
@@ -88,11 +89,11 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var user = this.service.findByModel(this.service.getMapper().getModel(dto));
+        var user = this.service.validate(this.service.mapper().getModel(dto));
         if (user.isPresent())
         {
             return Response
-                    .ok(this.service.getMapper().getDTO(user.get()))
+                    .ok(this.service.mapper().getDTO(user.get()))
                     .build();
         }
         return this.create(dto);
@@ -104,10 +105,10 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var usuario = this.service.getMapper().getModel(dto);
-        usuario = this.service.addEdit(usuario);
+        var usuario = this.service.mapper().getModel(dto);
+        this.service.addEdit(usuario);
         return Response
-                .ok(this.service.getMapper().getDTO(usuario))
+                .ok(this.service.mapper().getDTO(usuario))
                 .build();
     }
 
