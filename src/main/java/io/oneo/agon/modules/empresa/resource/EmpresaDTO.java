@@ -1,9 +1,7 @@
 package io.oneo.agon.modules.empresa.resource;
 
-import io.oneo.agon.modules.endereco.resource.dto.EnderecoDTO;
+import io.oneo.agon.modules.endereco.resource.EnderecoDTO;
 import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
