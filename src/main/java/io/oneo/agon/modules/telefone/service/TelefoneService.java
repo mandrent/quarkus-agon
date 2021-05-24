@@ -23,7 +23,7 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
 
     @Inject TelefoneMapper mapper;
 
-    public TelefoneMapper getMapper() { return this.mapper; }
+    public TelefoneMapper mapper() { return this.mapper; }
 
     @Override
     public String validarFormatoNumero(String numero)
@@ -36,23 +36,15 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
 
     public Optional<Telefone> findByNumber(String numero)
     {
-        if (numero.equals(null))
-        {
-            return Optional.empty();
-        }
-        return this.repo.findByNumber(this.validarFormatoNumero(numero));
+        return numero.equals(null) ? Optional.empty() : this.repo.findByNumber(this.validarFormatoNumero(numero));
     }
 
-    public Optional<Telefone> findByModel(Telefone telefone) throws TelefoneServiceException
+    public Optional<Telefone> validate(Telefone telefone) throws TelefoneServiceException
     {
         try
         {
             var phone = super.findByID(telefone.getId());
-            if (phone.isPresent())
-            {
-                return phone;
-            }
-            return this.findByNumber(telefone.getNumero());
+            return phone.isPresent() ? phone : this.findByNumber(telefone.getNumero());
         }
         catch (Exception e)
         {
@@ -62,15 +54,15 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
     }
 
     @Transactional
-    public Telefone addEdit(Telefone telefone) throws TelefoneServiceException
+    public void addEdit(Telefone telefone) throws TelefoneServiceException
     {
         try
         {
             if (telefone.getId() == null)
             {
-                return this.create(telefone);
+                super.create(telefone);
             }
-            return this.update(telefone);
+            super.update(telefone);
         }
         catch (Exception e)
         {

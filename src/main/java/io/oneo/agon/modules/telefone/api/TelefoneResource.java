@@ -25,9 +25,9 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.getMapper().dtoList(this.service.list());
+        var list = this.service.list();
         return Response
-                .ok(list)
+                .ok(this.service.mapper().dtoList(list))
                 .build();
     }
 
@@ -38,10 +38,15 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByID(@PathParam("id") Long id)
     {
-        var cargo = this.service.findByID(id);
-        var dto = this.service.getMapper().getDTO(cargo.get());
+        var telefone = this.service.findByID(id);
+        if (!telefone.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
         return Response
-                .ok(dto)
+                .ok(this.service.mapper().getDTO(telefone.get()))
                 .build();
     }
 
@@ -60,7 +65,7 @@ public class TelefoneResource
                     .build();
         }
         return Response
-                .ok(this.service.getMapper().getDTO(telefone.get()))
+                .ok(this.service.mapper().getDTO(telefone.get()))
                 .build();
     }
 
@@ -70,10 +75,10 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
     {
-        var telefone = this.service.getMapper().getModel(dto);
+        var telefone = this.service.mapper().getModel(dto);
         this.service.addEdit(telefone);
         return Response
-                .ok(this.service.getMapper().getDTO(telefone))
+                .ok(this.service.mapper().getDTO(telefone))
                 .build();
     }
 
@@ -84,11 +89,11 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
     {
-        var telefone = this.service.findByModel(this.service.getMapper().getModel(dto));
+        var telefone = this.service.validate(this.service.mapper().getModel(dto));
         if (telefone.isPresent())
         {
             return Response
-                    .ok(this.service.getMapper().getDTO(telefone.get()))
+                    .ok(this.service.mapper().getDTO(telefone.get()))
                     .build();
         }
         return this.create(dto);
@@ -100,9 +105,9 @@ public class TelefoneResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
     {
-        var telefone= this.service.getMapper().getModel(dto);
+        var telefone= this.service.mapper().getModel(dto);
         this.service.addEdit(telefone);
-        dto = this.service.getMapper().getDTO(telefone);
+        dto = this.service.mapper().getDTO(telefone);
         return Response
                 .ok(dto)
                 .build();

@@ -11,11 +11,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class TelefoneRepository implements PanacheRepositoryBase<Telefone, Long>
 {
-    public Optional<Telefone> findByNumber(String numero)
-    {
-        var telefone = this.find("numero", numero).firstResult();
-        return Optional.ofNullable(telefone);
-    }
+    public Optional<Telefone> findByNumber(String numero) { return this.find("numero", numero).firstResultOptional(); }
 
     public List<Telefone> listByDDD(String ddd) { return this.find("ddd", ddd).list(); }
 
