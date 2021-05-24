@@ -37,7 +37,7 @@ public class ProfissionalResource
     public Response list()
     {
         return Response
-                .ok(this.service.getMapper().dtoList(this.service.list()))
+                .ok(this.service.mapper().dtoList(this.service.list()))
                 .build();
     }
 
@@ -56,7 +56,7 @@ public class ProfissionalResource
                     .build();
         }
         return Response
-                .ok(this.service.getMapper().getDTO(profissional.get()))
+                .ok(this.service.mapper().getDTO(profissional.get()))
                 .build();
     }
 
@@ -68,10 +68,10 @@ public class ProfissionalResource
     {
         dto.usuario = this.usuarioProxy.validate(dto.usuario);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
-        var profissional = this.service.getMapper().getModel(dto);
+        var profissional = this.service.mapper().getModel(dto);
         this.service.addEdit(profissional);
         return Response
-                .ok(this.service.getMapper().getDTO(profissional))
+                .ok(this.service.mapper().getDTO(profissional))
                 .build();
     }
 
@@ -82,9 +82,12 @@ public class ProfissionalResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
-        if (dto.id != null)
+        var profissional = this.service.validate(this.service.mapper().getModel(dto));
+        if (!profissional.isPresent())
         {
-            return this.findByID(dto.id);
+            return Response
+                    .noContent()
+                    .build();
         }
         return this.create(dto);
     }
