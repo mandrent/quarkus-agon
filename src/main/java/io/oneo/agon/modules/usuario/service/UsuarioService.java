@@ -78,34 +78,18 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
     }
 
-    private int validateSearch(Usuario usuario)
-    {
-        if (usuario.getId() != null)
-        {
-            return 1;
-        }
-
-        if (!usuario.getEmail().equals(null))
-        {
-            return 2;
-        }
-        return 0;
-    }
-
     public Optional<Usuario> validate(Usuario usuario) throws UsuarioServiceException
     {
         try
         {
-            return switch (this.validateSearch(usuario)) {
-                case 1 -> super.findByID(usuario.getId());
-                case 2 -> this.findByEmail(usuario.getEmail());
-                default -> this.findByLogin(usuario.getLogin());
-            };
+            var result = this.findByLogin(usuario.getLogin());
+            result = !result.isPresent() ? this.findByEmail(usuario.getEmail()) : result;
+            return result.isPresent() ? result : super.findByID(usuario.id);
         }
         catch (Exception e)
         {
             this.log.error(e.getMessage());
-            throw new UsuarioServiceException("Erro ao buscar usuario pelo login", e);
+            throw new UsuarioServiceException("Erro ao buscar usuario", e);
         }
     }
 
@@ -121,7 +105,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     {
         try
         {
-            if (usuario.getId() == null)
+            if (usuario.id == null)
             {
                 usuario.setGrupo(this.validateGroup(usuario.getGrupo().ordinal()));
                 usuario.setStatus(this.validateStatus(usuario.getStatus().ordinal()));
