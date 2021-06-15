@@ -7,42 +7,55 @@ quarkus:
       url: jdbc:mysql://localhost:3306/agondb
       driver: com.mysql.cj.jdbc.Driver
 
-cargoProxy/mp-rest/uri:
-  http://localhost:8080/agon/api/empresas/cargos
-cargoProxy/mp-rest/scope:
-  javax.inject.Singleton
-enderecoProxy/mp-rest:
-  http://localhost:8080/agon/enderecos
-enderecoProxy/scope:
-  javax.inject.Singleton
-funcionarioProxy/mp-rest/uri:
-  http://localhost:8080/agon/api/empresas/funcionarios
-funcionarioProxy/mp-rest/scope:
-  javax.inject.Singleton
-usuarioProxy/mp-rest/uri:
-  http://localhost:8080/agon/api/usuarios
-usuarioProxy/mp-rest/scope:
-  javax.inject.Singleton
-telefoneProxy/mp-rest/uri:
-  http://localhost:8080/agon/api/telefones
-telefoneProxy/scope:
-  javax.inject.Singleton
+  http:
+    root-path: /agon
+    port: 8080
 
-"%dev":
-  quarkus:
-    http:
-      root-path: /agon
-      port: 8080
-    flyway:
-      migrate-at-start: true
-      baseline-on-migrate: true
-      baseline-version: 0.0.11
-      baseline-description: Versão inicial do DB
-      validate-on-migrate: true
-      schemas: agondb
-      table: flyway_quarkus_history
-      locations:
-        db/migration
+  flyway:
+    migrate-at-start: false
+    baseline-on-migrate: false
+    baseline-version: 0.0.11
+    baseline-description: Versão inicial do DB
+    validate-on-migrate: false
+    schemas:
+      agondb
+    table:
+      flyway_quarkus_history
+    locations:
+      db/migration
 
+cargoProxy:
+  mp-rest:
+    uri:
+      http://localhost:8080/agon/api/empresas/cargos
+    scope:
+      javax.inject.Singleton
 
+enderecoProxy:
+  mp-rest:
+    uri:
+      http://localhost:8080/agon/enderecos
+    scope:
+      javax.inject.Singleton
+
+funcionarioProxy:
+  mp-rest:
+    uri:
+      http://localhost:8080/agon/api/empresas/funcionarios
+    scope:
+      javax.inject.Singleton
+
+telefoneProxy:
+  mp-rest:
+    uri:
+      http://localhost:8080/agon/api/telefones
+    scope:
+      javax.inject.Singleton
+
+usuarioProxy:
+  mp-rest:
+    uri:
+      http://localhost:8080/agon/api/usuarios
+    scope:
+      javax.inject.Singleton
 
