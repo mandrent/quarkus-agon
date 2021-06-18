@@ -37,7 +37,7 @@ public class ProfissionalResource
     public Response list()
     {
         return Response
-                .ok(this.service.mapper().dtoList(this.service.list()))
+                .ok(this.service.dtoList(this.service.list()))
                 .build();
     }
 
@@ -56,7 +56,26 @@ public class ProfissionalResource
                     .build();
         }
         return Response
-                .ok(this.service.mapper().getDTO(profissional.get()))
+                .ok(this.service.getDTO(profissional.get()))
+                .build();
+    }
+
+    @GET
+    @Path("/documents")
+    @Operation(description = "Busca por documentos")
+    @Tag(name="profissionais")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response findByDocuments(@RequestBody ProfissionalDTO dto)
+    {
+        var profissional = this.service.findByDocuments(this.service.getModel(dto));
+        if (!profissional.isPresent())
+        {
+            return Response
+                    .noContent()
+                    .build();
+        }
+        return Response
+                .ok(this.service.getDTO(profissional.get()))
                 .build();
     }
 
@@ -68,10 +87,10 @@ public class ProfissionalResource
     {
         dto.usuario = this.usuarioProxy.validate(dto.usuario);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
-        var profissional = this.service.mapper().getModel(dto);
+        var profissional = this.service.getModel(dto);
         this.service.addEdit(profissional);
         return Response
-                .ok(this.service.mapper().getDTO(profissional))
+                .ok(this.service.getDTO(profissional))
                 .build();
     }
 
@@ -82,7 +101,7 @@ public class ProfissionalResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
-        var profissional = this.service.validate(this.service.mapper().getModel(dto));
+        var profissional = this.service.validate(this.service.getModel(dto));
         if (!profissional.isPresent())
         {
             return Response

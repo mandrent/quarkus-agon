@@ -17,7 +17,8 @@ public class ProfissionalRepository implements PanacheRepository<Profissional>
     public Optional<Profissional> findByFullname(String nome, String sobrenome)
     {
         return this.find("nome = :nome and sobrenome = :sobrenome",
-                Parameters.with("nome", nome)
+                Parameters
+                        .with("nome", nome)
                         .and("sobrenome", sobrenome)).firstResultOptional();
     }
 

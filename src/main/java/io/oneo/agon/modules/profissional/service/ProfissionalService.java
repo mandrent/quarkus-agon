@@ -5,16 +5,18 @@ import io.oneo.agon.modules.profissional.exception.ProfissionalServiceException;
 import io.oneo.agon.modules.profissional.mapper.ProfissionalMapper;
 import io.oneo.agon.modules.profissional.model.Profissional;
 import io.oneo.agon.modules.profissional.repository.ProfissionalRepository;
+import io.oneo.agon.modules.profissional.resource.dto.ProfissionalDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
-public class ProfissionalService extends BaseService<Profissional, Long>
+public class ProfissionalService extends BaseService<Profissional, Long> implements IProfissionalService
 {
     private final Logger logger = LoggerFactory.getLogger(ProfissionalService.class);
 
@@ -22,56 +24,53 @@ public class ProfissionalService extends BaseService<Profissional, Long>
 
     @Inject ProfissionalMapper mapper;
 
-    public ProfissionalMapper mapper() { return this.mapper; }
-
-    private int validateRegistration(Profissional profissional)
+    @Override
+    public Optional<Profissional> findByDocuments(Profissional profissional)
     {
-        if (!profissional.getDrt().equals(null))
+        if (profissional.getCrea() != null)
         {
-            return 1;
+            return this.repo.findByCrea(profissional.getCrea());
         }
 
-        if (!profissional.getCrm().equals(null))
+        if (profissional.getDrt() != null)
         {
-            return 2;
+            return this.repo.findByDRT(profissional.getDrt());
         }
 
-        if (!profissional.getCrea().equals(null))
+        if (profissional.getCrm() != null)
         {
-            return 3;
+            return this.repo.findByCRM(profissional.getCrm());
         }
-        return 0;
+        return this.repo.findByCoren(profissional.getCoren());
     }
 
-    public Optional<Profissional> findByRegistration(Profissional profissional)
-    {
-        return switch (this.validateRegistration(profissional)) {
-            case 1 -> this.repo.findByDRT(profissional.getDrt());
-            case 2 -> this.repo.findByCRM(profissional.getCrm());
-            case 3 -> this.repo.findByCrea(profissional.getCrea());
-            default -> this.repo.findByCoren(profissional.getCoren());
-        };
-    }
+    @Override
+    public ProfissionalDTO getDTO(Profissional profissional) { return this.mapper.getDTO(profissional); }
 
-    public Optional<Profissional> validate(Profissional profissional) throws ProfissionalServiceException
+    @Override
+    public Profissional getModel(ProfissionalDTO dto) { return this.mapper.getModel(dto); }
+
+    @Override
+    public List<ProfissionalDTO> dtoList(List<Profissional> list) { return this.mapper.dtoList(list); }
+
+    @Override
+    public List<Profissional> modelList(List<ProfissionalDTO> list) { return this.mapper.modelList(list); }
+
+    public Optional<Profissional> validate(Profissional profissional)
     {
         try
         {
-            if (profissional.getId() != null)
+            if (profissional.id != null)
             {
-                return super.findByID(profissional.getId());
+                return super.findByID(profissional.id);
             }
 
-            if (profissional.getUsuario() != null)
+            if (profissional.getUsuario().id != null)
             {
                 return this.repo.findByUser(profissional.getUsuario());
             }
 
-            if (!profissional.getNome().equals(null) && !profissional.getSobreNome().equals(null))
-            {
-                return this.repo.findByFullname(profissional.getNome(), profissional.getSobreNome());
-            }
-            var result = this.findByRegistration(profissional);
+            var result = this.repo.findByFullname(profissional.getNome(), profissional.getSobreNome());
             return result.isPresent() ? result : this.repo.findByPhone(profissional.getTelefone());
         }
         catch (Exception e)
@@ -82,11 +81,11 @@ public class ProfissionalService extends BaseService<Profissional, Long>
     }
 
     @Transactional
-    public void addEdit(Profissional profissional) throws ProfissionalServiceException
+    public void addEdit(Profissional profissional)
     {
         try
         {
-            if (profissional.getId() == null)
+            if (profissional.id == null)
             {
                 super.create(profissional);
             }

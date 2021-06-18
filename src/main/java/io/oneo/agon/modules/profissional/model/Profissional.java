@@ -4,6 +4,7 @@ import io.oneo.agon.modules.profissional.type.AreaTipo;
 import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
 import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.usuario.model.Usuario;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,54 +13,48 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "profissional", schema = "agondb")
-public class Profissional implements Serializable
+public class Profissional extends PanacheEntity implements Serializable
 {
     private static final long serialVersionUID = -2283230030471863819L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private Usuario usuario;
+    public Usuario usuario;
 
     @Column(name = "nome", length = 30)
-    private String nome;
+    public String nome;
 
     @Column(name = "sobrenome", length = 30)
-    private String sobreNome;
+    public String sobreNome;
 
     @Column(name = "area")
     @Enumerated(EnumType.STRING)
-    private AreaTipo area;
+    public AreaTipo area;
 
     @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
-    private ProfissionalTipo tipo;
+    public ProfissionalTipo tipo;
 
     @Column(name = "drt", length = 15)
-    private String drt;
+    public String drt;
 
     @Column(name = "sesmt", length = 10)
-    private int sesmt;
+    public int sesmt;
 
     @Column(name = "crm", length = 15)
-    private String crm;
+    public String crm;
 
     @Column(name = "crea", length = 15)
-    private String crea;
+    public String crea;
 
     @Column(name = "coren", length = 15)
-    private String coren;
+    public String coren;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "telefone_id", referencedColumnName = "id")
-    private Telefone telefone;
+    public Telefone telefone;
 
     public Profissional() { }
-
 }
