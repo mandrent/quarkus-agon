@@ -43,5 +43,4 @@ public class Usuario extends PanacheEntity implements Serializable
     public LocalDateTime update;
 
     public Usuario() { }
-
 }

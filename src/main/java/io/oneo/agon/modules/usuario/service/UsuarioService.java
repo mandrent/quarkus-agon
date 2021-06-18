@@ -5,6 +5,7 @@ import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
 import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.repository.UsuarioRepository;
+import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import org.slf4j.Logger;
@@ -16,8 +17,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.String.valueOf;
-
 @ApplicationScoped
 public class UsuarioService extends BaseService<Usuario, Long> implements IUsuarioService
 {
@@ -26,8 +25,6 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     @Inject UsuarioRepository repo;
 
     @Inject UsuarioMapper mapper;
-
-    public UsuarioMapper mapper() { return this.mapper; }
 
     @Override
     public GrupoTipo validateGroup(Integer grupoValor)
@@ -51,11 +48,11 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     }
 
     @Override
-    public Optional<Usuario> findByLogin(String login) throws UsuarioServiceException
+    public Optional<Usuario> findByLogin(String login)
     {
         try
         {
-            return login.equals(null) ? Optional.empty() : this.repo.findByLogin(login);
+            return this.repo.findByLogin(login);
         }
         catch (Exception e)
         {
@@ -65,11 +62,11 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     }
 
     @Override
-    public Optional<Usuario> findByEmail(String email) throws UsuarioServiceException
+    public Optional<Usuario> findByEmail(String email)
     {
         try
         {
-            return email.equals(null) ? Optional.empty() : this.repo.findByEmail(email);
+            return this.repo.findByEmail(email);
         }
         catch (Exception e)
         {
@@ -78,12 +75,25 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
     }
 
-    public Optional<Usuario> validate(Usuario usuario) throws UsuarioServiceException
+    @Override
+    public UsuarioDTO getDTO(Usuario usuario) { return this.mapper.getDTO(usuario); }
+
+    @Override
+    public Usuario getModel(UsuarioDTO dto) { return this.mapper.getModel(dto); }
+
+    @Override
+    public List<UsuarioDTO> dtoList(List<Usuario> list) { return this.mapper.dtoList(list); }
+
+    @Override
+    public List<Usuario> modelList(List<UsuarioDTO> list) { return this.mapper.modelList(list); }
+
+    @Override
+    public Optional<Usuario> validate(Usuario usuario)
     {
         try
         {
             var result = this.findByLogin(usuario.getLogin());
-            result = !result.isPresent() ? this.findByEmail(usuario.getEmail()) : result;
+            result = result.isPresent() ? result : this.findByEmail(usuario.getEmail());
             return result.isPresent() ? result : super.findByID(usuario.id);
         }
         catch (Exception e)
@@ -93,15 +103,8 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
     }
 
-    public List<Usuario> listByGroup(Integer grupoID) { return this.repo.listByGrupo(this.validateGroup(grupoID)); }
-
-    public List<Usuario> listByStatus(Integer statusID)
-    {
-        return this.repo.listByStatus(this.validateStatus(statusID));
-    }
-
     @Transactional
-    public void addEdit(Usuario usuario) throws UsuarioServiceException
+    public void addEdit(Usuario usuario)
     {
         try
         {
