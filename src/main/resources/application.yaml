@@ -24,38 +24,18 @@ quarkus:
     locations:
       db/migration
 
-cargoProxy:
-  mp-rest:
-    uri:
-      http://localhost:8080/agon/api/empresas/cargos
-    scope:
-      javax.inject.Singleton
+cargoProxy/mp-rest/uri: http://localhost:8080/agon/api/empresas/cargos
+cargoProxy/scope: javax.inject.Singleton
 
-enderecoProxy:
-  mp-rest:
-    uri:
-      http://localhost:8080/agon/enderecos
-    scope:
-      javax.inject.Singleton
+enderecoProxy/mp-rest/uri: http://localhost:8080/agon/api/enderecos
+enderecoProxy/scope: javax.inject.Singleton
 
-funcionarioProxy:
-  mp-rest:
-    uri:
-      http://localhost:8080/agon/api/empresas/funcionarios
-    scope:
-      javax.inject.Singleton
+funcionarioProxy/mp-rest/uri: http://localhost:8080/agon/api/empresas/funcionarios
+funcionarioProxy/scope: javax.inject.Singleton
 
-telefoneProxy:
-  mp-rest:
-    uri:
-      http://localhost:8080/agon/api/telefones
-    scope:
-      javax.inject.Singleton
+telefoneProxy/mp-rest/uri: http://localhost:8080/agon/api/telefones
+telefoneProxy/mp-rest/scope: javax.inject.Singleton
 
-usuarioProxy:
-  mp-rest:
-    uri:
-      http://localhost:8080/agon/api/usuarios
-    scope:
-      javax.inject.Singleton
+usuarioProxy/mp-rest/uri: http://localhost:8080/agon/api/usuarios
+usuarioProxy/scope: javax.inject.Singleton
 
