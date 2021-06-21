@@ -1,14 +1,12 @@
 package io.oneo.agon.modules.usuario.service;
 
-import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
-import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 
 import java.util.Optional;
 
-public interface IUsuarioService extends UsuarioMapper
+public interface IUsuarioService
 {
     GrupoTipo validateGroup(Integer grupoValor);
 

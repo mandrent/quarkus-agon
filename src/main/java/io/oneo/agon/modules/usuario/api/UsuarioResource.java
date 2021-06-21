@@ -27,7 +27,7 @@ public class UsuarioResource
     {
         var list = this.service.list();
         return Response
-                .ok(this.service.dtoList(list))
+                .ok(this.service.getMapper().dtoList(list))
                 .build();
     }
 
@@ -46,7 +46,7 @@ public class UsuarioResource
                     .build();
         }
         return Response
-                .ok(this.service.getDTO(usuario.get()))
+                .ok(this.service.getMapper().getDTO(usuario.get()))
                 .build();
     }
 
@@ -65,7 +65,7 @@ public class UsuarioResource
                     .build();
         }
         return Response
-                .ok(this.service.getDTO(usuario.get()))
+                .ok(this.service.getMapper().getDTO(usuario.get()))
                 .build();
     }
 
@@ -75,10 +75,10 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var usuario = this.service.getModel(dto);
+        var usuario = this.service.getMapper().getModel(dto);
         this.service.addEdit(usuario);
         return Response
-                .ok(this.service.getDTO(usuario))
+                .ok(this.service.getMapper().getDTO(usuario))
                 .build();
     }
 
@@ -89,11 +89,11 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var user = this.service.validate(this.service.getModel(dto));
+        var user = this.service.validate(this.service.getMapper().getModel(dto));
         if (user.isPresent())
         {
             return Response
-                    .ok(this.service.getDTO(user.get()))
+                    .ok(this.service.getMapper().getDTO(user.get()))
                     .build();
         }
         return this.create(dto);
@@ -105,10 +105,10 @@ public class UsuarioResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
     {
-        var usuario = this.service.getModel(dto);
+        var usuario = this.service.getMapper().getModel(dto);
         this.service.addEdit(usuario);
         return Response
-                .ok(this.service.getDTO(usuario))
+                .ok(this.service.getMapper().getDTO(usuario))
                 .build();
     }
 

@@ -8,12 +8,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsuarioDTO implements Serializable
 {
+    @Serial
     private static final long serialVersionUID = 3457897005042647280L;
 
     public Long id;
@@ -40,6 +42,6 @@ public class UsuarioDTO implements Serializable
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonProperty("update")
+    @JsonProperty("atualiza")
     public LocalDateTime atualiza;
 }

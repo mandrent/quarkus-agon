@@ -26,6 +26,8 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
 
     @Inject UsuarioMapper mapper;
 
+    public UsuarioMapper getMapper() { return this.mapper; }
+
     @Override
     public GrupoTipo validateGroup(Integer grupoValor)
     {
@@ -74,18 +76,6 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
             throw new UsuarioServiceException("Erro ao buscar usuario pelo email", e);
         }
     }
-
-    @Override
-    public UsuarioDTO getDTO(Usuario usuario) { return this.mapper.getDTO(usuario); }
-
-    @Override
-    public Usuario getModel(UsuarioDTO dto) { return this.mapper.getModel(dto); }
-
-    @Override
-    public List<UsuarioDTO> dtoList(List<Usuario> list) { return this.mapper.dtoList(list); }
-
-    @Override
-    public List<Usuario> modelList(List<UsuarioDTO> list) { return this.mapper.modelList(list); }
 
     @Override
     public Optional<Usuario> validate(Usuario usuario)
