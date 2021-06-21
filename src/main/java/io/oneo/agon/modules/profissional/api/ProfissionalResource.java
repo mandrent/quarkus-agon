@@ -37,7 +37,7 @@ public class ProfissionalResource
     public Response list()
     {
         return Response
-                .ok(this.service.dtoList(this.service.list()))
+                .ok(this.service.getMapper().dtoList(this.service.list()))
                 .build();
     }
 
@@ -49,33 +49,21 @@ public class ProfissionalResource
     public Response findByID(@PathParam("id") Long id)
     {
         var profissional = this.service.findByID(id);
-        if (!profissional.isPresent())
-        {
-            return Response
-                    .noContent()
-                    .build();
-        }
         return Response
-                .ok(this.service.getDTO(profissional.get()))
+                .ok(this.service.getMapper().getDTO(profissional.get()))
                 .build();
     }
 
-    @GET
+    @PUT
     @Path("/documents")
     @Operation(description = "Busca por documentos")
     @Tag(name="profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByDocuments(@RequestBody ProfissionalDTO dto)
     {
-        var profissional = this.service.findByDocuments(this.service.getModel(dto));
-        if (!profissional.isPresent())
-        {
-            return Response
-                    .noContent()
-                    .build();
-        }
+        var profissional = this.service.findByDocuments(this.service.getMapper().getModel(dto));
         return Response
-                .ok(this.service.getDTO(profissional.get()))
+                .ok(this.service.getMapper().getDTO(profissional.get()))
                 .build();
     }
 
@@ -87,10 +75,10 @@ public class ProfissionalResource
     {
         dto.usuario = this.usuarioProxy.validate(dto.usuario);
         dto.telefone = this.telefoneProxy.validate(dto.telefone);
-        var profissional = this.service.getModel(dto);
+        var profissional = this.service.getMapper().getModel(dto);
         this.service.addEdit(profissional);
         return Response
-                .ok(this.service.getDTO(profissional))
+                .ok(this.service.getMapper().getDTO(profissional))
                 .build();
     }
 
@@ -101,11 +89,11 @@ public class ProfissionalResource
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
-        var profissional = this.service.validate(this.service.getModel(dto));
-        if (!profissional.isPresent())
+        var profissional = this.service.validate(this.service.getMapper().getModel(dto));
+        if (profissional.isPresent())
         {
             return Response
-                    .noContent()
+                    .ok(this.service.getMapper().getDTO(profissional.get()))
                     .build();
         }
         return this.create(dto);

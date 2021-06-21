@@ -24,6 +24,8 @@ public class ProfissionalService extends BaseService<Profissional, Long> impleme
 
     @Inject ProfissionalMapper mapper;
 
+    public ProfissionalMapper getMapper() { return this.mapper; }
+
     @Override
     public Optional<Profissional> findByDocuments(Profissional profissional)
     {
@@ -43,18 +45,6 @@ public class ProfissionalService extends BaseService<Profissional, Long> impleme
         }
         return this.repo.findByCoren(profissional.getCoren());
     }
-
-    @Override
-    public ProfissionalDTO getDTO(Profissional profissional) { return this.mapper.getDTO(profissional); }
-
-    @Override
-    public Profissional getModel(ProfissionalDTO dto) { return this.mapper.getModel(dto); }
-
-    @Override
-    public List<ProfissionalDTO> dtoList(List<Profissional> list) { return this.mapper.dtoList(list); }
-
-    @Override
-    public List<Profissional> modelList(List<ProfissionalDTO> list) { return this.mapper.modelList(list); }
 
     public Optional<Profissional> validate(Profissional profissional)
     {
