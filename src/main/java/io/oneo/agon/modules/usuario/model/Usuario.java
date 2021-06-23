@@ -3,13 +3,11 @@ package io.oneo.agon.modules.usuario.model;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter @Setter
 @Entity
 @Table(name = "usuario", schema = "agondb")
 public class Usuario extends PanacheEntity implements Serializable

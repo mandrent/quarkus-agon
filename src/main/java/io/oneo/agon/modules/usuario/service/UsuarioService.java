@@ -77,13 +77,12 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         }
     }
 
-    @Override
     public Optional<Usuario> validate(Usuario usuario)
     {
         try
         {
-            var result = this.findByLogin(usuario.getLogin());
-            result = result.isPresent() ? result : this.findByEmail(usuario.getEmail());
+            var result = this.findByLogin(usuario.login);
+            result = result.isPresent() ? result : this.findByEmail(usuario.email);
             return result.isPresent() ? result : super.findByID(usuario.id);
         }
         catch (Exception e)
@@ -94,14 +93,32 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     }
 
     @Transactional
+    public void delete(Usuario usuario)
+    {
+        try
+        {
+            if (usuario.id == null)
+            {
+                super.remove(usuario);
+            }
+            super.removeByID(usuario.id);
+        }
+        catch (Exception e)
+        {
+            this.log.error(e.getMessage());
+            throw new UsuarioServiceException("Erro ao remover o usuário", e);
+        }
+    }
+
+    @Transactional
     public void addEdit(Usuario usuario)
     {
         try
         {
             if (usuario.id == null)
             {
-                usuario.setGrupo(this.validateGroup(usuario.getGrupo().ordinal()));
-                usuario.setStatus(this.validateStatus(usuario.getStatus().ordinal()));
+                usuario.grupo = this.validateGroup(usuario.grupo.ordinal());
+                usuario.status = this.validateStatus(usuario.status.ordinal());
                 super.create(usuario);
             }
             super.update(usuario);

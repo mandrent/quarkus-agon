@@ -112,5 +112,17 @@ public class UsuarioResource
                 .build();
     }
 
+    @DELETE
+    @Operation(description = "Atualiza os dados do usuário")
+    @Tag(name="usuarios")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response delete(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
+    {
+        this.service.delete(this.service.getMapper().getModel(dto));
+        return Response
+                .noContent()
+                .build();
+    }
+
 
 }

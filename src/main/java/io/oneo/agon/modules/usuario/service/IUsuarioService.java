@@ -15,6 +15,4 @@ public interface IUsuarioService
     Optional<Usuario> findByLogin(String login);
 
     Optional<Usuario> findByEmail(String email);
-
-    Optional<Usuario> validate(Usuario usuario);
 }

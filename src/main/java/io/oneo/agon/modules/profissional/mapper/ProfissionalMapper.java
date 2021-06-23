@@ -6,5 +6,4 @@ import io.oneo.agon.modules.profissional.resource.dto.ProfissionalDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(config = BaseMapping.class)
-public interface ProfissionalMapper extends BaseMapping<Profissional, ProfissionalDTO>
-{ }
+public interface ProfissionalMapper extends BaseMapping<Profissional, ProfissionalDTO> { }

@@ -1,6 +1,5 @@
 package io.oneo.agon.modules.usuario.proxy;
 
-import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
 import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -16,9 +15,9 @@ public interface UsuarioProxy
     UsuarioDTO findByID(@PathParam("id") Long id);
 
     @POST
-    UsuarioDTO create(@RequestBody UsuarioDTO dto) throws UsuarioServiceException;
+    UsuarioDTO create(@RequestBody UsuarioDTO dto);
 
     @POST
     @Path("/validate")
-    UsuarioDTO validate(@RequestBody UsuarioDTO dto) throws UsuarioServiceException;
+    UsuarioDTO validate(@RequestBody UsuarioDTO dto);
 }
