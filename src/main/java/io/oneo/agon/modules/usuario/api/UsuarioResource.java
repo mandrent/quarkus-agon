@@ -39,12 +39,6 @@ public class UsuarioResource
     public Response findByID(@PathParam("id") Long id)
     {
         var usuario = this.service.findByID(id);
-        if (!usuario.isPresent())
-        {
-            return Response
-                    .noContent()
-                    .build();
-        }
         return Response
                 .ok(this.service.getMapper().getDTO(usuario.get()))
                 .build();

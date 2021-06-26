@@ -31,10 +31,10 @@ public class Usuario extends PanacheEntity implements Serializable
     @Enumerated(EnumType.ORDINAL)
     public StatusUsuarioTipo status;
 
-    @Column(name = "criacao_dt", insertable = true)
+    @Column(name = "criacao_dt")
     public LocalDateTime criacao;
 
-    @Column(name = "acesso_dt", insertable = true)
+    @Column(name = "acesso_dt")
     public LocalDateTime acesso;
 
     @Column(name = "update_dt")

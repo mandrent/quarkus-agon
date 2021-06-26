@@ -5,7 +5,6 @@ import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
 import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.repository.UsuarioRepository;
-import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.type.GrupoTipo;
 import io.oneo.agon.modules.usuario.type.StatusUsuarioTipo;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
