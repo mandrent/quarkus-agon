@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.usuario.api;
 
-import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
+import io.oneo.agon.modules.usuario.exception.UsuarioException;
 import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -52,12 +52,6 @@ public class UsuarioResource
     public Response findByLogin(@PathParam("login") String login)
     {
         var usuario = this.service.findByLogin(login);
-        if (!usuario.isPresent())
-        {
-            return Response
-                    .noContent()
-                    .build();
-        }
         return Response
                 .ok(this.service.getMapper().getDTO(usuario.get()))
                 .build();
@@ -67,7 +61,7 @@ public class UsuarioResource
     @Operation(description = "Cadastra um novo usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
+    public Response create(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
         var usuario = this.service.getMapper().getModel(dto);
         this.service.addEdit(usuario);
@@ -81,7 +75,7 @@ public class UsuarioResource
     @Operation(description = "Valida um usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
+    public Response validate(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
         var user = this.service.validate(this.service.getMapper().getModel(dto));
         if (user.isPresent())
@@ -97,7 +91,7 @@ public class UsuarioResource
     @Operation(description = "Atualiza os dados do usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
+    public Response update(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
         var usuario = this.service.getMapper().getModel(dto);
         this.service.addEdit(usuario);
@@ -110,7 +104,7 @@ public class UsuarioResource
     @Operation(description = "Atualiza os dados do usuário")
     @Tag(name="usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response delete(@RequestBody UsuarioDTO dto) throws UsuarioServiceException
+    public Response delete(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
         this.service.delete(this.service.getMapper().getModel(dto));
         return Response

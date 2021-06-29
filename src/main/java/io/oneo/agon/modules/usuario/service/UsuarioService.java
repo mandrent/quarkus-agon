@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.usuario.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.usuario.exception.UsuarioServiceException;
+import io.oneo.agon.modules.usuario.exception.UsuarioException;
 import io.oneo.agon.modules.usuario.mapper.UsuarioMapper;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.oneo.agon.modules.usuario.repository.UsuarioRepository;
@@ -57,7 +57,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         catch (Exception e)
         {
             this.log.error(e.getMessage());
-            throw new UsuarioServiceException("Erro ao buscar usuario pelo login", e);
+            throw new UsuarioException("Erro ao buscar usuario pelo login", e);
         }
     }
 
@@ -71,7 +71,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         catch (Exception e)
         {
             this.log.error(e.getMessage());
-            throw new UsuarioServiceException("Erro ao buscar usuario pelo email", e);
+            throw new UsuarioException("Erro ao buscar usuario pelo email", e);
         }
     }
 
@@ -86,7 +86,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         catch (Exception e)
         {
             this.log.error(e.getMessage());
-            throw new UsuarioServiceException("Erro ao buscar usuario", e);
+            throw new UsuarioException("Erro ao buscar usuario", e);
         }
     }
 
@@ -104,7 +104,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         catch (Exception e)
         {
             this.log.error(e.getMessage());
-            throw new UsuarioServiceException("Erro ao remover o usuário", e);
+            throw new UsuarioException("Erro ao remover o usuário", e);
         }
     }
 
@@ -124,7 +124,7 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         catch (Exception e)
         {
             this.log.error(e.getMessage());
-            throw new UsuarioServiceException("Erro ao gravar os dados do usuário", e);
+            throw new UsuarioException("Erro ao gravar os dados do usuário", e);
         }
     }
 
