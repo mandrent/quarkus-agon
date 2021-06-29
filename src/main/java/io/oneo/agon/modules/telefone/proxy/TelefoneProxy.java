@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.telefone.proxy;
 
 import io.oneo.agon.modules.telefone.exception.TelefoneServiceException;
-import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
+import io.oneo.agon.modules.telefone.resource.TelefoneDTO;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 

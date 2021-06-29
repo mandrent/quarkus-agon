@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.telefone.resource.dto;
+package io.oneo.agon.modules.telefone.resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.oneo.agon.modules.telefone.type.TelefoneTipo;

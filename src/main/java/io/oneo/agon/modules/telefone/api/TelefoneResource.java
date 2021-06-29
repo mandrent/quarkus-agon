@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.telefone.api;
 
 import io.oneo.agon.modules.telefone.exception.TelefoneServiceException;
-import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
+import io.oneo.agon.modules.telefone.resource.TelefoneDTO;
 import io.oneo.agon.modules.telefone.service.TelefoneService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;

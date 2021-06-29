@@ -36,15 +36,15 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
 
     public Optional<Telefone> findByNumber(String numero)
     {
-        return numero.equals(null) ? Optional.empty() : this.repo.findByNumber(this.validarFormatoNumero(numero));
+        return this.repo.findByNumber(this.validarFormatoNumero(numero));
     }
 
-    public Optional<Telefone> validate(Telefone telefone) throws TelefoneServiceException
+    public Optional<Telefone> validate(Telefone telefone)
     {
         try
         {
-            var phone = super.findByID(telefone.getId());
-            return phone.isPresent() ? phone : this.findByNumber(telefone.getNumero());
+            var phone = super.findByID(telefone.id);
+            return phone.isPresent() ? phone : this.findByNumber(telefone.numero);
         }
         catch (Exception e)
         {
@@ -54,11 +54,11 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
     }
 
     @Transactional
-    public void addEdit(Telefone telefone) throws TelefoneServiceException
+    public void addEdit(Telefone telefone)
     {
         try
         {
-            if (telefone.getId() == null)
+            if (telefone.id == null)
             {
                 super.create(telefone);
             }
