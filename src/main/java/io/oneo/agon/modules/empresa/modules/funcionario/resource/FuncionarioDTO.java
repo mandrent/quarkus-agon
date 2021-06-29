@@ -9,7 +9,7 @@ import io.oneo.agon.modules.empresa.modules.cargo.resource.CargoDTO;
 import io.oneo.agon.modules.empresa.modules.funcionario.type.EstadoCivilTipo;
 import io.oneo.agon.modules.empresa.modules.funcionario.type.SexoTipo;
 import io.oneo.agon.modules.endereco.resource.EnderecoDTO;
-import io.oneo.agon.modules.telefone.resource.dto.TelefoneDTO;
+import io.oneo.agon.modules.telefone.resource.TelefoneDTO;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
