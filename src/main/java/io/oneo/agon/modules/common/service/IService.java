@@ -6,16 +6,15 @@ import java.util.Optional;
 
 public interface IService<E extends Serializable, ID extends Serializable>
 {
-    void create(E t);
+    void create(E e);
 
-    void update(E t);
+    void update(E e);
 
     Optional<E> findByID(ID id);
 
-    void remove(E t);
+    void remove(E e);
 
     void removeByID(ID id);
 
     List<E> list();
-
 }
