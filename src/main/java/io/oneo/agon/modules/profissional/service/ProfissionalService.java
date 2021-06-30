@@ -5,14 +5,12 @@ import io.oneo.agon.modules.profissional.exception.ProfissionalServiceException;
 import io.oneo.agon.modules.profissional.mapper.ProfissionalMapper;
 import io.oneo.agon.modules.profissional.model.Profissional;
 import io.oneo.agon.modules.profissional.repository.ProfissionalRepository;
-import io.oneo.agon.modules.profissional.resource.dto.ProfissionalDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -29,21 +27,21 @@ public class ProfissionalService extends BaseService<Profissional, Long> impleme
     @Override
     public Optional<Profissional> findByDocuments(Profissional profissional)
     {
-        if (profissional.getCrea() != null)
+        if (profissional.crea != null)
         {
-            return this.repo.findByCrea(profissional.getCrea());
+            return this.repo.findByCrea(profissional.crea);
         }
 
-        if (profissional.getDrt() != null)
+        if (profissional.drt != null)
         {
-            return this.repo.findByDRT(profissional.getDrt());
+            return this.repo.findByDRT(profissional.drt);
         }
 
-        if (profissional.getCrm() != null)
+        if (profissional.crm != null)
         {
-            return this.repo.findByCRM(profissional.getCrm());
+            return this.repo.findByCRM(profissional.crm);
         }
-        return this.repo.findByCoren(profissional.getCoren());
+        return this.repo.findByCoren(profissional.coren);
     }
 
     public Optional<Profissional> validate(Profissional profissional)
@@ -55,13 +53,13 @@ public class ProfissionalService extends BaseService<Profissional, Long> impleme
                 return super.findByID(profissional.id);
             }
 
-            if (profissional.getUsuario().id != null)
+            if (profissional.usuario.id != null)
             {
-                return this.repo.findByUser(profissional.getUsuario());
+                return this.repo.findByUser(profissional.usuario);
             }
 
-            var result = this.repo.findByFullname(profissional.getNome(), profissional.getSobreNome());
-            return result.isPresent() ? result : this.repo.findByPhone(profissional.getTelefone());
+            var result = this.repo.findByFullname(profissional.nome, profissional.sobreNome);
+            return result.isPresent() ? result : this.repo.findByPhone(profissional.telefone);
         }
         catch (Exception e)
         {

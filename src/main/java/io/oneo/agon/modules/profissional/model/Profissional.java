@@ -5,14 +5,10 @@ import io.oneo.agon.modules.profissional.type.ProfissionalTipo;
 import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.usuario.model.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter @Setter
 @Entity
 @Table(name = "profissional", schema = "agondb")
 public class Profissional extends PanacheEntity implements Serializable

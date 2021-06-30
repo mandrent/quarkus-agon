@@ -32,7 +32,7 @@ public class ProfissionalResource
 
     @GET
     @Operation(description = "Lista os profissionais")
-    @Tag(name="profissionais")
+    @Tag(name = "profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
@@ -44,7 +44,7 @@ public class ProfissionalResource
     @GET
     @Path("/{id}")
     @Operation(description = "Busca profissional por ID")
-    @Tag(name="profissionais")
+    @Tag(name = "profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByID(@PathParam("id") Long id)
     {
@@ -57,7 +57,7 @@ public class ProfissionalResource
     @PUT
     @Path("/documents")
     @Operation(description = "Busca por documentos")
-    @Tag(name="profissionais")
+    @Tag(name = "profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByDocuments(@RequestBody ProfissionalDTO dto)
     {
@@ -69,7 +69,7 @@ public class ProfissionalResource
 
     @POST
     @Operation(description = "Adiciona novo profissional")
-    @Tag(name="profissionais")
+    @Tag(name = "profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
@@ -85,7 +85,7 @@ public class ProfissionalResource
     @POST
     @Path("/validate")
     @Operation(description = "Valida o usuario")
-    @Tag(name="profissionais")
+    @Tag(name = "profissionais")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody ProfissionalDTO dto) throws ProfissionalServiceException
     {
