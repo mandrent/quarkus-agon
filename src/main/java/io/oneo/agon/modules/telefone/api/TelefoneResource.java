@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.telefone.api;
 
-import io.oneo.agon.modules.telefone.exception.TelefoneServiceException;
+import io.oneo.agon.modules.telefone.exception.TelefoneException;
 import io.oneo.agon.modules.telefone.resource.TelefoneDTO;
 import io.oneo.agon.modules.telefone.service.TelefoneService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -69,11 +69,37 @@ public class TelefoneResource
                 .build();
     }
 
+    @GET
+    @Path("/ddd/{ddd}")
+    @Operation(description = "Lista por DDD")
+    @Tag(name = "telefones")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response findByDDD(@PathParam("ddd") String ddd)
+    {
+        var telefones = this.service.listByDDD(ddd);
+        return Response
+                .ok(this.service.mapper().dtoList(telefones))
+                .build();
+    }
+
+    @GET
+    @Path("/type/{type}")
+    @Operation(description = "Lista por tipo")
+    @Tag(name = "telefones")
+    @APIResponse(responseCode = "200", description = "Ok")
+    public Response findByType(@PathParam("type") Integer type)
+    {
+        var telefones = this.service.listByType(type);
+        return Response
+                .ok(this.service.mapper().dtoList(telefones))
+                .build();
+    }
+
     @POST
     @Operation(description = "Cadastra novo telefone")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response create(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
+    public Response create(@RequestBody TelefoneDTO dto) throws TelefoneException
     {
         var telefone = this.service.mapper().getModel(dto);
         this.service.addEdit(telefone);
@@ -87,7 +113,7 @@ public class TelefoneResource
     @Operation(description = "Valida o TelefoneProxy")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response validate(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
+    public Response validate(@RequestBody TelefoneDTO dto) throws TelefoneException
     {
         var telefone = this.service.validate(this.service.mapper().getModel(dto));
         if (telefone.isPresent())
@@ -103,7 +129,7 @@ public class TelefoneResource
     @Operation(description = "Atualiza os dados do telefone")
     @Tag(name="telefones")
     @APIResponse(responseCode = "200", description = "Ok")
-    public Response update(@RequestBody TelefoneDTO dto) throws TelefoneServiceException
+    public Response update(@RequestBody TelefoneDTO dto) throws TelefoneException
     {
         var telefone= this.service.mapper().getModel(dto);
         this.service.addEdit(telefone);

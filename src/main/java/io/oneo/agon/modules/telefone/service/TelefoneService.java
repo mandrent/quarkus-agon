@@ -1,16 +1,19 @@
 package io.oneo.agon.modules.telefone.service;
 
 import io.oneo.agon.modules.common.service.BaseService;
-import io.oneo.agon.modules.telefone.exception.TelefoneServiceException;
+import io.oneo.agon.modules.telefone.exception.TelefoneException;
 import io.oneo.agon.modules.telefone.mapper.TelefoneMapper;
 import io.oneo.agon.modules.telefone.model.Telefone;
 import io.oneo.agon.modules.telefone.repository.TelefoneRepository;
+import io.oneo.agon.modules.telefone.type.TelefoneTipo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -39,7 +42,17 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
         return this.repo.findByNumber(this.validarFormatoNumero(numero));
     }
 
-    public Optional<Telefone> validate(Telefone telefone)
+    public List<Telefone> listByDDD(String ddd)
+    {
+        return ddd.equals(null) && ddd.length() < 2 ? Collections.emptyList() : this.repo.listByDDD(ddd);
+    }
+
+    public List<Telefone> listByType(Integer type)
+    {
+        return this.repo.listByType(TelefoneTipo.validate(type));
+    }
+
+    public Optional<Telefone> validate(Telefone telefone) throws TelefoneException
     {
         try
         {
@@ -49,12 +62,12 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
         catch (Exception e)
         {
             this.logger.error(e.getMessage());
-            throw new TelefoneServiceException("Erro ao gravar os dados do telefone!", e);
+            throw new TelefoneException("Erro ao gravar os dados do telefone!", e);
         }
     }
 
     @Transactional
-    public void addEdit(Telefone telefone)
+    public void addEdit(Telefone telefone) throws TelefoneException
     {
         try
         {
@@ -67,7 +80,7 @@ public class TelefoneService extends BaseService<Telefone, Long> implements ITel
         catch (Exception e)
         {
             this.logger.error(e.getMessage());
-            throw new TelefoneServiceException("Erro ao gravar os dados do telefone!", e);
+            throw new TelefoneException("Erro ao gravar os dados do telefone!", e);
         }
     }
 
