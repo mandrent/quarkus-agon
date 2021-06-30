@@ -1,6 +1,6 @@
 package io.oneo.agon.modules.usuario.proxy;
 
-import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
+import io.oneo.agon.modules.usuario.resource.UsuarioDTO;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 

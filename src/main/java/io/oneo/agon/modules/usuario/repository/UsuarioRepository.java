@@ -18,6 +18,4 @@ public class UsuarioRepository implements PanacheRepository<Usuario>
     {
         return this.find("email", email).firstResultOptional();
     }
-
-
 }

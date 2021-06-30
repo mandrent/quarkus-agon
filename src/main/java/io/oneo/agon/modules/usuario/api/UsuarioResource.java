@@ -1,7 +1,7 @@
 package io.oneo.agon.modules.usuario.api;
 
 import io.oneo.agon.modules.usuario.exception.UsuarioException;
-import io.oneo.agon.modules.usuario.resource.dto.UsuarioDTO;
+import io.oneo.agon.modules.usuario.resource.UsuarioDTO;
 import io.oneo.agon.modules.usuario.service.UsuarioService;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -21,20 +21,19 @@ public class UsuarioResource
 
     @GET
     @Operation(description = "Lista todos os usuários")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response list()
     {
-        var list = this.service.list();
         return Response
-                .ok(this.service.getMapper().dtoList(list))
+                .ok(this.service.getMapper().dtoList(this.service.list()))
                 .build();
     }
 
     @GET
     @Path("/{id}")
     @Operation(description = "Buscar usuário pelo ID")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByID(@PathParam("id") Long id)
     {
@@ -47,7 +46,7 @@ public class UsuarioResource
     @GET
     @Path("/login/{login}")
     @Operation(description = "Buscar usuário pelo LOGIN")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response findByLogin(@PathParam("login") String login)
     {
@@ -59,7 +58,7 @@ public class UsuarioResource
 
     @POST
     @Operation(description = "Cadastra um novo usuário")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response create(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
@@ -73,7 +72,7 @@ public class UsuarioResource
     @POST
     @Path("/validate")
     @Operation(description = "Valida um usuário")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response validate(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
@@ -89,7 +88,7 @@ public class UsuarioResource
 
     @PUT
     @Operation(description = "Atualiza os dados do usuário")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response update(@RequestBody UsuarioDTO dto) throws UsuarioException
     {
@@ -102,7 +101,7 @@ public class UsuarioResource
 
     @DELETE
     @Operation(description = "Atualiza os dados do usuário")
-    @Tag(name="usuarios")
+    @Tag(name = "usuarios")
     @APIResponse(responseCode = "200", description = "Ok")
     public Response delete(@RequestBody UsuarioDTO dto) throws UsuarioException
     {

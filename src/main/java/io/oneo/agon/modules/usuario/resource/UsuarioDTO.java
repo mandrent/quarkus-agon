@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.usuario.resource.dto;
+package io.oneo.agon.modules.usuario.resource;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

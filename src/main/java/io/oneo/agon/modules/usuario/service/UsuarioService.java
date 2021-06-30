@@ -27,27 +27,6 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
     public UsuarioMapper getMapper() { return this.mapper; }
 
     @Override
-    public GrupoTipo validateGroup(Integer grupoValor)
-    {
-        return switch (grupoValor) {
-            case 1 -> GrupoTipo.ADMIN;
-            case 2 -> GrupoTipo.CONVIDADO;
-            case 3 -> GrupoTipo.EMPRESA;
-            default -> GrupoTipo.PROFISSIONAL;
-        };
-    }
-
-    @Override
-    public StatusUsuarioTipo validateStatus(Integer statusValor)
-    {
-        return switch (statusValor) {
-            case 1 -> StatusUsuarioTipo.ATIVO;
-            case 2 -> StatusUsuarioTipo.INATIVO;
-            default -> StatusUsuarioTipo.PENDENTE;
-        };
-    }
-
-    @Override
     public Optional<Usuario> findByLogin(String login)
     {
         try
@@ -115,13 +94,13 @@ public class UsuarioService extends BaseService<Usuario, Long> implements IUsuar
         {
             if (usuario.id == null)
             {
-                usuario.grupo = this.validateGroup(usuario.grupo.ordinal());
-                usuario.status = this.validateStatus(usuario.status.ordinal());
+                usuario.grupo = GrupoTipo.validate(usuario.grupo.ordinal());
+                usuario.status = StatusUsuarioTipo.validate(usuario.status.ordinal());
                 super.create(usuario);
             }
             super.update(usuario);
         }
-        catch (Exception e)
+        catch (UsuarioException e)
         {
             this.log.error(e.getMessage());
             throw new UsuarioException("Erro ao gravar os dados do usuário", e);
