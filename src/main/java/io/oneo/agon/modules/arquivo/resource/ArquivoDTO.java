@@ -1,4 +1,4 @@
-package io.oneo.agon.modules.arquivo.resource.dto;
+package io.oneo.agon.modules.arquivo.resource;
 
 import io.oneo.agon.modules.arquivo.type.ArquivoTipo;
 
